@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Input, Grid } from "@material-ui/core";
 import backgroundImage from "../../assets/signUpPageBackground.png";
 import arrowRight from "../../assets/arrowRight.png";
+import NavigationBar from "../../components/NavigationBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    alignContent: "flex-start",
   },
   title: {
     fontFamily: "Times",
@@ -60,6 +62,7 @@ function SignUpPage() {
 
   return (
     <Grid container className={classes.container}>
+      <NavigationBar />
       <Grid container item direction='column' className={classes.inputForm}>
         <Typography className={classes.title}>DEAR DREAMER,</Typography>
         <Typography className={classes.description}>

@@ -1,9 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button } from "@material-ui/core";
-import logo from "../../assets/whaleIcon.png";
+import { Typography } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import backgroundImage from "../../assets/landingPageBackground.png";
 import landingPinocchio from "../../assets/landingPinocchio.png";
+import NavigationBar from "../../components/NavigationBar";
+import TextButton from "../../components/TextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,49 +23,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: "Times",
     fontWeight: "bold",
-    fontSize: "100px",
-    lineHeight: "110px",
+    lineHeight: 1,
+    fontSize: 100,
     "@media (max-width:780px)": {
-      fontSize: "70px",
+      fontSize: 70,
     },
   },
   description: {
     fontFamily: "Roboto",
-    fontSize: "25px",
-    lineHeight: "29px",
+    fontSize: 25,
     textAlign: "center",
-    margin: "0px",
-    paddingBottom: "21px",
+    margin: 0,
+    paddingBottom: 21,
     "@media (max-width:780px)": {
-      fontSize: "20px",
+      fontSize: 20,
     },
-  },
-  button: {
-    width: "225px",
-    height: "72px",
-    backgroundColor: "#3C79B0",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
-    borderRadius: "20px",
-    padding: "18px 25px 18px 25px",
-    marginRight: 18,
-    marginBottom: 18,
-    "&:hover": {
-      backgroundColor: "#3C79B0",
-    },
-  },
-  buttonText: {
-    color: "#FFFBFB",
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: "30px",
-    textAlign: "center",
-    margin: "0px",
-  },
-  logo: {
-    height: "80px",
-    paddingTop: "25px",
-    paddingBottom: "25px",
   },
   landingPinocchio: {
     display: "flex",
@@ -71,15 +45,19 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:780px)": {
       height: "45vh",
     },
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
 function LandingPage() {
   const classes = useStyles();
+  const history = useHistory();
 
   return (
     <div className={classes.container}>
-      <img src={logo} alt='Logo' className={classes.logo} />
+      <NavigationBar />
       <img
         src={landingPinocchio}
         alt='Logo'
@@ -89,9 +67,7 @@ function LandingPage() {
       <Typography className={classes.description}>
         : a supportive community built just for our dreamers
       </Typography>
-      <Button className={classes.button} variant='contained'>
-        <Typography className={classes.buttonText}>SIGN UP</Typography>
-      </Button>
+      <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
     </div>
   );
 }

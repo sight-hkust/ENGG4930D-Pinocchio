@@ -3,15 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Grid, Input } from "@material-ui/core";
 import backgroundImage from "../../assets/loginPageBackground.png";
 import arrowRight from "../../assets/arrowRight.png";
+import NavigationBar from "../../components/NavigationBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    alignContent: "flex-start",
   },
   title: {
     fontFamily: "Times",
@@ -34,12 +35,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     width: "95px",
     height: "77px",
-    backgroundColor: "#3C79B0",
+    backgroundColor: "#000000",
     color: "#FFFFFF",
     borderRadius: "15px",
     alignSelf: "flex-end",
     "&:hover": {
-      backgroundColor: "#3C79B0",
+      backgroundColor: "#000000",
     },
   },
   inputForm: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     alignSelf: "center",
     alignItems: "flex-start",
-    marginTop: "60px",
+    marginTop: "30vh",
   },
   input: {
     width: "512px",
@@ -60,6 +61,7 @@ function LoginPage() {
 
   return (
     <Grid container className={classes.container}>
+      <NavigationBar />
       <Grid container item direction='column' className={classes.inputForm}>
         <Typography className={classes.title}>WELCOME BACK,</Typography>
         <Typography className={classes.description}>
