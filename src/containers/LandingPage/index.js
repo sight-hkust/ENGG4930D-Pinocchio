@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import backgroundImage from "../../assets/landingPageBackground.png";
+import mobileBackgroundImage from "../../assets/landingMobileBg.png";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
 import TextButton from "../../components/TextButton";
@@ -17,16 +18,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    width: "100vw",
-    height: "75vh",
+    contain: "content",
+    "@media (max-width:480px)": {
+      backgroundImage: `url(${mobileBackgroundImage})`,
+    },
   },
   title: {
     fontFamily: "Times",
     fontWeight: "bold",
     lineHeight: 1,
     fontSize: 100,
-    "@media (max-width:780px)": {
-      fontSize: 70,
+    "@media (max-width:600px)": {
+      fontSize: 50,
     },
   },
   description: {
@@ -35,14 +38,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: 0,
     paddingBottom: 21,
-    "@media (max-width:780px)": {
-      fontSize: 20,
+    "@media (max-width:480px)": {
+      fontSize: 12,
     },
   },
   landingPinocchio: {
     display: "flex",
     height: "50vh",
-    "@media (max-width:780px)": {
+    "@media (max-width:480px)": {
       height: "45vh",
     },
     textAlign: "center",
@@ -56,7 +59,7 @@ function LandingPage() {
   const history = useHistory();
 
   return (
-    <div className={classes.container}>
+    <Grid container direction='column' className={classes.container}>
       <NavigationBar />
       <img
         src={landingPinocchio}
@@ -68,7 +71,7 @@ function LandingPage() {
         : a supportive community built just for our dreamers
       </Typography>
       <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
-    </div>
+    </Grid>
   );
 }
 

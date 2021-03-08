@@ -15,14 +15,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     alignContent: "flex-end",
+    contain: "content",
   },
   title: {
     fontFamily: "Times",
     fontWeight: "bold",
+    textAlign: "center",
     fontSize: 60,
     marginTop: 70,
-    "@media (max-width:780px)": {
+    width: "70%",
+    "@media (max-width:480px)": {
       fontSize: 30,
+      marginTop: 30,
     },
   },
   description: {
@@ -31,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     margin: 0,
     paddingBottom: 60,
-    "@media (max-width:780px)": {
-      fontSize: 20,
+    "@media (max-width:480px)": {
+      fontSize: 15,
+      marginTop: 24,
     },
   },
   button: {
@@ -61,9 +66,12 @@ const useStyles = makeStyles((theme) => ({
   buttonText: {
     color: "#FFFBFB",
     fontFamily: "Roboto",
-    fontSize: "30px",
+    fontSize: 30,
     textAlign: "center",
-    margin: "0px",
+    margin: 0,
+    "@media (max-width:480px)": {
+      fontSize: 15,
+    },
   },
   inputForm: {
     display: "flex",
@@ -99,8 +107,8 @@ function InterestsPage() {
           marginLeft: "auto",
         }}
       />
-      <NavigationBar />
       <Grid container item direction='column' className={classes.inputForm}>
+        <NavigationBar />
         <Typography className={classes.title}>
           WHEN YOU WISH UPON A STAR...
         </Typography>

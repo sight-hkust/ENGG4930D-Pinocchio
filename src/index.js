@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
 import "./index.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
@@ -10,19 +9,16 @@ import LoginPage from "./containers/LoginPage";
 import InterestsPage from "./containers/InterestsPage";
 import SignUpPage from "./containers/SignUpPage";
 
-const history = createBrowserHistory();
-
 ReactDOM.render(
   <React.StrictMode>
-    <Router history={history}>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={LandingPage} />
-          <Route exact path='/login' component={LoginPage} />
-          <Route exact path='/interests' component={InterestsPage} />
-          <Route exact path='/signup' component={SignUpPage} />
-        </Switch>
-      </Router>
+    <Router basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/login' component={LoginPage} />
+        <Route exact path='/interests' component={InterestsPage} />
+        <Route exact path='/signup' component={SignUpPage} />
+        <Route exact path='*' component={LandingPage} />
+      </Switch>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")
