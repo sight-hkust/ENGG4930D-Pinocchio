@@ -11,17 +11,17 @@ import TextButton from "../../components/TextButton";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    height: "100vh",
+    background: "center",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    alignContent: "flex-start",
     contain: "content",
     "@media (max-width:480px)": {
       backgroundImage: `url(${mobileBackgroundImage})`,
     },
+    alignItems: "center",
   },
   title: {
     fontFamily: "Times",

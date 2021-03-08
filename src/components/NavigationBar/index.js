@@ -1,6 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
+import {
+  Typography,
+  Button,
+  Grid,
+  useMediaQuery,
+  SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import ForumIcon from "@material-ui/icons/Forum";
+import HistoryIcon from "@material-ui/icons/History";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useHistory } from "react-router-dom";
 import logo from "../../assets/whaleIcon.png";
 import menuLogo from "../../assets/navigationBarMobile.png";
@@ -50,6 +64,57 @@ function NavigationBar() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
+  const [state, setState] = React.useState({
+    left: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <List>
+      {["HOME", "OUR FORUM", "PAST ENTRIES", "LOGIN"].map((text, index) =>
+        index === 0 ? (
+          <ListItem button key={text} onClick={() => history.push("/")}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ) : index === 1 ? (
+          <ListItem button key={text} onClick={() => history.push("/")}>
+            <ListItemIcon>
+              <ForumIcon />
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ) : index === 2 ? (
+          <ListItem button key={text} onClick={() => history.push("/")}>
+            <ListItemIcon>
+              <HistoryIcon />
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ) : (
+          <ListItem button key={text} onClick={() => history.push("/login")}>
+            <ListItemIcon>
+              <VpnKeyIcon />
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        )
+      )}
+    </List>
+  );
 
   if (isMobile) {
     return (
@@ -60,9 +125,20 @@ function NavigationBar() {
           justifyContent: "space-between",
         }}
       >
-        <Button className={classes.menuButton}>
+        <Button
+          className={classes.menuButton}
+          onClick={toggleDrawer("left", true)}
+        >
           <img src={menuLogo} width='22.5px' height='20.25px'></img>
         </Button>
+        <SwipeableDrawer
+          anchor='left'
+          open={state["left"]}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
+        >
+          {list("left")}
+        </SwipeableDrawer>
         <Grid
           item
           style={{
