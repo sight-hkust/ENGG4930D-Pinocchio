@@ -5,7 +5,8 @@
     {
       "src": "favicon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "favicon-192.png",
@@ -13,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/pinocchio-frontend/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

@@ -46,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "50vh",
     "@media (max-width:480px)": {
-      height: "45vh",
+      height: "70vw",
+      marginTop: "10vh",
     },
     textAlign: "center",
     justifyContent: "center",
