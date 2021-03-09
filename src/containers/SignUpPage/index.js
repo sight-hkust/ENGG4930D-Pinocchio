@@ -26,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: 60,
     lineHeight: "normal",
+    textAlign: "center",
     "@media (max-width:480px)": {
       fontSize: "30px",
       wordWrap: "break-word",
+      textAlign: "left",
     },
   },
   description: {
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 35,
     "@media (max-width:480px)": {
       fontSize: "13px",
+      textAlign: "left",
     },
   },
   button: {

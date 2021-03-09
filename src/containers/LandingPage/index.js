@@ -59,18 +59,20 @@ function LandingPage() {
   const history = useHistory();
 
   return (
-    <Grid container direction='column' className={classes.container}>
+    <Grid container className={classes.container}>
       <NavigationBar />
-      <img
-        src={landingPinocchio}
-        alt='Logo'
-        className={classes.landingPinocchio}
-      ></img>
-      <Typography className={classes.title}>PINOCCHIO</Typography>
-      <Typography className={classes.description}>
-        : a supportive community built just for our dreamers
-      </Typography>
-      <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
+      <Grid container direction='column' alignItems='center'>
+        <img
+          src={landingPinocchio}
+          alt='Logo'
+          className={classes.landingPinocchio}
+        ></img>
+        <Typography className={classes.title}>PINOCCHIO</Typography>
+        <Typography className={classes.description}>
+          : a supportive community built just for our dreamers
+        </Typography>
+        <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
+      </Grid>
     </Grid>
   );
 }

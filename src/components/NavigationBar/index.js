@@ -129,7 +129,12 @@ function NavigationBar() {
           className={classes.menuButton}
           onClick={toggleDrawer("left", true)}
         >
-          <img src={menuLogo} width='22.5px' height='20.25px'></img>
+          <img
+            src={menuLogo}
+            width='22.5px'
+            height='20.25px'
+            alt='menuLogo'
+          ></img>
         </Button>
         <SwipeableDrawer
           anchor='left'
@@ -163,7 +168,7 @@ function NavigationBar() {
         </Button>
         <Button className={classes.button}>OUR FORUM</Button>
         <Grid item style={{ textAlign: "center" }}>
-          <img className={classes.logo} src={logo} alt=''></img>
+          <img className={classes.logo} src={logo} alt='logo'></img>
           <Typography className={classes.text}>pinocchio</Typography>
         </Grid>
         <Button className={classes.button}>PAST ENTRIES</Button>

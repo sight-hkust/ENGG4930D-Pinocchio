@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   inputForm: {
     display: "flex",
     alignItems: "center",
-    marginTop: "30vh",
+    marginTop: "20vh",
     "@media (max-width:480px)": {
       marginTop: 50,
     },
