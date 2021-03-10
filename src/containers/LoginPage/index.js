@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
+import {
+  Typography,
+  Button,
+  Grid,
+  useMediaQuery,
+  Snackbar,
+} from "@material-ui/core";
+import firebase from "firebase/app";
 import backgroundImage from "../../assets/loginPageBackground.png";
 import mobileBackgroundImage from "../../assets/loginMobileBg.png";
 import arrowRight from "../../assets/arrowRight.png";
@@ -75,6 +82,12 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "center",
       "& fieldset": {
         borderColor: "#000000",
+        "& legend": {
+          "&[class*='legendNotched']": {
+            paddingRight: "3vw",
+            marginRight: "3vw",
+          },
+        },
       },
       "&::placeholder": {
         color: "#000000",
@@ -95,6 +108,43 @@ const useStyles = makeStyles((theme) => ({
 function LoginPage() {
   const classes = useStyles();
   const isMobile = useMediaQuery("(max-width:480px)");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setLoggedIn(false);
+  };
+
+  const handleClick = () => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log("You're in already!");
+      } else {
+        firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+          .then(() => {
+            return firebase
+              .auth()
+              .signInWithEmailAndPassword(email, password)
+              .then((userCredential) => {
+                var user = userCredential.user;
+                setUsername(user.displayName);
+                setLoggedIn(true);
+              })
+              .catch((error) => console.log(error));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
+  };
 
   return (
     <Grid container className={classes.container}>
@@ -107,30 +157,35 @@ function LoginPage() {
         {isMobile && (
           <Grid container item direction='column' alignContent='center'>
             <Input
-              style={{
-                width: 271,
-                height: 48,
-              }}
+              className={classes.input}
               InputLabelProps={{
                 style: { top: 5, color: "#000000", letterSpacing: "0.14em" },
               }}
               size='small'
-              label='USERNAME'
+              label='ITSC ACCOUNT'
+              onChange={(e) => setEmail(e.target.value)}
             ></Input>
             <Input
-              style={{ width: 271, height: 48 }}
+              className={classes.input}
               InputLabelProps={{
                 style: { top: 5, color: "#000000", letterSpacing: "0.14em" },
               }}
               size='small'
               label='SECRET WORD'
+              onChange={(e) => setPassword(e.target.value)}
             ></Input>
           </Grid>
         )}
         {!isMobile && (
           <Grid container item direction='column' alignContent='center'>
-            <Input label='USERNAME'></Input>
-            <Input label='SECRET WORD'></Input>
+            <Input
+              label='ITSC ACCOUNT'
+              onChange={(e) => setEmail(e.target.value)}
+            ></Input>
+            <Input
+              label='SECRET WORD'
+              onChange={(e) => setPassword(e.target.value)}
+            ></Input>
           </Grid>
         )}
         <Grid container direction='row' justify='center' alignContent='center'>
@@ -139,11 +194,22 @@ function LoginPage() {
               start my journey
             </Typography>
           )}
-          <Button className={classes.button} variant='contained'>
+          <Button
+            className={classes.button}
+            variant='contained'
+            onClick={handleClick}
+          >
             <img alt='arrowRight' src={arrowRight} width='80%'></img>
           </Button>
         </Grid>
       </Grid>
+      <Snackbar
+        open={loggedIn}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        autoHideDuration={9000}
+        message={`Welcome, ${username}!`}
+      />
     </Grid>
   );
 }

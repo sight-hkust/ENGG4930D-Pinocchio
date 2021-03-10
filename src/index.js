@@ -1,5 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import firebase from "firebase/app";
+import "firebase/analytics";
+import "firebase/auth";
+import "firebase/firestore";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./index.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
@@ -8,6 +12,18 @@ import LandingPage from "./containers/LandingPage";
 import LoginPage from "./containers/LoginPage";
 import InterestsPage from "./containers/InterestsPage";
 import SignUpPage from "./containers/SignUpPage";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyDiNVv8_UBM0Egcbxqjaf0K51x-9J_sX0A",
+  authDomain: "ust-sight-pinocchio.firebaseapp.com",
+  projectId: "ust-sight-pinocchio",
+  storageBucket: "ust-sight-pinocchio.appspot.com",
+  messagingSenderId: "449896953766",
+  appId: "1:449896953766:web:1f5374d846ffb070320167",
+  measurementId: "G-NPZZZP04E6",
+};
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
 ReactDOM.render(
   <React.StrictMode>

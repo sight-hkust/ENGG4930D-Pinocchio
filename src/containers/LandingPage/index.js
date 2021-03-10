@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  useMediaQuery,
+  Card,
+  Button,
+  CardContent,
+  CardActions,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import backgroundImage from "../../assets/landingPageBackground.png";
 import mobileBackgroundImage from "../../assets/landingMobileBg.png";
@@ -53,11 +61,52 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
   },
+  appInstallBanner: {
+    position: "absolute",
+    top: "80%",
+    backgroundColor: "#FFCF25",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    height: "20vh",
+    width: "100vw",
+    textAlign: "center",
+  },
 }));
 
 function LandingPage() {
   const classes = useStyles();
   const history = useHistory();
+  const isMobile = useMediaQuery("(max-width:480px)");
+  const [open, setOpen] = useState(false);
+  let deferredPrompt;
+
+  const handleClick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("User accepted the A2HS prompt");
+      } else {
+        console.log("User dismissed the A2HS prompt");
+      }
+      deferredPrompt = null;
+    });
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    setOpen(true);
+  });
+
+  window.addEventListener("appinstalled", () => {
+    setOpen(false);
+    deferredPrompt = null;
+    console.log("PWA was installed");
+  });
 
   return (
     <Grid container className={classes.container}>
@@ -73,6 +122,40 @@ function LandingPage() {
           : a supportive community built just for our dreamers
         </Typography>
         <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
+        {isMobile && open && (
+          <Card className={classes.appInstallBanner}>
+            <CardContent style={{ paddingBottom: 4 }}>
+              <Typography style={{ fontSize: 18 }}>
+                Online Mental Health Forum For USTers!
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Grid container direction='column' alignContent='center'>
+                <Button
+                  style={{
+                    backgroundColor: "white",
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  onClick={handleClick}
+                >
+                  Install
+                </Button>
+                <Button
+                  style={{
+                    marginTop: 8,
+                    color: "rgba(0, 0, 0, 0.5)",
+                    borderRadius: 20,
+                    width: 100,
+                  }}
+                  onClick={handleClose}
+                >
+                  Not now
+                </Button>
+              </Grid>
+            </CardActions>
+          </Card>
+        )}
       </Grid>
     </Grid>
   );
