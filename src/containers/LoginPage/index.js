@@ -172,6 +172,7 @@ function LoginPage() {
               }}
               size='small'
               label='SECRET WORD'
+              isPassword={true}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
           </Grid>
@@ -184,6 +185,7 @@ function LoginPage() {
             ></Input>
             <Input
               label='SECRET WORD'
+              isPassword={true}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
           </Grid>

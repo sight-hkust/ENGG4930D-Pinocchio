@@ -162,6 +162,7 @@ function SignUpPage() {
         <Input
           size={isMobile ? "small" : "medium"}
           label='SECRET WORD'
+          isPassword={true}
           onChange={(e) => setPassword(e.target.value)}
         ></Input>
         <Grid container className={classes.confirmContainer}>

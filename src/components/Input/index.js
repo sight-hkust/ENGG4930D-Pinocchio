@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import { TextField, IconButton, InputAdornment } from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -39,8 +41,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Input({ ...props }) {
+function Input(props) {
   const classes = useStyles();
+  const { isPassword, ...restProps } = props;
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <TextField
       className={classes.input}
@@ -48,7 +53,20 @@ function Input({ ...props }) {
       InputLabelProps={{
         className: classes.inputLabel,
       }}
-      {...props}
+      type={isPassword ? (showPassword ? "text" : "password") : "text"}
+      InputProps={{
+        endAdornment: isPassword ? (
+          <InputAdornment position='end'>
+            <IconButton
+              onClick={() => setShowPassword(!showPassword)}
+              edge='end'
+            >
+              {showPassword ? <Visibility /> : <VisibilityOff />}
+            </IconButton>
+          </InputAdornment>
+        ) : null,
+      }}
+      {...restProps}
     ></TextField>
   );
 }
