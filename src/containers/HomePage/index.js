@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     width: 155,
     height: 188,
     backgroundImage: `url(${myStoriesButtonImage})`,
-    left: "32vw",
+    left: "30vw",
   },
   myStoriesButtonText: {
     fontWeight: "bold",
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundImage: `url(${writeNowButtonImage})`,
     bottom: "40vh",
-    left: "60vw",
+    left: "57vw",
   },
   writeNowButtonText: {
     fontSize: 24,
