@@ -5,6 +5,7 @@ import { Typography, Button } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   button: {
     height: 72,
+    width: 226,
     backgroundColor: "#3C79B0",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
     borderRadius: 20,
@@ -12,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 38,
     "&:hover": {
       backgroundColor: "#3C79B0",
+    },
+    "@media (max-width:480px)": {
+      marginBottom: 14,
     },
   },
   buttonText: {

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid } from "@material-ui/core";
+import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import backgroundImage from "../../assets/interestsPageBackground.png";
-import arrowRight from "../../assets/arrowRight.png";
-import fairyLogo from "../../assets/fairy.png";
 import NavigationBar from "../../components/NavigationBar";
+import mobileBackgroundImage from "../../assets/interestsMobileBg.png";
+import interestsBubbleImage from "../../assets/interestsBubble.png";
+import NextButton from "../../components/NextButton";
+import firebase from "firebase/app";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -16,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     alignContent: "flex-end",
     contain: "content",
+    "@media (max-width:480px)": {
+      backgroundImage: `url(${mobileBackgroundImage})`,
+      backgroundSize: "contain",
+      backgroundPosition: "bottom",
+    },
   },
   title: {
     fontFamily: "Times",
@@ -25,8 +33,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 70,
     width: "70%",
     "@media (max-width:480px)": {
-      fontSize: 30,
-      marginTop: 30,
+      lineHeight: 1,
+      width: "100%",
+      fontSize: 40,
+      marginTop: 26,
     },
   },
   description: {
@@ -37,15 +47,15 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 60,
     "@media (max-width:480px)": {
       fontSize: 15,
-      marginTop: 24,
+      paddingBottom: 0,
     },
   },
   button: {
-    width: "95px",
-    height: "77px",
+    width: 95,
+    height: 77,
     backgroundColor: "#3C79B0",
     color: "#FFFFFF",
-    borderRadius: "15px",
+    borderRadius: 15,
     alignSelf: "flex-end",
     "&:hover": {
       backgroundColor: "#3C79B0",
@@ -56,11 +66,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#D38851",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
     borderRadius: 20,
+    borderBottomRightRadius: 9,
     padding: "18px 25px",
     marginBottom: 38,
     textTransform: "lowercase",
     "&:hover": {
       backgroundColor: "#D38851",
+    },
+    "@media (max-width:480px)": {
+      height: "auto",
+      padding: "13px 13px",
+      width: "auto",
+      marginBottom: 20,
     },
   },
   buttonText: {
@@ -79,43 +96,73 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     alignItems: "center",
   },
+  buttonGroupImage: {
+    width: "100vw",
+  },
+  buttonGroup: {
+    position: "absolute",
+    top: "28%",
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+  },
 }));
 
 function InterestsPage() {
   const classes = useStyles();
+  const history = useHistory();
   const [selected, setSelected] = useState([]);
+  const isMobile = useMediaQuery("(max-width:480px)");
+
   const interests = [
-    "depression",
-    "exam anxiety",
-    "eating disorder",
     "PTSD",
+    "depression",
     "motivation",
+    "eating disorder",
+    "exam anxiety",
     "social anxiety",
     "panic disorder",
+    "all",
   ];
+
+  const handleSubmit = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
+          .set(
+            {
+              interests: [...selected.map((index) => interests[index])],
+            },
+            { merge: true }
+          );
+        history.push("/home");
+      }
+    });
+  };
 
   return (
     <Grid container className={classes.container} direction='column'>
-      <img
-        src={fairyLogo}
-        alt='fairyLogo'
-        style={{
-          position: "absolute",
-          height: "350px",
-          right: "5%",
-          bottom: 0,
-          marginLeft: "auto",
-        }}
-      />
       <Grid container item direction='column' className={classes.inputForm}>
-        <NavigationBar />
+        {!isMobile && <NavigationBar />}
         <Typography className={classes.title}>
           WHEN YOU WISH UPON A STAR...
         </Typography>
         <Typography className={classes.description}>
           choose the topics that your heart desires{" "}
         </Typography>
-        <Grid container item direction='row' justify='space-around' xs={6}>
+        <img
+          alt=''
+          className={classes.buttonGroupImage}
+          src={interestsBubbleImage}
+        ></img>
+        <Grid
+          container
+          item
+          xs={isMobile ? 10 : 6}
+          className={classes.buttonGroup}
+        >
           {interests.map((interest, index) => (
             <Button
               className={classes.interestButton}
@@ -137,12 +184,10 @@ function InterestsPage() {
               >{`+ ${interest}`}</Typography>
             </Button>
           ))}
+          {selected.length !== 0 && (
+            <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
+          )}
         </Grid>
-        {selected && (
-          <Button className={classes.button} variant='contained'>
-            <img src={arrowRight} width='80%' alt='nextPage'></img>
-          </Button>
-        )}
       </Grid>
     </Grid>
   );

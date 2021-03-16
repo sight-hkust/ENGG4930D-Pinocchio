@@ -1,0 +1,310 @@
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Typography,
+  Button,
+  Grid,
+  useMediaQuery,
+  Snackbar,
+} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import firebase from "firebase/app";
+import NavigationBar from "../../components/NavigationBar";
+import backgroundImage from "../../assets/interestsPageBackground.png";
+import mobileBackgroundImage from "../../assets/homeMobileBg.png";
+import bookmarkButtonImage from "../../assets/bookmarkButton.png";
+import myStoriesButtonImage from "../../assets/myStoriesButton.png";
+import writeNowButtonImage from "../../assets/writeNowButton.png";
+import personalButtonImage from "../../assets/personalButton.png";
+import logoutButtonImage from "../../assets/logoutButton.png";
+import bookshelfButtonImage from "../../assets/bookshelfButton.png";
+import guideMeButtonImage from "../../assets/guideMeButton.png";
+import askHelpButtonImage from "../../assets/askHelpButton.png";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    height: "100vh",
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundColor: "#FFF4E3",
+    backgroundPosition: "bottom",
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    "@media (max-width:480px)": {
+      backgroundImage: `url(${mobileBackgroundImage})`,
+    },
+  },
+  title: {
+    fontFamily: "Times",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 60,
+    width: "70%",
+    "@media (max-width:480px)": {
+      lineHeight: 1,
+      width: "100%",
+      fontSize: 40,
+      whiteSpace: "break-spaces",
+    },
+  },
+  description: {
+    width: 221,
+    fontSize: 15,
+    marginLeft: 28,
+    marginTop: 8,
+    whiteSpace: "break-spaces",
+  },
+  bookmarkButton: {
+    width: 130,
+    height: 192,
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(${bookmarkButtonImage})`,
+  },
+  bookmarkButtonText: {
+    fontWeight: "bold",
+    color: "#D8A800",
+    marginBottom: 60,
+  },
+  myStoriesButton: {
+    width: 155,
+    height: 188,
+    backgroundImage: `url(${myStoriesButtonImage})`,
+    left: "32vw",
+  },
+  myStoriesButtonText: {
+    fontWeight: "bold",
+    color: "#3D9B3B",
+    whiteSpace: "break-spaces",
+    marginBottom: 35,
+  },
+  writeNowButton: {
+    width: 164,
+    height: 300,
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(${writeNowButtonImage})`,
+    bottom: "40vh",
+    left: "60vw",
+  },
+  writeNowButtonText: {
+    fontSize: 24,
+    color: "#087087",
+    marginTop: 170,
+    whiteSpace: "break-spaces",
+    textTransform: "lowercase",
+    lineHeight: 1,
+  },
+  personalButton: {
+    width: 132,
+    height: 235,
+    backgroundImage: `url(${personalButtonImage})`,
+    bottom: "19vh",
+  },
+  personalButtonText: {
+    marginBottom: 15,
+    fontWeight: "bold",
+    color: "#D8A800",
+  },
+  logoutButton: {
+    width: 143,
+    height: 233,
+    backgroundImage: `url(${logoutButtonImage})`,
+    bottom: "22vh",
+    left: "32vw",
+    zIndex: 2,
+  },
+  logoutButtonText: {
+    fontWeight: "bold",
+    color: "#D38851",
+    whiteSpace: "break-spaces",
+    marginRight: 3,
+    marginTop: "3vh",
+  },
+  bookshelfButton: {
+    width: 123,
+    height: 245,
+    backgroundImage: `url(${bookshelfButtonImage})`,
+    bottom: "7vh",
+    left: "65vw",
+  },
+  bookshelfButtonText: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#DE2A4E",
+    marginBottom: 120,
+  },
+  guideMeButton: {
+    backgroundImage: `url(${guideMeButtonImage})`,
+    bottom: "10vh",
+    width: 202,
+    height: 150,
+    left: 10,
+  },
+  guideMeButtonText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    whiteSpace: "break-spaces",
+    color: "#9D7A00",
+    margin: "48px 0px 0px 30px",
+  },
+  askHelpButton: {
+    backgroundImage: `url(${askHelpButtonImage})`,
+    width: 202,
+    height: 88,
+    bottom: 0,
+    left: 10,
+  },
+  askHelpButtonText: {
+    fontWeight: "bold",
+    whiteSpace: "break-spaces",
+    fontSize: 16,
+    color: "#234666",
+    marginBottom: "3vh",
+    backgroundSize: "cover !important",
+  },
+}));
+
+function HomePage() {
+  const classes = useStyles();
+  const history = useHistory();
+  const isMobile = useMediaQuery("(max-width:480px)");
+  const [isOpen, setOpen] = useState(false);
+
+  const logOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setOpen(true);
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleCall = (e) => {
+    e.preventDefault();
+    window.location.href = "tel:+85282082688";
+  };
+
+  const imageButtonClasses = [
+    {
+      title: "BOOKMARK",
+      className: classes.bookmarkButton,
+      textClassName: classes.bookmarkButtonText,
+    },
+    {
+      title: "MY\nSTORIES",
+      className: classes.myStoriesButton,
+      textClassName: classes.myStoriesButtonText,
+    },
+    {
+      title: "\twrite\nnow!",
+      className: classes.writeNowButton,
+      textClassName: classes.writeNowButtonText,
+    },
+    {
+      title: "PERSONAL",
+      className: classes.personalButton,
+      textClassName: classes.personalButtonText,
+    },
+    {
+      title: "LOG\nOUT",
+      className: classes.logoutButton,
+      textClassName: classes.logoutButtonText,
+      onClick: logOut,
+    },
+    {
+      title: "BOOKSHELF",
+      className: classes.bookshelfButton,
+      textClassName: classes.bookshelfButtonText,
+    },
+    {
+      title: "GUIDE\nME!",
+      className: classes.guideMeButton,
+      textClassName: classes.guideMeButtonText,
+    },
+    {
+      title: "ASK HELP:\nBLUE FAIRY",
+      className: classes.askHelpButton,
+      textClassName: classes.askHelpButtonText,
+      onClick: handleCall,
+    },
+  ];
+  return (
+    isMobile && (
+      <Grid container className={classes.container} direction='column'>
+        <NavigationBar />
+        <Typography
+          className={classes.title}
+        >{`HOME:\nSTORY OF US`}</Typography>
+        <Typography className={classes.description}>
+          {`if your heart is in your dream,\nno request is too extreme`}
+        </Typography>
+        <Grid container direction='row'>
+          {imageButtonClasses.map((imageButtonClass) => (
+            <Button
+              key={`${imageButtonClass.title}`}
+              className={imageButtonClass.className}
+              style={{
+                position: "absolute",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+              }}
+              onClick={imageButtonClass.onClick}
+            >
+              <Typography
+                key={`${imageButtonClass.title}`}
+                className={imageButtonClass.textClassName}
+              >
+                {imageButtonClass.title}
+              </Typography>
+            </Button>
+          ))}
+        </Grid>
+        <Typography
+          style={{
+            fontWeight: "bold",
+            color: "#794B2A",
+            fontSize: 20,
+            transform: "rotate(351deg)",
+            position: "absolute",
+            bottom: 26,
+            right: 66,
+          }}
+        >
+          bookself opens:
+        </Typography>
+        <Typography
+          style={{
+            color: "#794B2A",
+            fontSize: 18,
+            transform: "rotate(352deg)",
+            position: "absolute",
+            bottom: 9,
+            right: 22,
+          }}
+        >
+          12pm-10pm everyday!
+        </Typography>
+        <Snackbar
+          open={isOpen}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          autoHideDuration={9000}
+          message={"We've cooked you dinner! Remember to come home🥺"}
+          ContentProps={{ style: { backgroundColor: "#3546a2" } }}
+        />
+      </Grid>
+    )
+  );
+}
+
+export default HomePage;

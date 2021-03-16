@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavigationBar() {
+function NavigationBar({ showMenu }) {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
@@ -122,20 +122,22 @@ function NavigationBar() {
         container
         direction='row'
         style={{
-          justifyContent: "space-between",
+          justifyContent: showMenu ? "space-between" : "flex-end",
         }}
       >
-        <Button
-          className={classes.menuButton}
-          onClick={toggleDrawer("left", true)}
-        >
-          <img
-            src={menuLogo}
-            width='22.5px'
-            height='20.25px'
-            alt='menuLogo'
-          ></img>
-        </Button>
+        {showMenu && (
+          <Button
+            className={classes.menuButton}
+            onClick={toggleDrawer("left", true)}
+          >
+            <img
+              src={menuLogo}
+              width='22.5px'
+              height='20.25px'
+              alt='menuLogo'
+            ></img>
+          </Button>
+        )}
         <SwipeableDrawer
           anchor='left'
           open={state["left"]}
@@ -148,7 +150,7 @@ function NavigationBar() {
           item
           style={{
             textAlign: "center",
-            marginTop: 35,
+            marginTop: 28,
             marginRight: 29,
             alignSelf: "flex-end",
           }}
@@ -163,7 +165,7 @@ function NavigationBar() {
   } else {
     return (
       <Grid container direction='row' className={classes.container}>
-        <Button className={classes.button} onClick={() => history.push("/")}>
+        <Button className={classes.button} onClick={() => history.push("/home")}>
           HOME
         </Button>
         <Button className={classes.button}>OUR FORUM</Button>

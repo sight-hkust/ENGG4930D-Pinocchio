@@ -1,39 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Button,
-  Grid,
-  useMediaQuery,
-  Snackbar,
-} from "@material-ui/core";
+import { Typography, Grid, useMediaQuery, Snackbar } from "@material-ui/core";
 import firebase from "firebase/app";
+import { useHistory } from "react-router-dom";
 import backgroundImage from "../../assets/loginPageBackground.png";
 import mobileBackgroundImage from "../../assets/loginMobileBg.png";
-import arrowRight from "../../assets/arrowRight.png";
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/Input";
+import NextButton from "../../components/NextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    background: "center",
     backgroundImage: `url(${backgroundImage})`,
+    backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     alignContent: "flex-start",
     contain: "content",
     "@media (max-width:480px)": {
       backgroundImage: `url(${mobileBackgroundImage})`,
+      backgroundPosition: "bottom",
     },
   },
   title: {
     fontFamily: "Times",
     fontWeight: "bold",
     fontSize: 60,
+    lineHeight: "normal",
+    textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: 25,
+      fontSize: 50,
+      wordWrap: "break-word",
+      textAlign: "left",
     },
   },
   description: {
@@ -42,76 +42,89 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: 0,
     paddingBottom: 21,
+    marginRight: 35,
     "@media (max-width:480px)": {
       fontSize: 15,
-      paddingBottom: 38,
+      textAlign: "left",
+      paddingBottom: 8,
     },
   },
   button: {
     width: 95,
     height: 77,
-    backgroundColor: "#000000",
+    backgroundColor: "#3C79B0",
     color: "#FFFFFF",
-    borderRadius: 15,
+    borderRadius: "15px",
     alignSelf: "flex-end",
     "&:hover": {
-      backgroundColor: "#000000",
+      backgroundColor: "#3C79B0",
     },
     "@media (max-width:480px)": {
       width: 45,
       height: 36,
-      marginTop: 8,
       minWidth: 45,
       padding: "6px 6px",
-      marginLeft: "42vw",
     },
   },
   inputForm: {
     display: "flex",
-    alignItems: "center",
-    marginTop: "20vh",
+    alignContent: "flex-end",
+    marginTop: 50,
+    marginRight: 108,
+    alignItems: "flex-end",
     "@media (max-width:480px)": {
-      marginTop: 50,
-    },
-  },
-  input: {
-    "@media (max-width:480px)": {
-      width: 271,
-      height: 48,
-      marginBottom: 16,
-      justifyContent: "center",
-      "& fieldset": {
-        borderColor: "#000000",
-        "& legend": {
-          "&[class*='legendNotched']": {
-            paddingRight: "3vw",
-            marginRight: "3vw",
-          },
-        },
-      },
-      "&::placeholder": {
-        color: "#000000",
-      },
+      marginTop: 0,
+      alignItems: "flex-start",
+      marginLeft: 22,
     },
   },
   startMyJourneyText: {
     fontWeight: "bold",
     fontSize: 25,
-    color: "#000000",
+    color: "#3C79B0",
     letterSpacing: "0.14em",
     paddingRight: 28,
     alignSelf: "center",
-    marginLeft: 150,
+    "@media (max-width:480px)": {
+      marginLeft: 26,
+      fontSize: 12,
+    },
+  },
+  confirmContainer: {
+    justifyContent: "flex-end",
+    "@media (max-width:480px)": {
+      justifyContent: "flex-start",
+      display: "flex",
+    },
+  },
+  errorMessage: {
+    color: "#FF0000",
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    fontSize: 12,
+    marginTop: 6,
+    marginBottom: 6,
   },
 }));
 
 function LoginPage() {
   const classes = useStyles();
+  const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loginError, setLoginError] = useState();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        history.push("/home");
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -123,86 +136,68 @@ function LoginPage() {
   const handleClick = () => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        console.log("You're in already!");
+        return;
       } else {
-        firebase
-          .auth()
-          .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-          .then(() => {
-            return firebase
-              .auth()
-              .signInWithEmailAndPassword(email, password)
-              .then((userCredential) => {
-                var user = userCredential.user;
-                setUsername(user.displayName);
-                setLoggedIn(true);
-              })
-              .catch((error) => console.log(error));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        login();
       }
     });
   };
+
+  const login = () =>
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(() => {
+        return firebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            var user = userCredential.user;
+            setUsername(user.displayName);
+            setLoggedIn(true);
+            setLoginError(false);
+          })
+          .catch((error) => setLoginError(error));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
   return (
     <Grid container className={classes.container}>
       <NavigationBar />
       <Grid container item direction='column' className={classes.inputForm}>
-        <Typography className={classes.title}>WELCOME BACK,</Typography>
-        <Typography className={classes.description}>
-          we’re happy you came back to us~
+        <Typography className={classes.title}>
+          WELCOME {isMobile && <br />}
+          BACK,
         </Typography>
-        {isMobile && (
-          <Grid container item direction='column' alignContent='center'>
-            <Input
-              className={classes.input}
-              InputLabelProps={{
-                style: { top: 5, color: "#000000", letterSpacing: "0.14em" },
-              }}
-              size='small'
-              label='ITSC ACCOUNT'
-              onChange={(e) => setEmail(e.target.value)}
-            ></Input>
-            <Input
-              className={classes.input}
-              InputLabelProps={{
-                style: { top: 5, color: "#000000", letterSpacing: "0.14em" },
-              }}
-              size='small'
-              label='SECRET WORD'
-              isPassword={true}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Input>
-          </Grid>
+        <Typography className={classes.description}>
+          we’re happy you came back to us💜
+        </Typography>
+        <Input
+          size={isMobile ? "small" : "medium"}
+          label='FULL ITSC EMAIL ADDRESS'
+          onChange={(e) => setEmail(e.target.value)}
+        ></Input>
+        <Input
+          size={isMobile ? "small" : "medium"}
+          label='SECRET WORD'
+          isPassword={true}
+          onChange={(e) => setPassword(e.target.value)}
+          style={{
+            marginBottom: loginError ? 0 : 26,
+          }}
+        ></Input>
+        {loginError && (
+          <Typography className={classes.errorMessage}>
+            Your email address or secret word is wrong😕
+          </Typography>
         )}
-        {!isMobile && (
-          <Grid container item direction='column' alignContent='center'>
-            <Input
-              label='ITSC ACCOUNT'
-              onChange={(e) => setEmail(e.target.value)}
-            ></Input>
-            <Input
-              label='SECRET WORD'
-              isPassword={true}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Input>
-          </Grid>
-        )}
-        <Grid container direction='row' justify='center' alignContent='center'>
-          {!isMobile && (
-            <Typography className={classes.startMyJourneyText}>
-              start my journey
-            </Typography>
-          )}
-          <Button
-            className={classes.button}
-            variant='contained'
-            onClick={handleClick}
-          >
-            <img alt='arrowRight' src={arrowRight} width='80%'></img>
-          </Button>
+        <Grid container className={classes.confirmContainer}>
+          <NextButton onClick={handleClick} />
+          <Typography className={classes.startMyJourneyText}>
+            start my journey
+          </Typography>
         </Grid>
       </Grid>
       <Snackbar
@@ -211,6 +206,7 @@ function LoginPage() {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         autoHideDuration={9000}
         message={`Welcome, ${username}!`}
+        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
       />
     </Grid>
   );

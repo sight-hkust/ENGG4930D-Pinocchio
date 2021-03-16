@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "#000000",
       "& legend": {
         "&[class*='legendNotched']": {
-          paddingRight: "1vw",
-          marginRight: "1vw",
+          // paddingRight: "1vw",
+          // marginRight: "1vw",
         },
       },
     },
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:480px)": {
       width: 220,
       height: 36,
-      marginBottom: 14,
+      marginBottom: 26,
       justifyContent: "center",
     },
   },

@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Button,
-  Grid,
-  useMediaQuery,
-  Snackbar,
-} from "@material-ui/core";
+import { Typography, Grid, useMediaQuery, Snackbar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import backgroundImage from "../../assets/signupPageBackground.png";
 import mobileBackgroundImage from "../../assets/signupMobileBg.png";
-import arrowRight from "../../assets/arrowRight.png";
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/Input";
+import NextButton from "../../components/NextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
     contain: "content",
     "@media (max-width:480px)": {
       backgroundImage: `url(${mobileBackgroundImage})`,
+      backgroundPosition: "bottom",
+      backgroundSize: "contain",
     },
   },
   title: {
@@ -36,39 +32,22 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "normal",
     textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: "30px",
+      fontSize: 50,
       wordWrap: "break-word",
       textAlign: "left",
     },
   },
   description: {
     fontFamily: "Roboto",
-    fontSize: "30px",
+    fontSize: 30,
     textAlign: "center",
-    margin: "0px",
-    paddingBottom: "21px",
+    margin: 0,
+    paddingBottom: 21,
     marginRight: 35,
     "@media (max-width:480px)": {
-      fontSize: "13px",
+      fontSize: 15,
       textAlign: "left",
-    },
-  },
-  button: {
-    width: 95,
-    height: 77,
-    backgroundColor: "#3C79B0",
-    color: "#FFFFFF",
-    borderRadius: "15px",
-    alignSelf: "flex-end",
-    "&:hover": {
-      backgroundColor: "#3C79B0",
-    },
-    "@media (max-width:480px)": {
-      width: 45,
-      height: 36,
-      marginTop: 8,
-      minWidth: 45,
-      padding: "6px 6px",
+      paddingBottom: 8,
     },
   },
   inputForm: {
@@ -78,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 108,
     alignItems: "flex-end",
     "@media (max-width:480px)": {
-      marginTop: 12,
+      marginTop: 0,
       alignItems: "flex-start",
       marginLeft: 22,
     },
@@ -91,15 +70,24 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 28,
     alignSelf: "center",
     "@media (max-width:480px)": {
+      marginLeft: 15,
       fontSize: 12,
-      paddingTop: 10,
     },
   },
   confirmContainer: {
     justifyContent: "flex-end",
     "@media (max-width:480px)": {
-      display: "table-column",
+      justifyContent: "flex-start",
+      display: "flex",
     },
+  },
+  errorMessage: {
+    color: "#FF0000",
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    fontSize: 12,
+    marginTop: 6,
+    marginBottom: 6,
   },
 }));
 
@@ -107,10 +95,13 @@ function SignUpPage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
+  const emailRegex = /.+@.*ust.hk$/gm;
+  const passwordRegex = /^.{8,}$/gm;
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -120,62 +111,94 @@ function SignUpPage() {
   };
 
   const handleClick = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        setAccountCreated(true);
-        var user = userCredential.user;
-        user.updateProfile({
-          displayName: username,
-        });
-        user.sendEmailVerification().catch((error) => {
-          console.log("ERROR_EMAIL_VERIFY", error);
-        });
-      })
-      .catch((error) => {
-        console.log("ERROR_ACCOUNT_CREATE", error);
-      });
+    if (!emailRegex.test(email)) {
+      setEmail("");
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+    if (!passwordRegex.test(password)) {
+      setPassword("");
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
   };
+
+  useEffect(() => {
+    if (email && password && !emailError && !passwordError) {
+      const signUp = () =>
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            setAccountCreated(true);
+            var user = userCredential.user;
+            firebase.firestore().collection("users").doc(user.uid).set(
+              {
+                email: user.email,
+                emailVerified: user.emailVerified,
+                isAdmin: true,
+              },
+              { merge: true }
+            );
+            user
+              .sendEmailVerification()
+              .then(() => history.push("/interests"))
+              .catch((error) => {
+                console.log("ERROR_EMAIL_VERIFY", error);
+              });
+          })
+          .catch((error) => {
+            console.log("ERROR_ACCOUNT_CREATE", error);
+          });
+      signUp();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [emailError, passwordError]);
 
   return (
     <Grid container className={classes.container}>
       <NavigationBar />
       <Grid container item direction='column' className={classes.inputForm}>
-        <Typography className={classes.title}>
-          DEAR {isMobile && <br />}
-          DREAMER,
-        </Typography>
+        <Typography className={classes.title}>{`DEAR\nDREAMER,`}</Typography>
         <Typography className={classes.description}>
-          come on in and join our community
+          come and join us💜
         </Typography>
         <Input
           size={isMobile ? "small" : "medium"}
-          label='USERNAME'
-          onChange={(e) => setUsername(e.target.value)}
-        ></Input>
-        <Input
-          size={isMobile ? "small" : "medium"}
-          label='ITSC ACCOUNT'
+          label='FULL ITSC EMAIL ADDRESS'
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          style={{
+            marginBottom: emailError ? 0 : 26,
+          }}
         ></Input>
+        {emailError && (
+          <Typography className={classes.errorMessage}>
+            Please use a ITSC Email Address😉
+          </Typography>
+        )}
         <Input
           size={isMobile ? "small" : "medium"}
           label='SECRET WORD'
           isPassword={true}
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          style={{
+            marginBottom: passwordError ? 0 : 26,
+          }}
         ></Input>
+        {passwordError && (
+          <Typography className={classes.errorMessage}>
+            Secret word is too short😳 Use {">"}= 8 characters
+          </Typography>
+        )}
         <Grid container className={classes.confirmContainer}>
+          <NextButton onClick={handleClick} />
           <Typography className={classes.startMyJourneyText}>
             start my journey
           </Typography>
-          <Button
-            className={classes.button}
-            variant='contained'
-            onClick={handleClick}
-          >
-            <img alt='arrowRight' src={arrowRight} width='80%'></img>
-          </Button>
         </Grid>
       </Grid>
       <Snackbar
@@ -183,7 +206,8 @@ function SignUpPage() {
         open={accountCreated}
         onClose={handleClose}
         autoHideDuration={9000}
-        message='Verify your ITSC email address now!'
+        message='Verify your ITSC email address now to talk in the forum!'
+        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
       />
     </Grid>
   );
