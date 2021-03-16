@@ -60,10 +60,10 @@ function Input(props) {
         className: classes.inputLabel,
         id: "inputLabel",
       }}
-      autoCapitalize='none'
       autoComplete
       type={isPassword ? (showPassword ? "text" : "password") : "text"}
       InputProps={{
+        autoCapitalize: "none",
         endAdornment: isPassword ? (
           <InputAdornment position='end'>
             <IconButton
