@@ -86,13 +86,14 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 33,
     alignSelf: "center",
     "@media (max-width:480px)": {
-      marginLeft: 26,
+      marginLeft: 15,
       fontSize: 12,
     },
   },
   confirmContainer: {
     marginLeft: "10vw",
     "@media (max-width:480px)": {
+      marginLeft: 0,
       justifyContent: "flex-start",
       display: "flex",
     },
@@ -120,7 +121,9 @@ function LoginPage() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        history.push("/home");
+        setTimeout(() => {
+          history.push("/home");
+        }, 3000);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import firebase from "firebase/app";
 import backgroundImage from "../../assets/interestsPageBackground.png";
 import NavigationBar from "../../components/NavigationBar";
 import mobileBackgroundImage from "../../assets/interestsMobileBg.png";
 import interestsBubbleImage from "../../assets/interestsBubble.png";
 import NextButton from "../../components/NextButton";
-import firebase from "firebase/app";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonGroup: {
     position: "absolute",
-    top: "28%",
+    top: "40vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
@@ -145,7 +145,7 @@ function InterestsPage() {
   return (
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
-        {!isMobile && <NavigationBar />}
+        <NavigationBar />
         <Typography className={classes.title}>
           WHEN YOU WISH UPON A STAR...
         </Typography>

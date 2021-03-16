@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
   confirmContainer: {
     marginLeft: "10vw",
     "@media (max-width:480px)": {
+      marginLeft: 0,
       justifyContent: "flex-start",
       display: "flex",
     },

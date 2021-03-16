@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 28,
       marginTop: 8,
       whiteSpace: "break-spaces",
+      alignSelf: "auto",
     },
   },
   bookmarkButton: {
@@ -173,15 +174,17 @@ function HomePage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const logOut = () => {
     firebase
       .auth()
       .signOut()
       .then(() => {
-        setOpen(true);
-        history.push("/");
+        setIsOpen(true);
+        setTimeout(() => {
+          history.push("/");
+        }, 5000);
       })
       .catch((error) => {
         console.log(error);
@@ -192,7 +195,7 @@ function HomePage() {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setIsOpen(false);
   };
 
   const handleCall = (e) => {
@@ -281,38 +284,53 @@ function HomePage() {
               </Grid>
             ))}
       </Grid>
-      <Typography
-        style={{
-          fontWeight: "bold",
-          color: "#794B2A",
-          fontSize: 20,
-          transform: "rotate(351deg)",
-          position: "absolute",
-          bottom: 26,
-          right: 66,
-        }}
-      >
-        bookself opens:
-      </Typography>
-      <Typography
-        style={{
-          color: "#794B2A",
-          fontSize: 18,
-          transform: "rotate(352deg)",
-          position: "absolute",
-          bottom: 9,
-          right: 22,
-        }}
-      >
-        12pm-10pm everyday!
-      </Typography>
+      {isMobile && (
+        <>
+          <Typography
+            style={{
+              fontWeight: "bold",
+              color: "#794B2A",
+              fontSize: 20,
+              transform: "rotate(351deg)",
+              position: "absolute",
+              bottom: 26,
+              right: 66,
+            }}
+          >
+            bookself opens:
+          </Typography>
+          <Typography
+            style={{
+              color: "#794B2A",
+              fontSize: 15,
+              transform: "rotate(352deg)",
+              position: "absolute",
+              bottom: 9,
+              right: 30,
+            }}
+          >
+            12pm-10pm everyday!
+          </Typography>
+        </>
+      )}
       <Snackbar
         open={isOpen}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        anchorOrigin={
+          isMobile
+            ? { vertical: "bottom", horizontal: "center" }
+            : { vertical: "bottom", horizontal: "left" }
+        }
         autoHideDuration={9000}
-        message={"We've cooked you dinner! Remember to come home🥺"}
-        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
+        message={`We've cooked you dinner!\nRemember to come home🥺`}
+        style={{ width: "90vw" }}
+        ContentProps={{
+          style: {
+            backgroundColor: "#3546a2",
+            fontSize: isMobile ? "0.875rem" : "1rem",
+            whiteSpace: "break-spaces",
+          },
+        }}
       />
     </Grid>
   );

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 100,
     "@media (max-width:480px)": {
       fontSize: 50,
-      marginTop: 63,
+      marginTop: "5vh",
     },
   },
   description: {
