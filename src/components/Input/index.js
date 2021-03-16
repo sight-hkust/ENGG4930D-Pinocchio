@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "#000000",
       "& legend": {
         "&[class*='legendNotched']": {
-          // paddingRight: "1vw",
-          // marginRight: "1vw",
+          paddingRight: "3vw",
+          marginRight: "3vw",
         },
       },
     },
@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
       height: 36,
       marginBottom: 26,
       justifyContent: "center",
+      "& fieldset": {
+        borderColor: "#000000",
+        "& legend": {
+          "&[class*='legendNotched']": {},
+        },
+      },
     },
   },
   inputLabel: {
@@ -52,7 +58,10 @@ function Input(props) {
       variant='outlined'
       InputLabelProps={{
         className: classes.inputLabel,
+        id: "inputLabel",
       }}
+      autoCapitalize='none'
+      autoComplete
       type={isPassword ? (showPassword ? "text" : "password") : "text"}
       InputProps={{
         endAdornment: isPassword ? (

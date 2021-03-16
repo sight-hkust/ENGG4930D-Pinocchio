@@ -10,7 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
-import backgroundImage from "../../assets/interestsPageBackground.png";
+import backgroundImage from "../../assets/homePageBackground.png";
 import mobileBackgroundImage from "../../assets/homeMobileBg.png";
 import bookmarkButtonImage from "../../assets/bookmarkButton.png";
 import myStoriesButtonImage from "../../assets/myStoriesButton.png";
@@ -26,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "100vh",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundColor: "#FFF4E3",
     backgroundPosition: "bottom",
-    backgroundSize: "contain",
+    backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     "@media (max-width:480px)": {
+      backgroundColor: "#FFF4E3",
+      backgroundSize: "contain",
       backgroundImage: `url(${mobileBackgroundImage})`,
     },
   },
@@ -38,8 +39,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Times",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 60,
+    fontSize: 70,
     width: "70%",
+    alignSelf: "center",
     "@media (max-width:480px)": {
       lineHeight: 1,
       width: "100%",
@@ -48,11 +50,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: {
-    width: 221,
-    fontSize: 15,
-    marginLeft: 28,
-    marginTop: 8,
-    whiteSpace: "break-spaces",
+    fontSize: 30,
+    alignSelf: "center",
+    "@media (max-width:480px)": {
+      fontSize: 15,
+      width: 221,
+      marginLeft: 28,
+      marginTop: 8,
+      whiteSpace: "break-spaces",
+    },
   },
   bookmarkButton: {
     width: 130,
@@ -239,71 +245,76 @@ function HomePage() {
     },
   ];
   return (
-    isMobile && (
-      <Grid container className={classes.container} direction='column'>
-        <NavigationBar />
-        <Typography
-          className={classes.title}
-        >{`HOME:\nSTORY OF US`}</Typography>
-        <Typography className={classes.description}>
-          {`if your heart is in your dream,\nno request is too extreme`}
-        </Typography>
-        <Grid container direction='row'>
-          {imageButtonClasses.map((imageButtonClass) => (
-            <Button
-              key={`${imageButtonClass.title}`}
-              className={imageButtonClass.className}
-              style={{
-                position: "absolute",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
-              }}
-              onClick={imageButtonClass.onClick}
-            >
-              <Typography
+    <Grid container className={classes.container} direction='column'>
+      <NavigationBar />
+      <Typography className={classes.title}>{`HOME:\nSTORY OF US`}</Typography>
+      <Typography className={classes.description}>
+        {`if your heart is in your dream,\nno request is too extreme`}
+      </Typography>
+      <Grid container direction='row'>
+        {isMobile
+          ? imageButtonClasses.map((imageButtonClass) => (
+              <Button
                 key={`${imageButtonClass.title}`}
-                className={imageButtonClass.textClassName}
+                className={imageButtonClass.className}
+                style={{
+                  position: "absolute",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                }}
+                onClick={imageButtonClass.onClick}
               >
-                {imageButtonClass.title}
-              </Typography>
-            </Button>
-          ))}
-        </Grid>
-        <Typography
-          style={{
-            fontWeight: "bold",
-            color: "#794B2A",
-            fontSize: 20,
-            transform: "rotate(351deg)",
-            position: "absolute",
-            bottom: 26,
-            right: 66,
-          }}
-        >
-          bookself opens:
-        </Typography>
-        <Typography
-          style={{
-            color: "#794B2A",
-            fontSize: 18,
-            transform: "rotate(352deg)",
-            position: "absolute",
-            bottom: 9,
-            right: 22,
-          }}
-        >
-          12pm-10pm everyday!
-        </Typography>
-        <Snackbar
-          open={isOpen}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-          autoHideDuration={9000}
-          message={"We've cooked you dinner! Remember to come home🥺"}
-          ContentProps={{ style: { backgroundColor: "#3546a2" } }}
-        />
+                <Typography
+                  key={`${imageButtonClass.title}`}
+                  className={imageButtonClass.textClassName}
+                >
+                  {imageButtonClass.title}
+                </Typography>
+              </Button>
+            ))
+          : imageButtonClasses.map((imageButtonClass) => (
+              <Grid item xs style={{ marginTop: "20vh" }}>
+                <Button onClick={imageButtonClass.onClick}>
+                  <Typography>{imageButtonClass.title}</Typography>
+                  {/* <span className={imageButtonClass.className}></span> */}
+                </Button>
+              </Grid>
+            ))}
       </Grid>
-    )
+      <Typography
+        style={{
+          fontWeight: "bold",
+          color: "#794B2A",
+          fontSize: 20,
+          transform: "rotate(351deg)",
+          position: "absolute",
+          bottom: 26,
+          right: 66,
+        }}
+      >
+        bookself opens:
+      </Typography>
+      <Typography
+        style={{
+          color: "#794B2A",
+          fontSize: 18,
+          transform: "rotate(352deg)",
+          position: "absolute",
+          bottom: 9,
+          right: 22,
+        }}
+      >
+        12pm-10pm everyday!
+      </Typography>
+      <Snackbar
+        open={isOpen}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        autoHideDuration={9000}
+        message={"We've cooked you dinner! Remember to come home🥺"}
+        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
+      />
+    </Grid>
   );
 }
 

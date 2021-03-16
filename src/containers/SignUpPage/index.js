@@ -52,14 +52,14 @@ const useStyles = makeStyles((theme) => ({
   },
   inputForm: {
     display: "flex",
-    alignContent: "flex-end",
-    marginTop: 50,
-    marginRight: 108,
-    alignItems: "flex-end",
+    marginTop: "10vh",
+    marginLeft: "5vw",
+    alignItems: "flex-start",
     "@media (max-width:480px)": {
       marginTop: 0,
       alignItems: "flex-start",
       marginLeft: 22,
+      marginRight: 108,
     },
   },
   startMyJourneyText: {
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   confirmContainer: {
-    justifyContent: "flex-end",
+    marginLeft: "10vw",
     "@media (max-width:480px)": {
       justifyContent: "flex-start",
       display: "flex",
@@ -195,10 +195,21 @@ function SignUpPage() {
           </Typography>
         )}
         <Grid container className={classes.confirmContainer}>
-          <NextButton onClick={handleClick} />
-          <Typography className={classes.startMyJourneyText}>
-            start my journey
-          </Typography>
+          {isMobile ? (
+            <>
+              <NextButton onClick={handleClick} />
+              <Typography className={classes.startMyJourneyText}>
+                start my journey
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography className={classes.startMyJourneyText}>
+                start my journey
+              </Typography>
+              <NextButton onClick={handleClick} />
+            </>
+          )}
         </Grid>
       </Grid>
       <Snackbar
