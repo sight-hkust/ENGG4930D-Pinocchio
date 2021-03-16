@@ -4,16 +4,10 @@ import firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./index.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
-import LandingPage from "./containers/LandingPage";
-import LoginPage from "./containers/LoginPage";
-import InterestsPage from "./containers/InterestsPage";
-import SignUpPage from "./containers/SignUpPage";
-import HomePage from "./containers/HomePage";
-import NotFoundPage from "./containers/NotFoundPage";
+import Router from "./containers/RouteCollection";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDiNVv8_UBM0Egcbxqjaf0K51x-9J_sX0A",
@@ -29,16 +23,7 @@ firebase.analytics();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router basename={process.env.PUBLIC_URL}>
-      <Switch>
-        <Route exact path='/' component={LandingPage} />
-        <Route exact path='/signup' component={SignUpPage} />
-        <Route exact path='/login' component={LoginPage} />
-        <Route exact path='/interests' component={InterestsPage} />
-        <Route exact path='/home' component={HomePage} />
-        <Route exact path='*' component={NotFoundPage} />
-      </Switch>
-    </Router>
+    <Router />
   </React.StrictMode>,
   document.getElementById("root")
 );
