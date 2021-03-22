@@ -84,33 +84,33 @@ function GuidelinesPage() {
                 other community members.
               </li>
             </ul>
-            <Typography className={classes.rulesTitle}>
-              2. do not post offensive posts and links:
-              <ul className={classes.rulesDescription}>
-                <li>
-                  Any posts disrespectful to those of other genders, races,
-                  classes, or sexual orientations are not allowed.
-                </li>
-                <li>
-                  Any material that constitutes defamation, abuse, threats, or
-                  harassment is strictly forbidden.
-                </li>
-              </ul>
-              <Typography className={classes.rulesTitle}>
-                3. don't be afraid to share and lend a helping hand!:
-                <ul className={classes.rulesDescription}>
-                  <li>
-                    Try to share your thoughts and experiences regarding mental
-                    health. We're sure many others can relate, even if you don't
-                    think so!
-                  </li>
-                  <li>
-                    If you can, help out a fellow friend and offer some
-                    encouraging words to those facing tough times.
-                  </li>
-                </ul>
-              </Typography>
-            </Typography>
+          </Typography>
+          <Typography className={classes.rulesTitle}>
+            2. do not post offensive posts and links:
+            <ul className={classes.rulesDescription}>
+              <li>
+                Any posts disrespectful to those of other genders, races,
+                classes, or sexual orientations are not allowed.
+              </li>
+              <li>
+                Any material that constitutes defamation, abuse, threats, or
+                harassment is strictly forbidden.
+              </li>
+            </ul>
+          </Typography>
+          <Typography className={classes.rulesTitle}>
+            3. don't be afraid to share and lend a helping hand!:
+            <ul className={classes.rulesDescription}>
+              <li>
+                Try to share your thoughts and experiences regarding mental
+                health. We're sure many others can relate, even if you don't
+                think so!
+              </li>
+              <li>
+                If you can, help out a fellow friend and offer some encouraging
+                words to those facing tough times.
+              </li>
+            </ul>
           </Typography>
         </Typography>
       </Paper>
@@ -118,7 +118,7 @@ function GuidelinesPage() {
         container
         style={{ justifyContent: "flex-end", marginRight: 42, marginTop: 10 }}
       >
-        <NextButton onClick={history.push("/home")} />
+        <NextButton onClick={() => history.push("/home")} />
       </Grid>
     </Grid>
   );

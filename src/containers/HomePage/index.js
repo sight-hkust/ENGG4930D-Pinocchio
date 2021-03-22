@@ -127,6 +127,7 @@ function HomePage() {
         {["READ", "WRITE"].map((element) => (
           <Grid
             container
+            item
             direction='column'
             key={element}
             xs

@@ -43,11 +43,7 @@ function RouteCollection() {
           <InterestsPage />
         </Route>
         <Route exact path='/guidelines'>
-          {isLoggedIn ? (
-            <GuidelinesPage />
-          ) : (
-            <Redirect to={{ pathname: "/" }} />
-          )}
+          <GuidelinesPage />
         </Route>
         <Route exact path='/home'>
           {isLoggedIn ? <HomePage /> : <Redirect to={{ pathname: "/" }} />}

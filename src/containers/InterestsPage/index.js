@@ -137,7 +137,7 @@ function InterestsPage() {
             },
             { merge: true }
           );
-        history.push("/home");
+        history.push("/guidelines");
       }
     });
   };
