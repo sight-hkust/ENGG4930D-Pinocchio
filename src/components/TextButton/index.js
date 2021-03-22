@@ -20,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: {
     color: "#FFFBFB",
-    fontFamily: "Roboto",
-    fontStyle: "normal",
-    fontWeight: "normal",
     fontSize: "30px",
     textAlign: "center",
     margin: "0px",

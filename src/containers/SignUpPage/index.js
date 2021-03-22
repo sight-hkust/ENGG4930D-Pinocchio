@@ -196,21 +196,7 @@ function SignUpPage() {
           </Typography>
         )}
         <Grid container className={classes.confirmContainer}>
-          {isMobile ? (
-            <>
-              <NextButton onClick={handleClick} />
-              <Typography className={classes.startMyJourneyText}>
-                start my journey
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography className={classes.startMyJourneyText}>
-                start my journey
-              </Typography>
-              <NextButton onClick={handleClick} />
-            </>
-          )}
+          <NextButton onClick={handleClick} />
         </Grid>
       </Grid>
       <Snackbar

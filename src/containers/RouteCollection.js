@@ -12,6 +12,9 @@ import InterestsPage from "./InterestsPage";
 import SignUpPage from "./SignUpPage";
 import HomePage from "./HomePage";
 import NotFoundPage from "./NotFoundPage";
+import GuidelinesPage from "./GuidelinesPage";
+import WritingPage from "./WritingPage";
+import ForumPage from "./ForumPage";
 
 function RouteCollection() {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -39,8 +42,21 @@ function RouteCollection() {
         <Route exact path='/interests'>
           <InterestsPage />
         </Route>
+        <Route exact path='/guidelines'>
+          {isLoggedIn ? (
+            <GuidelinesPage />
+          ) : (
+            <Redirect to={{ pathname: "/" }} />
+          )}
+        </Route>
         <Route exact path='/home'>
           {isLoggedIn ? <HomePage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/writing'>
+          {isLoggedIn ? <WritingPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/forum'>
+          <ForumPage />
         </Route>
         <Route exact path='*'>
           <NotFoundPage />

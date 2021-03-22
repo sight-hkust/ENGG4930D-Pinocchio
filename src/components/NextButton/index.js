@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
-import arrowRight from "../../assets/arrowRight.png";
+import arrowRightImage from "../../assets/arrowRight.png";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -33,7 +33,7 @@ function NextButton(props) {
       onClick={onClick}
       {...rest}
     >
-      <img alt='arrowRight' src={arrowRight} width='80%'></img>
+      <img alt='arrowRight' src={arrowRightImage} width='80%'></img>
     </Button>
   );
 }

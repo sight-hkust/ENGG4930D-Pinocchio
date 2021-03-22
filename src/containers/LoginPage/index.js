@@ -197,21 +197,7 @@ function LoginPage() {
           </Typography>
         )}
         <Grid container className={classes.confirmContainer}>
-          {isMobile ? (
-            <>
-              <NextButton onClick={handleClick} />
-              <Typography className={classes.startMyJourneyText}>
-                start my journey
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography className={classes.startMyJourneyText}>
-                start my journey
-              </Typography>
-              <NextButton onClick={handleClick} />
-            </>
-          )}
+          <NextButton onClick={handleClick} />
         </Grid>
       </Grid>
       <Snackbar
@@ -219,7 +205,7 @@ function LoginPage() {
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         autoHideDuration={9000}
-        message={`Welcome, ${username}!`}
+        message={`Welcome!`}
         ContentProps={{ style: { backgroundColor: "#3546a2" } }}
       />
     </Grid>
