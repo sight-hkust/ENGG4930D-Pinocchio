@@ -84,14 +84,14 @@ function NavigationBar({ showMenu }) {
     <List>
       {["HOME", "OUR FORUM", "PAST ENTRIES", "LOGIN"].map((text, index) =>
         index === 0 ? (
-          <ListItem button key={text} onClick={() => history.push("/")}>
+          <ListItem button key={text} onClick={() => history.push("/home")}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 1 ? (
-          <ListItem button key={text} onClick={() => history.push("/")}>
+          <ListItem button key={text} onClick={() => history.push("/forum")}>
             <ListItemIcon>
               <ForumIcon />
             </ListItemIcon>
@@ -165,7 +165,10 @@ function NavigationBar({ showMenu }) {
   } else {
     return (
       <Grid container direction='row' className={classes.container}>
-        <Button className={classes.button} onClick={() => history.push("/home")}>
+        <Button
+          className={classes.button}
+          onClick={() => history.push("/home")}
+        >
           HOME
         </Button>
         <Button className={classes.button}>OUR FORUM</Button>

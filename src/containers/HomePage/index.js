@@ -114,7 +114,7 @@ function HomePage() {
 
   return (
     <Grid container className={classes.container} direction='column'>
-      <NavigationBar />
+      <NavigationBar showMenu />
       <Typography className={classes.title}>{`HOME:\nSTORY OF US`}</Typography>
       <Typography className={classes.description}>
         {`if your heart is in your dream,\nno request is too extreme`}
