@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
+import { Typography, Button, Grid, useMediaQuery, capitalize } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
-import backgroundImage from "../../assets/interestsPageBackground.png";
 import NavigationBar from "../../components/NavigationBar";
-import mobileBackgroundImage from "../../assets/interestsMobileBg.png";
-import interestsBubbleImage from "../../assets/interestsBubble.png";
 import NextButton from "../../components/NextButton";
+import depressionIcon from "../../assets/depressionIcon.png";
+import motivationIcon from "../../assets/motivationIcon.png";
+import examAnxietyIcon from "../../assets/examAnxietyIcon.png";
+import socialAnxietyIcon from "../../assets/socialAnxietyIcon.png";
+import ptsdIcon from "../../assets/ptsdIcon.png";
+import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
+import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
+import allIcon from "../../assets/allIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${backgroundImage})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     alignContent: "flex-end",
     contain: "content",
     "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
       backgroundSize: "contain",
       backgroundPosition: "bottom",
     },
   },
   title: {
-    fontFamily: "Times",
+    fontFamily: "Open Sans",
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 60,
@@ -35,19 +38,22 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:480px)": {
       lineHeight: 1,
       width: "100%",
-      fontSize: 40,
-      marginTop: 26,
+      fontSize: 27,
+      fontWeight: "bold",
+      marginTop: 50,
     },
   },
   description: {
-    fontFamily: "Roboto",
+    fontFamily: "Open Sans",
     fontSize: 30,
     alignSelf: "center",
     margin: 0,
     paddingBottom: 60,
     "@media (max-width:480px)": {
-      fontSize: 15,
+      color: "#838181",
+      fontSize: 20,
       paddingBottom: 0,
+      paddingTop: 5,
     },
   },
   button: {
@@ -62,17 +68,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   interestButton: {
-    height: 72,
-    backgroundColor: "#D38851",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
-    borderRadius: 20,
-    borderBottomRightRadius: 9,
-    padding: "18px 25px",
-    marginBottom: 38,
-    textTransform: "lowercase",
-    "&:hover": {
-      backgroundColor: "#D38851",
-    },
+    height: 135,
+    width: 114,
     "@media (max-width:480px)": {
       height: "auto",
       padding: "13px 13px",
@@ -81,10 +78,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonText: {
-    color: "#FFFBFB",
-    fontFamily: "Roboto",
+    color: "#000000",
+    fontFamily: "Open Sans",
     fontSize: 30,
+    paddingTop: 10,
     textAlign: "center",
+    textTransform: "capitalize",
     margin: 0,
     "@media (max-width:480px)": {
       fontSize: 15,
@@ -100,8 +99,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
   },
   buttonGroup: {
-    position: "absolute",
-    top: "40vh",
+    paddingTop: "47px",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
@@ -114,14 +112,14 @@ function InterestsPage() {
   const isMobile = useMediaQuery("(max-width:480px)");
 
   const interests = [
-    "PTSD",
-    "depression",
-    "motivation",
-    "eating disorder",
-    "exam anxiety",
-    "social anxiety",
-    "panic disorder",
-    "all",
+    ["Depression", depressionIcon],
+    ["Motivation", motivationIcon],
+    ["Exam Anxiety", examAnxietyIcon],
+    ["Social Anxiety", socialAnxietyIcon],
+    ["PTSD", ptsdIcon],
+    ["Panic Disorder", panicDisorderIcon],
+    ["Eating Disorder", eatingDisorderIcon],
+    ["All", allIcon],
   ];
 
   const handleSubmit = () => {
@@ -145,18 +143,13 @@ function InterestsPage() {
   return (
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
-        <NavigationBar />
+        <NavigationBar showMenu />
         <Typography className={classes.title}>
-          WHEN YOU WISH UPON A STAR...
+          Choose your interests
         </Typography>
         <Typography className={classes.description}>
-          choose the topics that your heart desires{" "}
+          As your heart desires
         </Typography>
-        <img
-          alt=''
-          className={classes.buttonGroupImage}
-          src={interestsBubbleImage}
-        ></img>
         <Grid
           container
           item
@@ -174,14 +167,15 @@ function InterestsPage() {
                   setSelected([...selected, index]);
                 }
               }}
-              style={{
-                backgroundColor:
-                  selected && selected.includes(index) ? "#8ED039" : "#D38851",
-              }}
             >
-              <Typography
-                className={classes.buttonText}
-              >{`+ ${interest}`}</Typography>
+              <Grid container item direction="column">
+                <span style={{ width: 98, height: 98, backgroundColor: "#FFD7D7", borderRadius: "50%" }}>
+                  <img src={interest[1]} style={{ paddingTop: 29 }} />
+                </span>
+                <Typography
+                  className={classes.buttonText}
+                >{interest[0]}</Typography>
+              </Grid>
             </Button>
           ))}
           {selected.length !== 0 && (

@@ -16,17 +16,12 @@ import ForumIcon from "@material-ui/icons/Forum";
 import HistoryIcon from "@material-ui/icons/History";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useHistory } from "react-router-dom";
-import logo from "../../assets/whaleIcon.png";
-import menuLogo from "../../assets/navigationBarMobile.png";
+import menuLogo from "../../assets/menuIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     justifyContent: "center",
     flexFlow: "nowrap",
-  },
-  logo: {
-    height: 80,
-    paddingTop: 38,
   },
   button: {
     fontFamily: "Roboto",
@@ -46,15 +41,11 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "0.07em",
   },
   menuButton: {
-    backgroundColor: "#3C79B0",
-    border: "2px solid #3C79B0",
-    boxSizing: "border-box",
-    borderRadius: 5,
     alignSelf: "flex-start",
-    marginTop: 35,
-    marginLeft: 29,
-    maxWidth: 35,
-    maxHeight: 35,
+    marginTop: 27,
+    marginLeft: 24,
+    maxWidth: 40,
+    maxHeight: 30,
     minWidth: 35,
     minHeight: 35,
   },
@@ -132,8 +123,6 @@ function NavigationBar({ showMenu }) {
           >
             <img
               src={menuLogo}
-              width='22.5px'
-              height='20.25px'
               alt='menuLogo'
             ></img>
           </Button>
@@ -155,10 +144,7 @@ function NavigationBar({ showMenu }) {
             alignSelf: "flex-end",
           }}
         >
-          <img style={{ height: 35 }} src={logo} alt=''></img>
-          <Typography className={classes.text} style={{ fontSize: 8 }}>
-            pinocchio
-          </Typography>
+
         </Grid>
       </Grid>
     );
@@ -172,10 +158,6 @@ function NavigationBar({ showMenu }) {
           HOME
         </Button>
         <Button className={classes.button}>OUR FORUM</Button>
-        <Grid item style={{ textAlign: "center" }}>
-          <img className={classes.logo} src={logo} alt='logo'></img>
-          <Typography className={classes.text}>pinocchio</Typography>
-        </Grid>
         <Button className={classes.button}>PAST ENTRIES</Button>
         <Button
           className={classes.button}
