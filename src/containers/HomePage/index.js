@@ -6,15 +6,16 @@ import {
   useMediaQuery,
   Snackbar,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
-import NextButton from "../../components/NextButton";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";
 import lookBackImage from "../../assets/lookBackIcon.png";
 import bookmarkImage from "../../assets/bookmarkIcon.png";
+import callWellnessCenterIcon from "../../assets/exclamationMarkIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -30,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    width: 170,
-    height: 170,
+    padding: "23px 36px",
     borderRadius: 40,
     backgroundColor: "#FFD7D7",
     display: "table-column",
@@ -40,12 +40,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonLarge: {
-    width: 373,
-    height: 170,
     borderRadius: 40,
     backgroundColor: "#FFD7D7",
-    padding: "0 26px",
+    padding: "30px 26px",
     textAlign: "left",
+    margin: 10,
     "&:hover": {
       backgroundColor: "#FFD7D7",
     },
@@ -105,7 +104,7 @@ function HomePage() {
     <Grid container direction='column'>
       <NavigationBar showMenu />
       <Typography className={classes.title}>For You</Typography>
-      <Grid container item direction='row' xs className={classes.cardContainer}>
+      <Grid container item direction='row' className={classes.cardContainer}>
         <Button className={classes.button}>
           <img alt='lookback' src={lookBackImage}></img>
           <Typography className={classes.buttonHeadingText}>
@@ -118,7 +117,10 @@ function HomePage() {
             Bookmarks
           </Typography>
         </Button>
-        <Button className={classes.buttonLarge}>
+        <Button
+          className={classes.buttonLarge}
+          onClick={() => history.push("/forum")}
+        >
           <img alt='bookmark' src={readNowImage}></img>
           <Grid
             container
@@ -132,10 +134,12 @@ function HomePage() {
             <Typography className={classes.buttonText}>
               Delve into our stories of the good, the bad and the magical
             </Typography>
-            <NextButton onClick={() => history.push("/forum")} />
           </Grid>
         </Button>
-        <Button className={classes.buttonLarge}>
+        <Button
+          className={classes.buttonLarge}
+          onClick={() => history.push("/writing")}
+        >
           <img alt='bookmark' src={writeNowImage}></img>
           <Grid
             container
@@ -150,9 +154,16 @@ function HomePage() {
               Write down your daily thoughts, for they are part of your alluring
               tale
             </Typography>
-            <NextButton onClick={() => history.push("/writing")} />
           </Grid>
         </Button>
+        <Grid container item justify='flex-end'>
+          <IconButton
+            onClick={(e) => handleCall(e)}
+            style={{ marginRight: 20 }}
+          >
+            <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
+          </IconButton>
+        </Grid>
       </Grid>
 
       <Snackbar
