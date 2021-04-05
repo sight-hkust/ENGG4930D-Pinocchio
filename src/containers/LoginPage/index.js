@@ -17,8 +17,6 @@ import arrowLeftImage from "../../assets/arrowLeft.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    height: "100vh",
     alignItems: "center",
     "@media (max-width:480px)": {},
   },

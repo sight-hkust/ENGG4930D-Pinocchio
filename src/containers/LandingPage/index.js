@@ -15,8 +15,6 @@ import TextButton from "../../components/TextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    height: "100vh",
     alignContent: "flex-start",
     alignItems: "center",
     "@media (max-width:480px)": {

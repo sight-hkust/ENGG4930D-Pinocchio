@@ -9,8 +9,6 @@ import NextButton from "../../components/NextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    height: "100vh",
     alignContent: "flex-start",
     "@media (max-width:480px)": {
       backgroundSize: "contain",

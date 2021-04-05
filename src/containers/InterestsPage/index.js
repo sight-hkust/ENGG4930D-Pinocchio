@@ -16,11 +16,6 @@ import allIcon from "../../assets/allIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    height: "100vh",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     alignContent: "flex-end",
     "@media (max-width:480px)": {
       backgroundSize: "contain",

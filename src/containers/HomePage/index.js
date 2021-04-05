@@ -5,23 +5,18 @@ import {
   Grid,
   useMediaQuery,
   Snackbar,
-  Paper,
   Button,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
+import NextButton from "../../components/NextButton";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";
 import lookBackImage from "../../assets/lookBackIcon.png";
 import bookmarkImage from "../../assets/bookmarkIcon.png";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    height: "100vh",
-    padding: "0 53px",
-  },
   title: {
     fontWeight: "bold",
     lineHeight: 1,
@@ -31,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 35,
       marginTop: "5vh",
       textAlign: "left",
+      paddingLeft: 20,
     },
   },
   button: {
@@ -39,13 +35,36 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 40,
     backgroundColor: "#FFD7D7",
     display: "table-column",
+    "&:hover": {
+      backgroundColor: "#FFD7D7",
+    },
+  },
+  buttonLarge: {
+    width: 373,
+    height: 170,
+    borderRadius: 40,
+    backgroundColor: "#FFD7D7",
+    padding: "0 26px",
+    textAlign: "left",
+    "&:hover": {
+      backgroundColor: "#FFD7D7",
+    },
   },
   cardContainer: {
+    paddingTop: 20,
     justifyContent: "space-evenly",
   },
   buttonHeadingText: {
     fontWeight: "bold",
     fontSize: 18,
+    textTransform: "Capitalize",
+  },
+  buttonText: {
+    fontSize: 14,
+    textTransform: "Capitalize",
+  },
+  buttonTextGroup: {
+    paddingLeft: 16,
   },
 }));
 
@@ -83,7 +102,7 @@ function HomePage() {
   };
 
   return (
-    <Grid container className={classes.container} direction='column'>
+    <Grid container direction='column'>
       <NavigationBar showMenu />
       <Typography className={classes.title}>For You</Typography>
       <Grid container item direction='row' xs className={classes.cardContainer}>
@@ -94,10 +113,45 @@ function HomePage() {
           </Typography>
         </Button>
         <Button className={classes.button}>
-          <img alt='lookback' src={bookmarkImage}></img>
+          <img alt='bookmark' src={bookmarkImage}></img>
           <Typography className={classes.buttonHeadingText}>
             Bookmarks
           </Typography>
+        </Button>
+        <Button className={classes.buttonLarge}>
+          <img alt='bookmark' src={readNowImage}></img>
+          <Grid
+            container
+            item
+            direction='row'
+            className={classes.buttonTextGroup}
+          >
+            <Typography className={classes.buttonHeadingText}>
+              Read stories
+            </Typography>
+            <Typography className={classes.buttonText}>
+              Delve into our stories of the good, the bad and the magical
+            </Typography>
+            <NextButton onClick={() => history.push("/forum")} />
+          </Grid>
+        </Button>
+        <Button className={classes.buttonLarge}>
+          <img alt='bookmark' src={writeNowImage}></img>
+          <Grid
+            container
+            item
+            direction='row'
+            className={classes.buttonTextGroup}
+          >
+            <Typography className={classes.buttonHeadingText}>
+              Write now
+            </Typography>
+            <Typography className={classes.buttonText}>
+              Write down your daily thoughts, for they are part of your alluring
+              tale
+            </Typography>
+            <NextButton onClick={() => history.push("/writing")} />
+          </Grid>
         </Button>
       </Grid>
 
