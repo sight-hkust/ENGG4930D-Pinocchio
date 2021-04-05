@@ -23,18 +23,22 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
     },
   },
+
   title: {
     fontWeight: "bold",
     lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
+    paddingBottom: 9,
+    paddingTop: 25,
     "@media (max-width:480px)": {
       fontSize: 35,
+      paddingTop: 0,
       marginTop: "5vh",
     },
   },
   description: {
-    fontSize: 25,
+    fontSize: 30,
     textAlign: "center",
     margin: 0,
     paddingBottom: 21,
@@ -51,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
+    paddingBottom: 45,
     "@media (max-width:480px)": {
       height: "40vh",
       paddingBottom: "5vh",
@@ -58,23 +63,33 @@ const useStyles = makeStyles((theme) => ({
   },
   signInText: {
     color: "#838181",
-    fontSize: 14,
+    fontSize: 28,
+    "@media (max-width:480px)": {
+      fontSize: 14,
+    },
   },
   link: {
     color: "#838181",
+    fontSize: 28,
     fontWeight: "bold",
-    fontSize: 14,
+    "@media (max-width:480px)": {
+      fontSize: 14,
+    },
   },
   button: {
     backgroundColor: "#FEBD7D",
-    borderRadius: 50,
+    borderRadius: 60,
     marginBottom: "1vh",
   },
   buttonText: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 30,
     textTransform: "capitalize",
-    padding: "2vw 3vh",
+    padding: "1vw 6vh",
+    "@media (max-width:480px)": {
+      fontSize: 20,
+      padding: "2vw 3vh",
+    },
   },
   appInstallBanner: {
     position: "absolute",
@@ -136,21 +151,31 @@ function LandingPage() {
         </Grid>
       ) : (
         <>
-          <NavigationBar />
           <Grid container direction='column' alignItems='center'>
+            <Typography className={classes.title}> Welcome to Pinocchio</Typography>
+            <Typography className={classes.description}>
+              Start your journey with us
+            </Typography>
             <img
               src={landingPinocchio}
               alt='Logo'
               className={classes.landingPinocchio}
             ></img>
-            <Typography className={classes.title}>PINOCCHIO</Typography>
-            <Typography className={classes.description}>
-              : a supportive community built just for our dreamers
-            </Typography>
-            <TextButton
-              text='SIGN UP'
+            <Button
+              className={classes.button}
               onClick={() => history.push("/signup")}
-            />
+            >
+              <Typography className={classes.buttonText}>Sign Up</Typography>
+            </Button>
+            <Typography className={classes.signInText}>
+              Already have an account?
+            <Link
+                className={classes.link}
+                onClick={() => history.push("/login")}
+              >
+                {" Sign In"}
+              </Link>
+            </Typography>
           </Grid>
         </>
       )}
