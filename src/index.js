@@ -5,9 +5,17 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "./index.css";
+import { createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Router from "./containers/RouteCollection";
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: ["Open Sans", "sans-serif"].join(","),
+  },
+});
 
 var firebaseConfig = {
   apiKey: "AIzaSyDiNVv8_UBM0Egcbxqjaf0K51x-9J_sX0A",
@@ -23,7 +31,9 @@ firebase.analytics();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router />
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

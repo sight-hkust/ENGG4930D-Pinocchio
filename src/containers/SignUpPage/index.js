@@ -3,8 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, Snackbar } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
-import backgroundImage from "../../assets/signupPageBackground.png";
-import mobileBackgroundImage from "../../assets/signupMobileBg.png";
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/Input";
 import NextButton from "../../components/NextButton";
@@ -13,20 +11,12 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     alignContent: "flex-start",
-    contain: "content",
     "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
-      backgroundPosition: "bottom",
       backgroundSize: "contain",
     },
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
     fontSize: 60,
     lineHeight: "normal",
@@ -38,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: {
-    fontFamily: "Roboto",
     fontSize: 30,
     textAlign: "center",
     margin: 0,
@@ -84,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
   },
   errorMessage: {
     color: "#FF0000",
-    fontFamily: "Roboto",
     fontWeight: "bold",
     fontSize: 12,
     marginTop: 6,

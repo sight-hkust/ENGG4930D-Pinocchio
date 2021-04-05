@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Paper } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import mobileBackgroundImage from "../../assets/guidelinesPageMobileBg.png";
 import ruleMemoImage from "../../assets/ruleBackground.png";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
@@ -11,17 +10,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${mobileBackgroundImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     alignContent: "flex-start",
-    "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
-    },
+    "@media (max-width:480px)": {},
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 60,

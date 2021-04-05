@@ -1,52 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, useMediaQuery, Snackbar } from "@material-ui/core";
 import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
-import backgroundImage from "../../assets/loginPageBackground.png";
-import mobileBackgroundImage from "../../assets/loginMobileBg.png";
-import NavigationBar from "../../components/NavigationBar";
-import Input from "../../components/Input";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Typography,
+  Grid,
+  useMediaQuery,
+  InputBase,
+  IconButton,
+  InputAdornment,
+} from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
+import arrowLeftImage from "../../assets/arrowLeft.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    alignContent: "flex-start",
-    contain: "content",
-    "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
-      backgroundPosition: "bottom",
-    },
+    alignItems: "center",
+    "@media (max-width:480px)": {},
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
-    fontSize: 60,
-    lineHeight: "normal",
+    lineHeight: 1,
+    fontSize: 100,
     textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: 50,
-      wordWrap: "break-word",
-      textAlign: "left",
+      fontSize: 35,
+      marginTop: "5vh",
     },
   },
   description: {
-    fontFamily: "Roboto",
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
     margin: 0,
-    paddingBottom: 21,
-    marginRight: 35,
+    color: "#838181",
     "@media (max-width:480px)": {
-      fontSize: 15,
-      textAlign: "left",
-      paddingBottom: 8,
+      fontSize: 20,
+      paddingTop: "2vh",
     },
   },
   button: {
@@ -67,44 +60,23 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    display: "flex",
-    marginTop: "18vh",
-    marginLeft: "20vw",
-    alignItems: "flex-start",
-    "@media (max-width:480px)": {
-      marginTop: 0,
-      alignItems: "flex-start",
-      marginLeft: 22,
-      marginRight: 108,
-    },
-  },
-  startMyJourneyText: {
-    fontWeight: "bold",
-    fontSize: 25,
-    color: "#3C79B0",
-    letterSpacing: "0.14em",
-    paddingRight: 33,
-    alignSelf: "center",
-    "@media (max-width:480px)": {
-      marginLeft: 15,
-      fontSize: 12,
-    },
-  },
-  confirmContainer: {
-    marginLeft: "10vw",
-    "@media (max-width:480px)": {
-      marginLeft: 0,
-      justifyContent: "flex-start",
-      display: "flex",
-    },
+    padding: "49px 69px 0px",
+    "@media (max-width:480px)": {},
   },
   errorMessage: {
     color: "#FF0000",
-    fontFamily: "Roboto",
-    fontWeight: "bold",
-    fontSize: 12,
-    marginTop: 6,
-    marginBottom: 6,
+    fontSize: 14,
+    textAlign: "end",
+  },
+  inputLabel: {
+    color: "#838181",
+    textAlign: "left",
+    fontSize: 14,
+  },
+  input: {
+    backgroundColor: "#EAEAEA",
+    padding: "8px 12px",
+    marginBottom: 18,
   },
 }));
 
@@ -115,26 +87,17 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [loginError, setLoginError] = useState();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        setTimeout(() => {
-          history.push("/home");
-        }, 3000);
+        history.push("/home");
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setLoggedIn(false);
-  };
 
   const handleClick = () => {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -157,7 +120,6 @@ function LoginPage() {
           .then((userCredential) => {
             var user = userCredential.user;
             setUsername(user.displayName);
-            setLoggedIn(true);
             setLoginError(false);
           })
           .catch((error) => setLoginError(error));
@@ -167,47 +129,54 @@ function LoginPage() {
       });
 
   return (
-    <Grid container className={classes.container}>
-      <NavigationBar />
-      <Grid container item direction='column' className={classes.inputForm}>
-        <Typography className={classes.title}>
-          WELCOME {isMobile && <br />}
-          BACK,
-        </Typography>
-        <Typography className={classes.description}>
-          we’re happy you came back to us💜
-        </Typography>
-        <Input
-          size={isMobile ? "small" : "medium"}
-          label='FULL ITSC EMAIL ADDRESS'
+    <Grid
+      container
+      className={classes.container}
+      direction='column'
+      alignItems='center'
+    >
+      <IconButton
+        style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+        onClick={() => history.goBack()}
+      >
+        <img alt='arrowLeft' src={arrowLeftImage} />
+      </IconButton>
+      <Typography className={classes.title}>Welcome back!</Typography>
+      <Typography className={classes.description}>
+        we’re happy you come back to us 💜
+      </Typography>
+      <Grid container item className={classes.inputForm} direction='column'>
+        <Typography className={classes.inputLabel}>ITSC Email</Typography>
+        <InputBase
+          className={classes.input}
+          autoComplete='email'
+          autoFocus
+          inputProps={{ autoCapitalize: "none" }}
           onChange={(e) => setEmail(e.target.value)}
-        ></Input>
-        <Input
-          size={isMobile ? "small" : "medium"}
-          label='SECRET WORD'
-          isPassword={true}
+        ></InputBase>
+        <Typography className={classes.inputLabel}>Your secret word</Typography>
+        <InputBase
+          className={classes.input}
+          type={showPassword ? "text" : "password"}
           onChange={(e) => setPassword(e.target.value)}
-          style={{
-            marginBottom: loginError ? 0 : 26,
-          }}
-        ></Input>
+          endAdornment={
+            <InputAdornment position='end'>
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge='end'
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        ></InputBase>
         {loginError && (
           <Typography className={classes.errorMessage}>
-            Your email address or secret word is wrong😕
+            Incorrect Email or Password😕
           </Typography>
         )}
-        <Grid container className={classes.confirmContainer}>
-          <NextButton onClick={handleClick} />
-        </Grid>
+        <NextButton onClick={handleClick} />
       </Grid>
-      <Snackbar
-        open={loggedIn}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        autoHideDuration={9000}
-        message={`Welcome!`}
-        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
-      />
     </Grid>
   );
 }

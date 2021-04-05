@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Snackbar } from "@material-ui/core";
-import backgroundImage from "../../assets/notFound.png";
-import mobileBackgroundImage from "../../assets/forumMobileBg.png";
 import StoryInput from "../../components/StoryInput";
 import NavigationBar from "../../components/NavigationBar";
 import ForumBottomBar from "../../components/ForumBottomBar";
@@ -12,19 +10,12 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     alignContent: "flex-start",
     "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
-      backgroundPosition: "bottom",
       justifyContent: "space-around",
     },
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
     fontSize: 60,
     lineHeight: "normal",

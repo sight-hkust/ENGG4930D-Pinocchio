@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, useMediaQuery } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  useMediaQuery,
+  Button,
+  Link,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
-import backgroundImage from "../../assets/landingPageBackground.png";
-import mobileBackgroundImage from "../../assets/landingMobileBg.png";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
 import TextButton from "../../components/TextButton";
@@ -13,37 +17,32 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    background: "center",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
     alignContent: "flex-start",
     alignItems: "center",
-    contain: "content",
     "@media (max-width:480px)": {
-      backgroundImage: `url(${mobileBackgroundImage})`,
       alignItems: "center",
     },
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
     lineHeight: 1,
     fontSize: 100,
+    textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: 50,
+      fontSize: 35,
       marginTop: "5vh",
     },
   },
   description: {
-    fontFamily: "Roboto",
     fontSize: 25,
     textAlign: "center",
     margin: 0,
     paddingBottom: 21,
+    color: "#838181",
     "@media (max-width:480px)": {
-      fontSize: 12,
-      paddingBottom: 0,
+      fontSize: 20,
+      paddingTop: "2vh",
+      paddingBottom: "5vh",
     },
   },
   landingPinocchio: {
@@ -53,8 +52,29 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     "@media (max-width:480px)": {
-      height: "80vw",
+      height: "40vh",
+      paddingBottom: "5vh",
     },
+  },
+  signInText: {
+    color: "#838181",
+    fontSize: 14,
+  },
+  link: {
+    color: "#838181",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  button: {
+    backgroundColor: "#FEBD7D",
+    borderRadius: 50,
+    marginBottom: "1vh",
+  },
+  buttonText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    textTransform: "capitalize",
+    padding: "2vw 3vh",
   },
   appInstallBanner: {
     position: "absolute",
@@ -86,18 +106,33 @@ function LandingPage() {
     <Grid container className={classes.container}>
       {isMobile ? (
         <Grid container direction='column' alignItems='center'>
-          <NavigationBar />
-          <Typography className={classes.title}>PINOCCHIO</Typography>
+          <NavigationBar showMenu />
+          <Typography className={classes.title}>
+            Welcome to Pinocchio
+          </Typography>
           <Typography className={classes.description}>
-            : a supportive community built just for our dreamers
+            Start your journey with us
           </Typography>
           <img
             src={landingPinocchio}
             alt='Logo'
             className={classes.landingPinocchio}
           ></img>
-          <TextButton text='SIGN UP' onClick={() => history.push("/signup")} />
-          <TextButton text='LOGIN' onClick={() => history.push("/login")} />
+          <Button
+            className={classes.button}
+            onClick={() => history.push("/signup")}
+          >
+            <Typography className={classes.buttonText}>Sign Up</Typography>
+          </Button>
+          <Typography className={classes.signInText}>
+            Already have an account?
+            <Link
+              className={classes.link}
+              onClick={() => history.push("/login")}
+            >
+              {" Sign In"}
+            </Link>
+          </Typography>
         </Grid>
       ) : (
         <>

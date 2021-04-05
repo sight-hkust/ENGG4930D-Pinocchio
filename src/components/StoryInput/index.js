@@ -1,9 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Input } from "@material-ui/core";
-import greenStoryBookImage from "../../assets/greenStoryBook.png";
-import brownStoryBookImage from "../../assets/brownStoryBook.png";
-import yellowStoryBookImage from "../../assets/yellowStoryBook.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,13 +28,7 @@ function StoryInput(props) {
       container
       className={classes.container}
       style={{
-        backgroundImage: `url(${
-          color === "green"
-            ? greenStoryBookImage
-            : color === "yellow"
-            ? yellowStoryBookImage
-            : brownStoryBookImage
-        })`,
+        backgroundColor: "#FFD7D7",
       }}
     >
       <Input

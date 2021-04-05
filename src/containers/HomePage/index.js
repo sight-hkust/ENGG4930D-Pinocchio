@@ -11,71 +11,41 @@ import {
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
-import backgroundImage from "../../assets/homePageBackground.png";
-import mobileBackgroundImage from "../../assets/homeMobileBg.png";
-import readNowImage from "../../assets/readNow.png";
-import writeNowImage from "../../assets/writeNow.png";
+import readNowImage from "../../assets/readStoryIcon.png";
+import writeNowImage from "../../assets/writeNowIcon.png";
+import lookBackImage from "../../assets/lookBackIcon.png";
+import bookmarkImage from "../../assets/bookmarkIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     height: "100vh",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundPosition: "bottom",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    "@media (max-width:480px)": {
-      backgroundColor: "#FFF4E3",
-      backgroundSize: "contain",
-      backgroundImage: `url(${mobileBackgroundImage})`,
-    },
+    padding: "0 53px",
   },
   title: {
-    fontFamily: "Times",
     fontWeight: "bold",
+    lineHeight: 1,
+    fontSize: 100,
     textAlign: "center",
-    fontSize: 70,
-    width: "70%",
-    alignSelf: "center",
     "@media (max-width:480px)": {
-      lineHeight: 1,
-      width: "100%",
-      fontSize: 40,
-      whiteSpace: "break-spaces",
+      fontSize: 35,
+      marginTop: "5vh",
+      textAlign: "left",
     },
-  },
-  description: {
-    fontSize: 30,
-    alignSelf: "center",
-    "@media (max-width:480px)": {
-      fontSize: 15,
-      width: 221,
-      marginTop: 8,
-      whiteSpace: "break-spaces",
-      textAlign: "center",
-    },
-  },
-  paper: {
-    width: "45vw",
-    height: "45vw",
-    borderRadius: 25,
-    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-    marginTop: 12,
-    marginBottom: 16,
-    backgroundPosition: "center",
-    backgroundSize: "contain",
-    backgroundRepeat: "no-repeat",
   },
   button: {
-    width: 164,
-    height: 56,
+    width: 170,
+    height: 170,
+    borderRadius: 40,
+    backgroundColor: "#FFD7D7",
+    display: "table-column",
+  },
+  cardContainer: {
+    justifyContent: "space-evenly",
+  },
+  buttonHeadingText: {
     fontWeight: "bold",
-    backgroundColor: "#3C79B0",
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-    borderRadius: 20,
-    "&:hover": {
-      backgroundColor: "#3C79B0",
-    },
+    fontSize: 18,
   },
 }));
 
@@ -93,7 +63,7 @@ function HomePage() {
         setIsOpen(true);
         setTimeout(() => {
           history.push("/");
-        }, 5000);
+        }, 4000);
       })
       .catch((error) => {
         console.log(error);
@@ -115,57 +85,20 @@ function HomePage() {
   return (
     <Grid container className={classes.container} direction='column'>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>{`HOME:\nSTORY OF US`}</Typography>
-      <Typography className={classes.description}>
-        {`if your heart is in your dream,\nno request is too extreme`}
-      </Typography>
-      <Grid
-        container
-        direction='row'
-        style={{ alignContent: "center", alignItems: "center" }}
-      >
-        {["READ", "WRITE"].map((element) => (
-          <Grid
-            container
-            item
-            direction='column'
-            key={element}
-            xs
-            style={{ alignItems: "center" }}
-          >
-            <Paper
-              className={classes.paper}
-              style={{
-                backgroundColor: element === "WRITE" ? "#FFEDAD" : "#DAF8FF",
-                backgroundImage:
-                  element === "WRITE"
-                    ? `url(${writeNowImage})`
-                    : `url(${readNowImage})`,
-              }}
-            >
-              {/* <img
-                alt=''
-                width='180px'
-                src={element === "WRITE" ? writeNowImage : readNowImage}
-              ></img> */}
-            </Paper>
-            <Button
-              className={classes.button}
-              style={{
-                backgroundColor: element === "WRITE" ? "#DE2A4E" : "#3C79B0",
-              }}
-              onClick={() => {
-                element === "WRITE"
-                  ? history.push("/writing")
-                  : history.push("/forum");
-              }}
-            >
-              <Typography style={{ color: "#FFFBFB" }}>
-                {`${element} NOW`}
-              </Typography>
-            </Button>
-          </Grid>
-        ))}
+      <Typography className={classes.title}>For You</Typography>
+      <Grid container item direction='row' xs className={classes.cardContainer}>
+        <Button className={classes.button}>
+          <img alt='lookback' src={lookBackImage}></img>
+          <Typography className={classes.buttonHeadingText}>
+            Look back
+          </Typography>
+        </Button>
+        <Button className={classes.button}>
+          <img alt='lookback' src={bookmarkImage}></img>
+          <Typography className={classes.buttonHeadingText}>
+            Bookmarks
+          </Typography>
+        </Button>
       </Grid>
 
       <Snackbar

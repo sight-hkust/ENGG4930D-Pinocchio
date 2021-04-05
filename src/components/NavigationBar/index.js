@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: "nowrap",
   },
   button: {
-    fontFamily: "Roboto",
     fontStyle: "normal",
     fontWeight: "normal",
     fontSize: 25,
@@ -35,19 +34,18 @@ const useStyles = makeStyles((theme) => ({
     margin: "34px 0px",
   },
   text: {
-    fontFamily: "Roboto",
     fontSize: 20,
     textAlign: "center",
     letterSpacing: "0.07em",
   },
   menuButton: {
     alignSelf: "flex-start",
-    marginTop: 27,
-    marginLeft: 24,
+    marginTop: 25,
+    marginLeft: 20,
     maxWidth: 40,
     maxHeight: 30,
-    minWidth: 35,
-    minHeight: 35,
+    minWidth: 40,
+    minHeight: 30,
   },
 }));
 
@@ -121,10 +119,7 @@ function NavigationBar({ showMenu }) {
             className={classes.menuButton}
             onClick={toggleDrawer("left", true)}
           >
-            <img
-              src={menuLogo}
-              alt='menuLogo'
-            ></img>
+            <img src={menuLogo} alt='menuLogo'></img>
           </Button>
         )}
         <SwipeableDrawer
@@ -143,9 +138,7 @@ function NavigationBar({ showMenu }) {
             marginRight: 29,
             alignSelf: "flex-end",
           }}
-        >
-
-        </Grid>
+        ></Grid>
       </Grid>
     );
   } else {

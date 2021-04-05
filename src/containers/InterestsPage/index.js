@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid, useMediaQuery, capitalize } from "@material-ui/core";
+import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
@@ -22,14 +22,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     alignContent: "flex-end",
-    contain: "content",
     "@media (max-width:480px)": {
       backgroundSize: "contain",
       backgroundPosition: "bottom",
     },
   },
   title: {
-    fontFamily: "Open Sans",
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 60,
@@ -44,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   description: {
-    fontFamily: "Open Sans",
     fontSize: 30,
     alignSelf: "center",
     margin: 0,
@@ -79,7 +76,6 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: {
     color: "#000000",
-    fontFamily: "Open Sans",
     fontSize: 30,
     paddingTop: 10,
     textAlign: "center",
@@ -99,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
   },
   buttonGroup: {
-    paddingTop: "47px",
+    paddingTop: "4vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
@@ -144,18 +140,11 @@ function InterestsPage() {
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
-        <Typography className={classes.title}>
-          Choose your interests
-        </Typography>
+        <Typography className={classes.title}>Choose your interests</Typography>
         <Typography className={classes.description}>
           As your heart desires
         </Typography>
-        <Grid
-          container
-          item
-          xs={isMobile ? 10 : 6}
-          className={classes.buttonGroup}
-        >
+        <Grid container item xs className={classes.buttonGroup}>
           {interests.map((interest, index) => (
             <Button
               className={classes.interestButton}
@@ -167,21 +156,30 @@ function InterestsPage() {
                   setSelected([...selected, index]);
                 }
               }}
+              disableRipple
             >
-              <Grid container item direction="column">
-                <span style={{ width: 98, height: 98, backgroundColor: "#FFD7D7", borderRadius: "50%" }}>
-                  <img src={interest[1]} style={{ paddingTop: 29 }} />
+              <Grid container item direction='column'>
+                <span
+                  style={{
+                    width: 98,
+                    height: 98,
+                    backgroundColor:
+                      selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <img alt='' src={interest[1]} style={{ paddingTop: 29 }} />
                 </span>
-                <Typography
-                  className={classes.buttonText}
-                >{interest[0]}</Typography>
+                <Typography className={classes.buttonText}>
+                  {interest[0]}
+                </Typography>
               </Grid>
             </Button>
           ))}
-          {selected.length !== 0 && (
-            <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
-          )}
         </Grid>
+        {selected.length !== 0 && (
+          <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
+        )}
       </Grid>
     </Grid>
   );

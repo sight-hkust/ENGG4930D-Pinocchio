@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import arrowRightImage from "../../assets/arrowRight.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,14 +27,13 @@ function NextButton(props) {
   const classes = useStyles();
   const { onClick, ...rest } = props;
   return (
-    <Button
-      className={classes.button}
-      variant='contained'
-      onClick={onClick}
-      {...rest}
+    <IconButton
+      aria-label='submit'
+      style={{ alignSelf: "flex-end" }}
+      onClick={() => onClick()}
     >
-      <img alt='arrowRight' src={arrowRightImage} width='80%'></img>
-    </Button>
+      <img alt='arrowRight' src={arrowRightImage} />
+    </IconButton>
   );
 }
 
