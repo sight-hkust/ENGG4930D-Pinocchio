@@ -15,6 +15,7 @@ import NotFoundPage from "./NotFoundPage";
 import GuidelinesPage from "./GuidelinesPage";
 import WritingPage from "./WritingPage";
 import ForumPage from "./ForumPage";
+import WritingCategoryPage from "./WritingCategoryPage";
 
 function RouteCollection() {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -50,6 +51,13 @@ function RouteCollection() {
         </Route>
         <Route exact path='/writing'>
           {isLoggedIn ? <WritingPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/writingCategory'>
+          {isLoggedIn ? (
+            <WritingCategoryPage />
+          ) : (
+            <Redirect to={{ pathname: "/" }} />
+          )}
         </Route>
         <Route exact path='/forum'>
           <ForumPage />

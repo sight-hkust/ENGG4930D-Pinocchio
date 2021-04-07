@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
     backgroundColor: "white",
     padding: "13px 10px",
-    position: "absolute",
-    right: 25,
-    bottom: 4,
   },
 }));
 
@@ -22,6 +19,7 @@ function NextButton(props) {
       aria-label='submit'
       className={classes.button}
       onClick={() => onClick()}
+      {...rest}
     >
       <img alt='arrowRight' src={arrowRightImage} />
     </IconButton>

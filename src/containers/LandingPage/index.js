@@ -11,7 +11,6 @@ import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
-import TextButton from "../../components/TextButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {

@@ -13,11 +13,15 @@ import ptsdIcon from "../../assets/ptsdIcon.png";
 import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
+import { uploadStory } from "../../utils/uploadStory";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     alignContent: "flex-end",
-    "@media (max-width:480px)": {},
+    "@media (max-width:480px)": {
+      backgroundSize: "contain",
+      backgroundPosition: "bottom",
+    },
   },
   title: {
     fontWeight: "bold",
@@ -46,14 +50,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    width: 95,
-    height: 77,
-    backgroundColor: "#3C79B0",
-    color: "#FFFFFF",
-    borderRadius: 15,
+    padding: "8px 14px",
+    marginBottom: 30,
+    marginLeft: 12,
+    backgroundColor: "#F9A586",
+    borderRadius: 20,
     alignSelf: "flex-end",
     "&:hover": {
-      backgroundColor: "#3C79B0",
+      backgroundColor: "#F9A586",
     },
   },
   interestButton: {
@@ -67,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: {
     color: "#000000",
-    fontSize: 30,
+    fontSize: 20,
     paddingTop: 10,
     textAlign: "center",
     textTransform: "capitalize",
@@ -82,20 +86,22 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     alignItems: "center",
   },
-  buttonGroupImage: {
-    width: "100vw",
-  },
   buttonGroup: {
     paddingTop: "4vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
+  buttonBoldText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    textTransform: "Capitalize",
+  },
 }));
 
-function InterestsPage() {
+function WritingCategoryPage() {
   const classes = useStyles();
   const history = useHistory();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState();
   const isMobile = useMediaQuery("(max-width:480px)");
 
   const interests = [
@@ -109,22 +115,16 @@ function InterestsPage() {
     ["All", allIcon],
   ];
 
-  const handleSubmit = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(user.uid)
-          .set(
-            {
-              interests: [...selected.map((index) => interests[index])],
-            },
-            { merge: true }
-          );
-        history.push("/guidelines");
-      }
-    });
+  const handleUpload = ({ isPublic }) => {
+    let title = sessionStorage.getItem("title");
+    let storyText = sessionStorage.getItem("storyText");
+    if (title && storyText && selected) {
+      //will implement Dialog Box here
+      uploadStory(storyText, title, interests[selected][0], isPublic);
+      history.push("/forum");
+    } else {
+      throw Error("ERROR_NO_STORY_STORED");
+    }
   };
 
   return (
@@ -133,7 +133,7 @@ function InterestsPage() {
         <NavigationBar showMenu />
         <Typography className={classes.title}>Choose your interests</Typography>
         <Typography className={classes.description}>
-          As your heart desires
+          Choose a category for your story:
         </Typography>
         <Grid container item xs className={classes.buttonGroup}>
           {interests.map((interest, index) => (
@@ -141,11 +141,7 @@ function InterestsPage() {
               className={classes.interestButton}
               key={index}
               onClick={() => {
-                if (selected.includes(index)) {
-                  setSelected(selected.filter((item) => item !== index));
-                } else {
-                  setSelected([...selected, index]);
-                }
+                setSelected(index);
               }}
               disableRipple
             >
@@ -154,8 +150,7 @@ function InterestsPage() {
                   style={{
                     width: 98,
                     height: 98,
-                    backgroundColor:
-                      selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
+                    backgroundColor: selected === index ? "#A8E6CF" : "#FFD7D7",
                     borderRadius: "50%",
                   }}
                 >
@@ -168,15 +163,33 @@ function InterestsPage() {
             </Button>
           ))}
         </Grid>
-        {selected.length !== 0 && (
-          <NextButton
-            style={{ marginLeft: 285, marginBottom: 20 }}
-            onClick={handleSubmit}
-          />
+        {selected >= 0 && (
+          <Grid container direction='row' justify='flex-end'>
+            <Button
+              className={classes.button}
+              onClick={() => handleUpload({ isPublic: false })}
+            >
+              <Typography className={classes.buttonBoldText}>
+                Pubslih For Me
+              </Typography>
+            </Button>
+            <Button
+              className={classes.button}
+              style={{
+                backgroundColor: "#FEBD7D",
+                marginRight: 10,
+              }}
+              onClick={() => handleUpload({ isPublic: true })}
+            >
+              <Typography className={classes.buttonBoldText}>
+                Publish For All
+              </Typography>
+            </Button>
+          </Grid>
         )}
       </Grid>
     </Grid>
   );
 }
 
-export default InterestsPage;
+export default WritingCategoryPage;

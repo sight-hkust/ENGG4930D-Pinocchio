@@ -3,15 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Button } from "@material-ui/core";
 import StoryInput from "../../components/StoryInput";
 import NavigationBar from "../../components/NavigationBar";
+import NextButton from "../../components/NextButton";
 import { uploadStory } from "../../utils/uploadStory";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    alignContent: "flex-start",
-    "@media (max-width:480px)": {
-      justifyContent: "space-around",
-    },
-  },
   title: {
     fontWeight: "bold",
     fontSize: 60,
@@ -19,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     "@media (max-width:480px)": {
       paddingLeft: 35,
-      paddingTop: 10,
+      paddingTop: 30,
       fontSize: 40,
       whiteSpace: "break-spaces",
       textAlign: "left",
@@ -47,40 +43,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function WritingPage() {
+  const history = useHistory();
   const classes = useStyles();
   const [storyText, setStoryText] = useState();
-  const handleUpload = ({ isPublic }) => {
-    console.log(isPublic);
-    uploadStory(storyText, isPublic);
+  const [title, setTitle] = useState();
+
+  const handleSubmit = () => {
+    var myStorage = window.sessionStorage;
+    myStorage.setItem("title", title);
+    myStorage.setItem("storyText", storyText);
+    history.push("/writingCategory");
   };
 
   return (
-    <Grid container direction='column' className={classes.container}>
+    <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>{`WRITE\nYOUR STORY`}</Typography>
+      <Typography className={classes.title}>Write your thoughts</Typography>
       <StoryInput
-        isDraft
-        color='green'
-        onChange={(e) => setStoryText(e.target.value)}
+        onBodyTextChange={(e) => setStoryText(e.target.value)}
+        onTitleChange={(e) => setTitle(e.target.value)}
       />
-      <Grid container direction='row' className={classes.buttonContainer}>
-        <Button
-          className={classes.button}
-          onClick={() => handleUpload({ isPublic: true })}
-        >
-          <Typography className={classes.buttonNormalText}>+ for</Typography>
-          <Typography className={classes.buttonBoldText}>everyone</Typography>
-        </Button>
-        <Button
-          className={classes.button}
-          onClick={() => handleUpload({ isPublic: false })}
-        >
-          <Typography className={classes.buttonNormalText}>
-            + just for
-          </Typography>
-          <Typography className={classes.buttonBoldText}>me</Typography>
-        </Button>
-      </Grid>
+
+      <NextButton
+        style={{ position: "relative", marginTop: 24 }}
+        onClick={() => handleSubmit()}
+      />
     </Grid>
   );
 }

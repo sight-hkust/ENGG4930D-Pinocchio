@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Snackbar } from "@material-ui/core";
-import StoryInput from "../../components/StoryInput";
+import firebase from "firebase/app";
+import InfiniteScroll from "react-infinite-scroll-component";
+import StoryPreviewCard from "../../components/StoryPreviewCard";
 import NavigationBar from "../../components/NavigationBar";
-import ForumBottomBar from "../../components/ForumBottomBar";
-import { fetchStory } from "../../utils/fetchStory";
+import { fetchNextFiveStories, fetchStory } from "../../utils/fetchStory";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    alignContent: "flex-start",
-    "@media (max-width:480px)": {
-      justifyContent: "space-around",
-    },
-  },
   title: {
     fontWeight: "bold",
     fontSize: 60,
@@ -20,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     "@media (max-width:480px)": {
       paddingLeft: 35,
-      paddingTop: 10,
+      paddingTop: 30,
       fontSize: 40,
       whiteSpace: "break-spaces",
       textAlign: "left",
@@ -33,65 +28,65 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     marginLeft: 9,
   },
-  buttonBoldText: {
-    fontSize: 12,
-    fontWeight: "bold",
-    marginLeft: 4,
-  },
-  buttonNormalText: {
-    fontSize: 12,
-  },
-  buttonContainer: {
-    justifyContent: "flex-end",
-    marginTop: 16,
-    paddingRight: 16,
-  },
 }));
 
 function ForumPage() {
   const classes = useStyles();
-  const [text, setText] = useState();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isEndOfList, setIsEndOfList] = useState(false);
-  const [isLatestStory, setIsLatestStory] = useState(false);
+  const [stories, setStories] = useState([]);
+  const [hasMoreStories, setHasMoreStories] = useState(true);
 
   useEffect(() => {
-    fetchStory({ isPublic: true, index: currentIndex })
-      .then((text) => setText(text))
-      .catch((error) => console.log(error));
+    fetchStory({ isPublic: true }).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = (newIndex) => {
-    if (newIndex >= 0) {
-      fetchStory({ isPublic: true, index: newIndex })
-        .then((text) => {
-          setCurrentIndex(newIndex);
-          setText(text);
-        })
-        .catch(() => setIsEndOfList(true));
-    } else {
-      setIsLatestStory(true);
-    }
+  const checkBookmark = (bookmarkUserRef) => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        return bookmarkUserRef.includes(user.uid);
+      }
+    });
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    isEndOfList && setIsEndOfList(false);
-    isLatestStory && setIsLatestStory(false);
+  const fetchData = () => {
+    fetchNextFiveStories({ isPublic: true }).then((querySnapshot) => {
+      if (querySnapshot) {
+        querySnapshot.forEach((doc) => {
+          setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+        });
+      } else {
+        setHasMoreStories(false);
+      }
+    });
   };
 
   return (
-    <Grid container direction='column' className={classes.container}>
+    <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>OUR STORY</Typography>
-      <StoryInput isDraft={false} color='yellow' storyText={text} />
-      <ForumBottomBar
-        nextPageClick={() => handleClick(currentIndex + 1)}
-        previousPageClick={() => handleClick(currentIndex - 1)}
-      />
+      <Typography className={classes.title}>The Storybook</Typography>
+      <InfiniteScroll
+        dataLength={stories.length}
+        next={fetchData}
+        hasMore={hasMoreStories}
+      >
+        {stories.map((story, index) => (
+          <StoryPreviewCard
+            key={index}
+            isBookmarked={checkBookmark(story[1].bookmarkUserRef)}
+            isPublic
+            title={story[1].title}
+            category={story[1].category}
+            storyText={story[1].text}
+            date={story[1].time.toDate().toDateString()}
+            storyID={story[0]}
+          />
+        ))}
+      </InfiniteScroll>
+      {/* 
       <Snackbar
         open={isEndOfList || isLatestStory}
         onClose={handleClose}
@@ -102,7 +97,7 @@ function ForumPage() {
         }
         ContentProps={{ style: { backgroundColor: "#3546a2" } }}
         style={{ marginBottom: "10vh" }}
-      />
+      /> */}
     </Grid>
   );
 }
