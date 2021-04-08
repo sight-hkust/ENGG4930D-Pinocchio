@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 function NextButton(props) {
   const isMobile = useMediaQuery("(max-width:480px)");
+  const classes = useStyles();
   const { onClick, ...rest } = props;
   return (
     <IconButton
