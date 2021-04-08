@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
+import { IconButton, useMediaQuery } from "@material-ui/core";
 import arrowRightImage from "../../assets/arrowRight.png";
+import arrowRightWebImage from "../../assets/arrowRightWeb.png";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function NextButton(props) {
-  const classes = useStyles();
+  const isMobile = useMediaQuery("(max-width:480px)");
   const { onClick, ...rest } = props;
   return (
     <IconButton
@@ -32,7 +33,10 @@ function NextButton(props) {
       style={{ alignSelf: "flex-end" }}
       onClick={() => onClick()}
     >
-      <img alt='arrowRight' src={arrowRightImage} />
+      <img
+        alt='arrowRight'
+        src={isMobile ? arrowRightImage : arrowRightWebImage}
+      />
     </IconButton>
   );
 }

@@ -13,7 +13,6 @@ import ptsdIcon from "../../assets/ptsdIcon.png";
 import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
-import { CenterFocusStrong } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -105,6 +104,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
+  interestImage: {
+    paddingTop: 35,
+    height: 70,
+    "@media (max-width:480px)": {
+      paddingTop: 29,
+      height: 43,
+    },
+  },
 }));
 
 function InterestsPage() {
@@ -123,7 +130,6 @@ function InterestsPage() {
     ["Eating Disorder", eatingDisorderIcon],
     ["All", allIcon],
   ];
-
 
   const handleSubmit = () => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -145,99 +151,58 @@ function InterestsPage() {
 
   return (
     <Grid container className={classes.container} direction='column'>
-      {isMobile ? (
-        <Grid container item direction='column' className={classes.inputForm}>
-          <NavigationBar showMenu />
-          <Typography className={classes.title}>Choose your interests</Typography>
-          <Typography className={classes.description}>
-            As your heart desires
-          </Typography>
-          <Grid container item xs className={classes.buttonGroup}>
-            {interests.map((interest, index) => (
-              <Button
-                className={classes.interestButton}
-                key={index}
-                onClick={() => {
-                  if (selected.includes(index)) {
-                    setSelected(selected.filter((item) => item !== index));
-                  } else {
-                    setSelected([...selected, index]);
-                  }
-                }}
-                disableRipple
-              >
-                <Grid container item direction='column'>
-                  <span
-                    style={{
-                      width: 98,
-                      height: 98,
-                      backgroundColor:
-                        selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
-                      borderRadius: "50%",
-                    }}
-                  >
-                    <img alt='' src={interest[1]} style={{ paddingTop: 29 }} />
-                  </span>
-                  <Typography className={classes.buttonText}>
-                    {interest[0]}
-                  </Typography>
-                </Grid>
-              </Button>
-            ))}
-          </Grid>
-          {selected.length !== 0 && (
-            <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
-          )}
-        </Grid>
-      ) : (
-        <>
-          <Grid container item direction='column' className={classes.inputForm}>
-            <NavigationBar showMenu />
-            <Typography className={classes.title}>Choose your interests</Typography>
-            <Typography className={classes.description}>
-              As your heart desires
-          </Typography>
-            <Grid container item xs className={classes.buttonGroup}>
-              {interests.map((interest, index) => (
-                <Button
-                  className={classes.interestButton}
-                  key={index}
-                  onClick={() => {
-                    if (selected.includes(index)) {
-                      setSelected(selected.filter((item) => item !== index));
-                    } else {
-                      setSelected([...selected, index]);
-                    }
+      <Grid container item direction='column' className={classes.inputForm}>
+        <NavigationBar showMenu />
+        <Typography className={classes.title}>Choose your interests</Typography>
+        <Typography className={classes.description}>
+          As your heart desires
+        </Typography>
+        <Grid
+          container
+          item
+          xs={isMobile ? "auto" : 10}
+          className={classes.buttonGroup}
+        >
+          {interests.map((interest, index) => (
+            <Button
+              className={classes.interestButton}
+              key={index}
+              onClick={() => {
+                if (selected.includes(index)) {
+                  setSelected(selected.filter((item) => item !== index));
+                } else {
+                  setSelected([...selected, index]);
+                }
+              }}
+              disableRipple
+            >
+              <Grid container item direction='column'>
+                <span
+                  style={{
+                    width: isMobile ? 98 : 130,
+                    height: isMobile ? 98 : 130,
+                    backgroundColor:
+                      selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
+                    borderRadius: "50%",
                   }}
-
-                  disableRipple
                 >
-                  <Grid container item direction='column'>
-                    <span
-                      style={{
-                        width: 130,
-                        height: 130,
-                        backgroundColor:
-                          selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
-                        borderRadius: "50%",
-                      }}
-                    >
-                      <img alt='' src={interest[1]} style={{ paddingTop: 35, height: 70}} />
-                    </span>
-                    <Typography className={classes.buttonText}>
-                      {interest[0]}
-                    </Typography>
-                  </Grid>
-                </Button>
-              ))}
-
-            </Grid>
-            {selected.length !== 0 && (
-              <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
-            )}
-          </Grid>
-        </>
-      )}
+                  <img
+                    alt=''
+                    src={interest[1]}
+                    className={classes.interestImage}
+                  />
+                </span>
+                <Typography className={classes.buttonText}>
+                  {interest[0]}
+                </Typography>
+              </Grid>
+            </Button>
+          ))}
+        </Grid>
+        {selected.length !== 0 && (
+          <NextButton style={{ marginLeft: 285 }} onClick={handleSubmit} />
+        )}
+      </Grid>
     </Grid>
   );
 }
