@@ -58,10 +58,9 @@ const useStyles = makeStyles((theme) => ({
   interestButton: {
     height: "auto",
     width: "auto",
-    paddingLeft: 70,
-    paddingRight: 70,
-    paddingTop: 20,
-    paddingBottom: 20,
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+    },
     "@media (max-width:480px)": {
       height: "auto",
       padding: "13px 13px",
@@ -152,11 +151,12 @@ function InterestsPage() {
         <Grid
           container
           item
-          xs={isMobile ? "auto" : 10}
+          xs={isMobile ? "auto" : 7}
           className={classes.buttonGroup}
         >
           {interests.map((interest, index) => (
             <Button
+              disableRipple
               className={classes.interestButton}
               key={index}
               onClick={() => {
@@ -166,9 +166,13 @@ function InterestsPage() {
                   setSelected([...selected, index]);
                 }
               }}
-              disableRipple
             >
-              <Grid container item direction='column'>
+              <Grid
+                container
+                item
+                direction='column'
+                style={{ alignItems: "center", padding: 10 }}
+              >
                 <span
                   style={{
                     width: isMobile ? 98 : 130,
