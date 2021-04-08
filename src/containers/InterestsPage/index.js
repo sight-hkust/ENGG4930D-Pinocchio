@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 60,
-    marginTop: 70,
+    marginTop: 22,
     width: "70%",
     "@media (max-width:480px)": {
       lineHeight: 1,
@@ -37,12 +37,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 30,
     alignSelf: "center",
     margin: 0,
-    paddingBottom: 60,
+    paddingBottom: 0,
+    paddingTop: 5,
+    color: "#838181",
     "@media (max-width:480px)": {
-      color: "#838181",
       fontSize: 20,
-      paddingBottom: 0,
-      paddingTop: 5,
     },
   },
   button: {
@@ -57,21 +56,28 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   interestButton: {
-    height: 135,
-    width: 114,
+    height: "auto",
+    width: "auto",
+    paddingLeft: 70,
+    paddingRight: 70,
+    paddingTop: 20,
+    paddingBottom: 20,
     "@media (max-width:480px)": {
       height: "auto",
       padding: "13px 13px",
       width: "auto",
+      marginLeft: 0,
+      marginBottom: 20,
     },
   },
   buttonText: {
     color: "#000000",
-    fontSize: 30,
+    fontSize: 25,
     paddingTop: 10,
     textAlign: "center",
     textTransform: "capitalize",
     margin: 0,
+    paddingRight: 5,
     "@media (max-width:480px)": {
       fontSize: 15,
     },
@@ -89,6 +95,14 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "4vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
+  },
+  interestImage: {
+    paddingTop: 35,
+    height: 70,
+    "@media (max-width:480px)": {
+      paddingTop: 29,
+      height: 43,
+    },
   },
 }));
 
@@ -135,7 +149,12 @@ function InterestsPage() {
         <Typography className={classes.description}>
           As your heart desires
         </Typography>
-        <Grid container item xs className={classes.buttonGroup}>
+        <Grid
+          container
+          item
+          xs={isMobile ? "auto" : 10}
+          className={classes.buttonGroup}
+        >
           {interests.map((interest, index) => (
             <Button
               className={classes.interestButton}
@@ -152,14 +171,18 @@ function InterestsPage() {
               <Grid container item direction='column'>
                 <span
                   style={{
-                    width: 98,
-                    height: 98,
+                    width: isMobile ? 98 : 130,
+                    height: isMobile ? 98 : 130,
                     backgroundColor:
                       selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
                     borderRadius: "50%",
                   }}
                 >
-                  <img alt='' src={interest[1]} style={{ paddingTop: 29 }} />
+                  <img
+                    alt=''
+                    src={interest[1]}
+                    className={classes.interestImage}
+                  />
                 </span>
                 <Typography className={classes.buttonText}>
                   {interest[0]}
