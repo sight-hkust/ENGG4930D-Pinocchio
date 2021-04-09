@@ -16,6 +16,7 @@ import GuidelinesPage from "./GuidelinesPage";
 import WritingPage from "./WritingPage";
 import ForumPage from "./ForumPage";
 import WritingCategoryPage from "./WritingCategoryPage";
+import StoryPage from "./StoryPage";
 
 function RouteCollection() {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -61,6 +62,9 @@ function RouteCollection() {
         </Route>
         <Route exact path='/forum'>
           <ForumPage />
+        </Route>
+        <Route exact path='/story'>
+          <StoryPage />
         </Route>
         <Route exact path='*'>
           <NotFoundPage />
