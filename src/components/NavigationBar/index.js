@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -10,13 +10,18 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  IconButton,
 } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-import ForumIcon from "@material-ui/icons/Forum";
-import HistoryIcon from "@material-ui/icons/History";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 import menuLogo from "../../assets/menuIcon.png";
+import homeMenuIcon from "../../assets/homeMenuIcon.png";
+import storyBookMenuIcon from "../../assets/storyBookMenuIcon.png";
+import writeNowMenuIcon from "../../assets/writeNowMenuIcon.png";
+import lookBackMenuIcon from "../../assets/lookBackMenuIcon.png";
+import bookmarkMenuIcon from "../../assets/bookmarkMenuIcon.png";
+import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
+import arrowLeftImage from "../../assets/arrowLeft.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     textAlign: "center",
     letterSpacing: "0.07em",
+    color: "#000000",
   },
   menuButton: {
     alignSelf: "flex-start",
@@ -56,7 +62,22 @@ function NavigationBar({ showMenu }) {
   const [state, setState] = React.useState({
     left: false,
   });
-
+  const [isOpen, setIsOpen] = useState(false);
+  const logOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setIsOpen(true);
+        setTimeout(() => {
+          history.push("/");
+        }, 4000);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -68,38 +89,51 @@ function NavigationBar({ showMenu }) {
 
     setState({ ...state, [anchor]: open });
   };
-
   const list = (anchor) => (
     <List>
-      {["HOME", "OUR FORUM", "PAST ENTRIES", "LOGIN"].map((text, index) =>
+      {["Home", "The Storybook", "Write Now", "Look Back", "Bookmark","Log Out"].map((text, index)=>
         index === 0 ? (
           <ListItem button key={text} onClick={() => history.push("/home")}>
             <ListItemIcon>
-              <HomeIcon />
+              <img src={homeMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 1 ? (
           <ListItem button key={text} onClick={() => history.push("/forum")}>
             <ListItemIcon>
-              <ForumIcon />
+            <img src={storyBookMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 2 ? (
-          <ListItem button key={text} onClick={() => history.push("/")}>
+          <ListItem button key={text} onClick={() => history.push("/writing")}>
             <ListItemIcon>
-              <HistoryIcon />
+            <img src={writeNowMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
-        ) : (
+        ) : index === 3 ? (
           <ListItem button key={text} onClick={() => history.push("/login")}>
             <ListItemIcon>
-              <VpnKeyIcon />
+              <img src={lookBackMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
+        ) : index === 4 ? (
+          <ListItem button key={text} onClick={() => history.push("/login")}>
+          <ListItemIcon>
+            <img src={bookmarkMenuIcon}></img>
+          </ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItem>
+        ) : (
+          <ListItem button key={text} onClick={() => logOut()}>
+          <ListItemIcon>
+            <img src={logOutMenuIcon}></img> 
+          </ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItem>
         )
       )}
     </List>
@@ -122,20 +156,27 @@ function NavigationBar({ showMenu }) {
             <img src={menuLogo} alt='menuLogo'></img>
           </Button>
         )}
-        <SwipeableDrawer
+          <SwipeableDrawer
           anchor='left'
           open={state["left"]}
           onClose={toggleDrawer("left", false)}
           onOpen={toggleDrawer("left", true)}
-        >
+          >
+          <IconButton
+          style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+          onClick={toggleDrawer("left", false)}>
+          <img alt='arrowLeft' src={arrowLeftImage} 
+          style = {{alignSelf: "flex-start"}}>
+          </img>
+          </IconButton>
           {list("left")}
-        </SwipeableDrawer>
+          </SwipeableDrawer>
         <Grid
           item
           style={{
             textAlign: "center",
             marginTop: 28,
-            marginRight: 29,
+            marginRight: 20,
             alignSelf: "flex-end",
           }}
         ></Grid>
