@@ -105,15 +105,6 @@ function LandingPage() {
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        history.push("/home");
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <Grid container className={classes.container}>
       {isMobile ? (
@@ -149,7 +140,10 @@ function LandingPage() {
       ) : (
         <>
           <Grid container direction='column' alignItems='center'>
-            <Typography className={classes.title}> Welcome to Pinocchio</Typography>
+            <Typography className={classes.title}>
+              {" "}
+              Welcome to Pinocchio
+            </Typography>
             <Typography className={classes.description}>
               Start your journey with us
             </Typography>
@@ -166,7 +160,7 @@ function LandingPage() {
             </Button>
             <Typography className={classes.signInText}>
               Already have an account?
-            <Link
+              <Link
                 className={classes.link}
                 onClick={() => history.push("/login")}
               >

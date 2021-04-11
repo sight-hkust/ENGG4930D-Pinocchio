@@ -66,10 +66,18 @@ function RouteCollection() {
         <Route exact path='/forum'>
           <ForumPage />
         </Route>
-        <Route exact path='/story/:id' children={<StoryPage />} />
-        <Route exact path='/comment/:id' children={<CommentPage />} />
-        <Route exact path='/bookmark' children={<BookmarkPage />} />
-        <Route exact path='/lookback' children={<LookBackPage />} />
+        <Route exact path='/story/:id'>
+          {isLoggedIn ? <StoryPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/comment/:id'>
+          {isLoggedIn ? <CommentPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/bookmark'>
+          {isLoggedIn ? <BookmarkPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
+        <Route exact path='/lookback'>
+          {isLoggedIn ? <LookBackPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
         <Route exact path='*'>
           <NotFoundPage />
         </Route>

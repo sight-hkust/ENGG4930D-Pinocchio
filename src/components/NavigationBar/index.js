@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  Typography,
   Button,
   Grid,
   useMediaQuery,
@@ -68,6 +67,8 @@ function NavigationBar({ showMenu }) {
       .auth()
       .signOut()
       .then(() => {
+        var myStorage = window.sessionStorage;
+        myStorage.removeItem("userUID");
         setIsOpen(true);
         history.push("/");
       })

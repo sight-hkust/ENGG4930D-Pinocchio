@@ -45,22 +45,18 @@ function StoryPage() {
 
   useEffect(() => {
     fetchStoryByID({ storyID: id }).then((doc) => {
-      if (doc.data().isPublic) {
-        setStory({
-          time: doc.data().time.toDate().toLocaleString([], {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          }),
-          title: doc.data().title,
-          text: doc.data().text,
-          category: doc.data().category,
-        });
-      } else {
-        throw Error("ERROR_NO_PERMISSION");
-      }
+      setStory({
+        time: doc.data().time.toDate().toLocaleString([], {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        title: doc.data().title,
+        text: doc.data().text,
+        category: doc.data().category,
+      });
     });
     checkStoryBookmarked(id).then((result) => setIsBookmarked(result));
   }, []);

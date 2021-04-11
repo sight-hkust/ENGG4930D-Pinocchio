@@ -102,7 +102,7 @@ function BookmarkPage() {
           direction='column'
           style={{ paddingLeft: 35, paddingTop: 20 }}
         >
-          <Typography>You haven't posted anything yet!</Typography>
+          <Typography>You haven't bookmarked anything yet!</Typography>
           <Typography>Try now!😋</Typography>
         </Grid>
       )}

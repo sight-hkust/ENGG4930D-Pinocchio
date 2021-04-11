@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
-import NextButton from "../../components/NextButton";
 import depressionIcon from "../../assets/depressionIcon.png";
 import motivationIcon from "../../assets/motivationIcon.png";
 import examAnxietyIcon from "../../assets/examAnxietyIcon.png";
@@ -14,6 +12,7 @@ import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
 import { uploadStory } from "../../utils/uploadStory";
+import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -102,6 +101,8 @@ function WritingCategoryPage() {
   const classes = useStyles();
   const history = useHistory();
   const [selected, setSelected] = useState();
+  const [openDialogPublishForAll, setOpenDialogPublishForAll] = useState(false);
+  const [openDialogPublishForMe, setOpenDialogPublishForMe] = useState(false);
   const isMobile = useMediaQuery("(max-width:480px)");
 
   const interests = [
@@ -114,6 +115,14 @@ function WritingCategoryPage() {
     ["Eating Disorder", eatingDisorderIcon],
     ["All", allIcon],
   ];
+
+  const comfirmUpload = ({ isPublic }) => {
+    if (isPublic) {
+      setOpenDialogPublishForAll(true);
+    } else {
+      setOpenDialogPublishForMe(true);
+    }
+  };
 
   const handleUpload = ({ isPublic }) => {
     let title = sessionStorage.getItem("title");
@@ -150,7 +159,7 @@ function WritingCategoryPage() {
                   style={{
                     width: 98,
                     height: 98,
-                    backgroundColor: selected === index ? "#A8E6CF" : "#FFD7D7",
+                    backgroundColor: selected === index ? "#FEBD7D" : "#FFD7D7",
                     borderRadius: "50%",
                   }}
                 >
@@ -167,7 +176,7 @@ function WritingCategoryPage() {
           <Grid container direction='row' justify='flex-end'>
             <Button
               className={classes.button}
-              onClick={() => handleUpload({ isPublic: false })}
+              onClick={() => comfirmUpload({ isPublic: false })}
             >
               <Typography className={classes.buttonBoldText}>
                 Pubslih For Me
@@ -179,7 +188,7 @@ function WritingCategoryPage() {
                 backgroundColor: "#FEBD7D",
                 marginRight: 10,
               }}
-              onClick={() => handleUpload({ isPublic: true })}
+              onClick={() => comfirmUpload({ isPublic: true })}
             >
               <Typography className={classes.buttonBoldText}>
                 Publish For All
@@ -188,6 +197,20 @@ function WritingCategoryPage() {
           </Grid>
         )}
       </Grid>
+      <DialogBox
+        open={openDialogPublishForAll}
+        text='Do you wish to proceed with publishing your story for everyone?'
+        onClickYes={() => handleUpload({ isPublic: true })}
+        onClickNo={() => setOpenDialogPublishForAll(false)}
+        onClose={() => setOpenDialogPublishForAll(false)}
+      ></DialogBox>
+      <DialogBox
+        open={openDialogPublishForMe}
+        text='Do you wish to proceed with publishing your story for yourself?'
+        onClickYes={() => handleUpload({ isPublic: false })}
+        onClickNo={() => setOpenDialogPublishForMe(false)}
+        onClose={() => setOpenDialogPublishForMe(false)}
+      ></DialogBox>
     </Grid>
   );
 }

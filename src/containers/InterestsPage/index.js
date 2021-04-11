@@ -44,17 +44,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
     },
   },
-  button: {
-    width: 95,
-    height: 77,
-    backgroundColor: "#3C79B0",
-    color: "#FFFFFF",
-    borderRadius: 15,
-    alignSelf: "flex-end",
-    "&:hover": {
-      backgroundColor: "#3C79B0",
-    },
-  },
   interestButton: {
     height: "auto",
     width: "auto",
@@ -178,7 +167,7 @@ function InterestsPage() {
                     width: isMobile ? 98 : 130,
                     height: isMobile ? 98 : 130,
                     backgroundColor:
-                      selected.includes(index) === true ? "#A8E6CF" : "#FFD7D7",
+                      selected.includes(index) === true ? "#FEBD7D" : "#FFD7D7",
                     borderRadius: "50%",
                   }}
                 >

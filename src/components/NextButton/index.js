@@ -7,7 +7,6 @@ import arrowRightWebImage from "../../assets/arrowRightWeb.png";
 const useStyles = makeStyles((theme) => ({
   button: {
     alignSelf: "flex-end",
-    backgroundColor: "white",
     padding: "13px 10px",
   },
 }));

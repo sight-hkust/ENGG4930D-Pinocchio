@@ -14,6 +14,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
+import signupLogo from "../../assets/signupLogo.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -89,13 +90,6 @@ function SignUpPage() {
   const emailRegex = /.+@.*ust.hk$/gm;
   const passwordRegex = /^.{8,}$/gm;
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAccountCreated(false);
-  };
-
   const handleClick = () => {
     if (!emailRegex.test(email)) {
       setEmail("");
@@ -116,7 +110,7 @@ function SignUpPage() {
       const signUp = () =>
         firebase
           .auth()
-          .createUserWithEmailAndPassword(email, password)
+          .createUserWithEmailAndPassword(email.trim(), password.trim())
           .then((userCredential) => {
             setAccountCreated(true);
             var user = userCredential.user;
@@ -124,7 +118,7 @@ function SignUpPage() {
               {
                 email: user.email,
                 emailVerified: user.emailVerified,
-                isAdmin: true,
+                isAdmin: false,
               },
               { merge: true }
             );
@@ -136,7 +130,7 @@ function SignUpPage() {
               });
           })
           .catch((error) => {
-            console.log("ERROR_ACCOUNT_CREATE", error);
+            setEmailError(true);
           });
       signUp();
     }
@@ -187,6 +181,7 @@ function SignUpPage() {
             </InputAdornment>
           }
         ></InputBase>
+
         {passwordError && (
           <Typography className={classes.errorMessage}>
             Secret word is too short😳 Use {">"}= 8 characters
@@ -199,6 +194,17 @@ function SignUpPage() {
         )}
         <NextButton onClick={() => handleClick()} />
       </Grid>
+      <img
+        alt=''
+        src={signupLogo}
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          height: "35vh",
+          zIndex: -1,
+        }}
+      />
     </Grid>
   );
 }

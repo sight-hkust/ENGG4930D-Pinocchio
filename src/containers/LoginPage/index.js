@@ -14,6 +14,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
+import loginLogo from "../../assets/loginLogo.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -112,7 +113,7 @@ function LoginPage() {
       .then(() => {
         return firebase
           .auth()
-          .signInWithEmailAndPassword(email, password)
+          .signInWithEmailAndPassword(email.trim(), password.trim())
           .then((userCredential) => {
             var user = userCredential.user;
             var myStorage = window.sessionStorage;
@@ -175,6 +176,17 @@ function LoginPage() {
         )}
         <NextButton onClick={handleClick} />
       </Grid>
+      <img
+        alt=''
+        src={loginLogo}
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          height: "35vh",
+          zIndex: -1,
+        }}
+      />
     </Grid>
   );
 }
