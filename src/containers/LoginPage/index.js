@@ -116,7 +116,7 @@ function LoginPage() {
           .signInWithEmailAndPassword(email.trim(), password.trim())
           .then((userCredential) => {
             var user = userCredential.user;
-            var myStorage = window.sessionStorage;
+            var myStorage = window.localStorage;
             myStorage.setItem("userUID", user.uid);
             setUsername(user.displayName);
             setLoginError(false);

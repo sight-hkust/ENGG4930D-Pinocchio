@@ -67,7 +67,7 @@ function NavigationBar({ showMenu }) {
       .auth()
       .signOut()
       .then(() => {
-        var myStorage = window.sessionStorage;
+        var myStorage = window.localStorage;
         myStorage.removeItem("userUID");
         setIsOpen(true);
         history.push("/");

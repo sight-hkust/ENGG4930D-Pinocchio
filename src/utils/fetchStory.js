@@ -56,7 +56,7 @@ export async function fetchNextFiveStories({ isPublic }) {
 
 export async function fetchBookmarkedStories({ numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.sessionStorage;
+  var myStorage = window.localStorage;
   var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
@@ -78,7 +78,7 @@ export async function fetchBookmarkedStories({ numberOfStory }) {
 
 export async function fetchNextFiveBookmarkedStories({ numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.sessionStorage;
+  var myStorage = window.localStorage;
   var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
@@ -103,7 +103,7 @@ export async function fetchNextFiveBookmarkedStories({ numberOfStory }) {
 
 export async function fetchUserStory({ numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.sessionStorage;
+  var myStorage = window.localStorage;
   var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
@@ -122,7 +122,7 @@ export async function fetchUserStory({ numberOfStory }) {
 
 export async function fetchNextFiveUserStories({ numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.sessionStorage;
+  var myStorage = window.localStorage;
   var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
