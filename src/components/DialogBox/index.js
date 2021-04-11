@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid, Button } from "@material-ui/core";
+import { Typography, Grid, Button, Modal } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import headsUpIcon from "../../assets/headsUpIcon.png";
 
@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#F9A586",
     color: "#000000",
     borderRadius: 30,
+    "&:hover": {
+      backgroundColor: "#F9A586",
+    },
     "@media (max-width:480px)": {
       width: 30,
       height: 30,
@@ -24,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FEBD7D",
     color: "#000000",
     borderRadius: 30,
+    "&:hover": {
+      backgroundColor: "#FEBD7D",
+    },
     "@media (max-width:480px)": {
       width: 30,
       height: 30,
@@ -65,33 +71,56 @@ const useStyles = makeStyles((theme) => ({
 
 function DialogBox(props) {
   const classes = useStyles();
-  const { onClick, ...rest } = props;
+  const { open, text, onClose, onClickYes, onClickNo, ...rest } = props;
   return (
-    <Grid container direction='row'>
-      <img
-        alt='headsUpIcon'
-        src={headsUpIcon}
-        style={{ height: 30, width: 11, paddingLeft: 15 }}
-      />
-      <Typography className={classes.headsUp}>Heads up!</Typography>
+    <Modal
+      open={open}
+      onClose={onClose}
+      style={{ top: "35vh", width: "75vw", left: "14vw" }}
+    >
       <Grid
         container
-        direction='row'
-        className={classes.box}
-        justify='flex-end'
+        direction='column'
+        style={{
+          outline: "none",
+          backgroundColor: "white",
+          borderRadius: 20,
+          alignItems: "center",
+        }}
       >
-        <Typography className={classes.boxText}>
-          Do you wish to proceed with publishing your story for everyone?
-        </Typography>
+        <Grid
+          container
+          direction='row'
+          style={{ justifyContent: "flex-start", alignItems: "center" }}
+        >
+          <img
+            alt='headsUpIcon'
+            src={headsUpIcon}
+            style={{ height: 30, width: 11, paddingLeft: 15 }}
+          />
+          <Typography className={classes.headsUp}>Heads up!</Typography>
+        </Grid>
+        <Grid
+          container
+          direction='row'
+          className={classes.box}
+          justify='flex-end'
+        >
+          <Typography className={classes.boxText}>{text}</Typography>
 
-        <Button className={classes.yesbutton}>
-          <Typography className={classes.buttontext}>Yes</Typography>
-        </Button>
-        <Button className={classes.nobutton}>
-          <Typography className={classes.buttontext}>No</Typography>
-        </Button>
+          <Button className={classes.yesbutton}>
+            <Typography className={classes.buttontext} onClick={onClickYes}>
+              Yes
+            </Typography>
+          </Button>
+          <Button className={classes.nobutton}>
+            <Typography className={classes.buttontext} onClick={onClickNo}>
+              No
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
+    </Modal>
   );
 }
 

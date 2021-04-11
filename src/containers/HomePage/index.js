@@ -4,18 +4,17 @@ import {
   Typography,
   Grid,
   useMediaQuery,
-  Snackbar,
   Button,
   IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";
 import lookBackImage from "../../assets/lookBackIcon.png";
 import bookmarkImage from "../../assets/bookmarkIcon.png";
 import callWellnessCenterIcon from "../../assets/exclamationMarkIcon.png";
+import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -31,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    padding: "23px 36px",
+    width: "41vw",
+    height: "25vh",
     borderRadius: 40,
     backgroundColor: "#FFD7D7",
     display: "table-column",
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFD7D7",
     padding: "30px 26px",
     textAlign: "left",
-    margin: 10,
+    margin: "10px 25px",
     "&:hover": {
       backgroundColor: "#FFD7D7",
     },
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: {
     fontSize: 14,
-    textTransform: "Capitalize",
+    textTransform: "none",
   },
   buttonTextGroup: {
     paddingLeft: 16,
@@ -73,50 +73,44 @@ function HomePage() {
   const isMobile = useMediaQuery("(max-width:480px)");
   const [isOpen, setIsOpen] = useState(false);
 
-  const logOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setIsOpen(true);
-        setTimeout(() => {
-          history.push("/");
-        }, 4000);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
     setIsOpen(false);
   };
 
   const handleCall = (e) => {
     e.preventDefault();
-    window.location.href = "tel:+85282082688";
+    setIsOpen(true);
   };
 
   return (
     <Grid container direction='column'>
       <NavigationBar showMenu />
       <Typography className={classes.title}>For You</Typography>
-      <Grid container item direction='row' className={classes.cardContainer}>
-        <Button className={classes.button}>
-          <img alt='lookback' src={lookBackImage}></img>
-          <Typography className={classes.buttonHeadingText}>
-            Look back
-          </Typography>
-        </Button>
-        <Button className={classes.button}>
-          <img alt='bookmark' src={bookmarkImage}></img>
-          <Typography className={classes.buttonHeadingText}>
-            Bookmarks
-          </Typography>
-        </Button>
+      <Grid container item direction='column' className={classes.cardContainer}>
+        <Grid
+          container
+          direction='row'
+          style={{ padding: "0 25px", justifyContent: "space-between" }}
+        >
+          <Button
+            className={classes.button}
+            onClick={() => history.push("/lookback")}
+          >
+            <img alt='lookback' src={lookBackImage}></img>
+            <Typography className={classes.buttonHeadingText}>
+              Look back
+            </Typography>
+          </Button>
+          <Button
+            className={classes.button}
+            onClick={() => history.push("/bookmark")}
+          >
+            <img alt='bookmark' src={bookmarkImage}></img>
+            <Typography className={classes.buttonHeadingText}>
+              Bookmarks
+            </Typography>
+          </Button>
+        </Grid>
         <Button
           className={classes.buttonLarge}
           onClick={() => history.push("/forum")}
@@ -164,27 +158,14 @@ function HomePage() {
             <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
           </IconButton>
         </Grid>
+        <DialogBox
+          open={isOpen}
+          text='Do you wish to contact our magical counsellors through the 24-hour helpline?'
+          onClose={handleClose}
+          onClickYes={() => (window.location.href = "tel:+85282082688")}
+          onClickNo={handleClose}
+        ></DialogBox>
       </Grid>
-
-      <Snackbar
-        open={isOpen}
-        onClose={handleClose}
-        anchorOrigin={
-          isMobile
-            ? { vertical: "bottom", horizontal: "center" }
-            : { vertical: "bottom", horizontal: "left" }
-        }
-        autoHideDuration={9000}
-        message={`We've cooked you dinner!\nRemember to come home🥺`}
-        style={{ width: "90vw" }}
-        ContentProps={{
-          style: {
-            backgroundColor: "#3546a2",
-            fontSize: isMobile ? "0.875rem" : "1rem",
-            whiteSpace: "break-spaces",
-          },
-        }}
-      />
     </Grid>
   );
 }

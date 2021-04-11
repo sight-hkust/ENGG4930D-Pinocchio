@@ -7,13 +7,14 @@ export function uploadStory(storyText, title, category, isPublic) {
     if (user) {
       db.collection("posts")
         .add({
-          userRef: db.collection("users").doc(user.uid),
+          userRef: user.uid,
           category: category,
           title: title,
           text: storyText,
           time: firebase.firestore.Timestamp.now(),
           isPublic: isPublic,
           bookmarkUserRef: [],
+          comments: [],
         })
         .then((documentRef) =>
           db

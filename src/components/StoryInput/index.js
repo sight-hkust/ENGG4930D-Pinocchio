@@ -15,17 +15,19 @@ const useStyles = makeStyles((theme) => ({
     margin: 20,
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
+    overflow: "auto",
   },
   inputBodyText: {
     fontSize: 14,
     flex: "auto",
     alignItems: "baseline",
-    overflow: "auto",
     margin: "0px 38px",
     padding: "20px 0px",
     color: "#515151",
   },
   inputTitle: {
+    overflow: "auto",
+    height: 60,
     fontSize: 20,
     color: "#515151",
     fontWeight: "bold",
@@ -54,6 +56,7 @@ function StoryInput(props) {
           className={classes.inputTitle}
           value={storyText}
           onChange={onTitleChange}
+          inputProps={{ style: { width: "70vw" } }}
           {...restProps}
         ></Input>
       </Grid>

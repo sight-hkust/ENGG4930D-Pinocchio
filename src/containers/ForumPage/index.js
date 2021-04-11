@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Snackbar } from "@material-ui/core";
-import firebase from "firebase/app";
+import { Typography, Grid } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StoryPreviewCard from "../../components/StoryPreviewCard";
 import NavigationBar from "../../components/NavigationBar";
 import { fetchNextFiveStories, fetchStory } from "../../utils/fetchStory";
+import { checkStoryBookmarked } from "../../utils/bookmarkStory";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -34,23 +34,20 @@ function ForumPage() {
   const classes = useStyles();
   const [stories, setStories] = useState([]);
   const [hasMoreStories, setHasMoreStories] = useState(true);
+  const [isBookmarked, setIsBookmarked] = useState([]);
 
   useEffect(() => {
-    fetchStory({ isPublic: true }).then((querySnapshot) => {
+    setStories([]);
+    fetchStory({ isPublic: true, numberOfStory: 5 }).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+        checkStoryBookmarked(doc.id).then((result) =>
+          setIsBookmarked((oldResults) => [...oldResults, result])
+        );
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const checkBookmark = (bookmarkUserRef) => {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        return bookmarkUserRef.includes(user.uid);
-      }
-    });
-  };
 
   const fetchData = () => {
     fetchNextFiveStories({ isPublic: true }).then((querySnapshot) => {
@@ -76,28 +73,22 @@ function ForumPage() {
         {stories.map((story, index) => (
           <StoryPreviewCard
             key={index}
-            isBookmarked={checkBookmark(story[1].bookmarkUserRef)}
+            isBookmarked={isBookmarked[index]}
             isPublic
             title={story[1].title}
             category={story[1].category}
             storyText={story[1].text}
-            date={story[1].time.toDate().toDateString()}
+            date={story[1].time.toDate().toLocaleString([], {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
             storyID={story[0]}
           />
         ))}
       </InfiniteScroll>
-      {/* 
-      <Snackbar
-        open={isEndOfList || isLatestStory}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        autoHideDuration={2000}
-        message={
-          isEndOfList ? "End of the road🥳" : "This is the Latest Story!"
-        }
-        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
-        style={{ marginBottom: "10vh" }}
-      /> */}
     </Grid>
   );
 }

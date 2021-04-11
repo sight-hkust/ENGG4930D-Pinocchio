@@ -69,15 +69,13 @@ function NavigationBar({ showMenu }) {
       .signOut()
       .then(() => {
         setIsOpen(true);
-        setTimeout(() => {
-          history.push("/");
-        }, 4000);
+        history.push("/");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event &&
@@ -91,49 +89,76 @@ function NavigationBar({ showMenu }) {
   };
   const list = (anchor) => (
     <List>
-      {["Home", "The Storybook", "Write Now", "Look Back", "Bookmark","Log Out"].map((text, index)=>
+      {[
+        "Home",
+        "The Storybook",
+        "Write Now",
+        "Look Back",
+        "Bookmark",
+        "Log Out",
+      ].map((text, index) =>
         index === 0 ? (
-          <ListItem button key={text} onClick={() => history.push("/home")}>
+          <ListItem
+            button
+            key={text + index}
+            onClick={() => history.push("/home")}
+          >
             <ListItemIcon>
-              <img src={homeMenuIcon}></img>
+              <img alt='home' src={homeMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 1 ? (
-          <ListItem button key={text} onClick={() => history.push("/forum")}>
+          <ListItem
+            button
+            key={text + index}
+            onClick={() => history.push("/forum")}
+          >
             <ListItemIcon>
-            <img src={storyBookMenuIcon}></img>
+              <img alt='storybook' src={storyBookMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 2 ? (
-          <ListItem button key={text} onClick={() => history.push("/writing")}>
+          <ListItem
+            button
+            key={text + index}
+            onClick={() => history.push("/writing")}
+          >
             <ListItemIcon>
-            <img src={writeNowMenuIcon}></img>
+              <img alt='writeNow' src={writeNowMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 3 ? (
-          <ListItem button key={text} onClick={() => history.push("/login")}>
+          <ListItem
+            button
+            key={text + index}
+            onClick={() => history.push("/lookback")}
+          >
             <ListItemIcon>
-              <img src={lookBackMenuIcon}></img>
+              <img alt='lookback' src={lookBackMenuIcon}></img>
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ) : index === 4 ? (
-          <ListItem button key={text} onClick={() => history.push("/login")}>
-          <ListItemIcon>
-            <img src={bookmarkMenuIcon}></img>
-          </ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
+          <ListItem
+            button
+            key={text + index}
+            onClick={() => history.push("/bookmark")}
+          >
+            <ListItemIcon>
+              <img alt='bookmark' src={bookmarkMenuIcon}></img>
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
         ) : (
-          <ListItem button key={text} onClick={() => logOut()}>
-          <ListItemIcon>
-            <img src={logOutMenuIcon}></img> 
-          </ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
+          <ListItem button key={text + index} onClick={() => logOut()}>
+            <ListItemIcon>
+              <img alt='logout' src={logOutMenuIcon}></img>
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
         )
       )}
     </List>
@@ -156,21 +181,24 @@ function NavigationBar({ showMenu }) {
             <img src={menuLogo} alt='menuLogo'></img>
           </Button>
         )}
-          <SwipeableDrawer
+        <SwipeableDrawer
           anchor='left'
           open={state["left"]}
           onClose={toggleDrawer("left", false)}
           onOpen={toggleDrawer("left", true)}
-          >
+        >
           <IconButton
-          style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-          onClick={toggleDrawer("left", false)}>
-          <img alt='arrowLeft' src={arrowLeftImage} 
-          style = {{alignSelf: "flex-start"}}>
-          </img>
+            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+            onClick={toggleDrawer("left", false)}
+          >
+            <img
+              alt='arrowLeft'
+              src={arrowLeftImage}
+              style={{ alignSelf: "flex-start" }}
+            ></img>
           </IconButton>
           {list("left")}
-          </SwipeableDrawer>
+        </SwipeableDrawer>
         <Grid
           item
           style={{

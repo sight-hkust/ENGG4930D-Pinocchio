@@ -17,6 +17,9 @@ import WritingPage from "./WritingPage";
 import ForumPage from "./ForumPage";
 import WritingCategoryPage from "./WritingCategoryPage";
 import StoryPage from "./StoryPage";
+import CommentPage from "./CommentPage";
+import BookmarkPage from "./BookmarkPage";
+import LookBackPage from "./LookBackPage";
 
 function RouteCollection() {
   const [isLoggedIn, setIsLoggedIn] = useState();
@@ -63,9 +66,10 @@ function RouteCollection() {
         <Route exact path='/forum'>
           <ForumPage />
         </Route>
-        <Route exact path='/story'>
-          <StoryPage />
-        </Route>
+        <Route exact path='/story/:id' children={<StoryPage />} />
+        <Route exact path='/comment/:id' children={<CommentPage />} />
+        <Route exact path='/bookmark' children={<BookmarkPage />} />
+        <Route exact path='/lookback' children={<LookBackPage />} />
         <Route exact path='*'>
           <NotFoundPage />
         </Route>

@@ -4,7 +4,6 @@ import { Typography, Grid, Button } from "@material-ui/core";
 import StoryInput from "../../components/StoryInput";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
-import { uploadStory } from "../../utils/uploadStory";
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({

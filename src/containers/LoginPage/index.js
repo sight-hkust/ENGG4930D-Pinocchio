@@ -18,7 +18,6 @@ import arrowLeftImage from "../../assets/arrowLeft.png";
 const useStyles = makeStyles((theme) => ({
   container: {
     alignItems: "center",
-    "@media (max-width:480px)": {},
   },
   title: {
     fontWeight: "bold",
@@ -59,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputForm: {
     padding: "49px 69px 0px",
-    "@media (max-width:480px)": {},
   },
   errorMessage: {
     color: "#FF0000",
@@ -117,6 +115,8 @@ function LoginPage() {
           .signInWithEmailAndPassword(email, password)
           .then((userCredential) => {
             var user = userCredential.user;
+            var myStorage = window.sessionStorage;
+            myStorage.setItem("userUID", user.uid);
             setUsername(user.displayName);
             setLoginError(false);
           })

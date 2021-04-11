@@ -118,7 +118,7 @@ function WritingCategoryPage() {
   const handleUpload = ({ isPublic }) => {
     let title = sessionStorage.getItem("title");
     let storyText = sessionStorage.getItem("storyText");
-    if (title && storyText && selected) {
+    if (title && storyText && selected !== undefined) {
       //will implement Dialog Box here
       uploadStory(storyText, title, interests[selected][0], isPublic);
       history.push("/forum");

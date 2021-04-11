@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 
-export function bookmarkStory(storyID) {
+export async function bookmarkStory(storyID) {
   //check if user logged in
   var story = firebase.firestore().collection("posts").doc(storyID);
   firebase.auth().onAuthStateChanged(function (user) {
@@ -27,4 +27,23 @@ export function bookmarkStory(storyID) {
       console.log("ERROR_USER_NOT_LOGGEDIN");
     }
   });
+}
+
+export async function checkStoryBookmarked(storyID) {
+  //check if user logged in
+  var userRef;
+  var story = firebase.firestore().collection("posts").doc(storyID);
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      userRef = user;
+    } else {
+      console.log("ERROR_USER_NOT_LOGGEDIN");
+    }
+  });
+  return await story
+    .get()
+    .then(async (doc) => {
+      return await doc.data().bookmarkUserRef.includes(userRef.uid);
+    })
+    .catch((error) => console.log(error));
 }

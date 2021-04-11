@@ -1,80 +1,78 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, useMediaQuery, Snackbar } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  useMediaQuery,
+  IconButton,
+  InputBase,
+  InputAdornment,
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
-import NavigationBar from "../../components/NavigationBar";
-import Input from "../../components/Input";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
+import arrowLeftImage from "../../assets/arrowLeft.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    alignContent: "flex-start",
-    "@media (max-width:480px)": {
-      backgroundSize: "contain",
-    },
+    alignItems: "center",
   },
   title: {
     fontWeight: "bold",
-    fontSize: 60,
-    lineHeight: "normal",
+    lineHeight: 1,
+    fontSize: 100,
     textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: 50,
-      wordWrap: "break-word",
-      textAlign: "left",
+      fontSize: 35,
+      marginTop: "5vh",
     },
   },
   description: {
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
     margin: 0,
-    paddingBottom: 21,
-    marginRight: 35,
+    color: "#838181",
     "@media (max-width:480px)": {
-      fontSize: 15,
-      textAlign: "left",
-      paddingBottom: 8,
+      fontSize: 20,
+      paddingTop: "2vh",
+    },
+  },
+  button: {
+    width: 95,
+    height: 77,
+    backgroundColor: "#3C79B0",
+    color: "#FFFFFF",
+    borderRadius: "15px",
+    alignSelf: "flex-end",
+    "&:hover": {
+      backgroundColor: "#3C79B0",
+    },
+    "@media (max-width:480px)": {
+      width: 45,
+      height: 36,
+      minWidth: 45,
+      padding: "6px 6px",
     },
   },
   inputForm: {
-    display: "flex",
-    marginTop: "10vh",
-    marginLeft: "5vw",
-    alignItems: "flex-start",
-    "@media (max-width:480px)": {
-      marginTop: 0,
-      alignItems: "flex-start",
-      marginLeft: 22,
-      marginRight: 108,
-    },
-  },
-  startMyJourneyText: {
-    fontWeight: "bold",
-    fontSize: 25,
-    color: "#3C79B0",
-    letterSpacing: "0.14em",
-    paddingRight: 28,
-    alignSelf: "center",
-    "@media (max-width:480px)": {
-      marginLeft: 15,
-      fontSize: 12,
-    },
-  },
-  confirmContainer: {
-    marginLeft: "10vw",
-    "@media (max-width:480px)": {
-      marginLeft: 0,
-      justifyContent: "flex-start",
-      display: "flex",
-    },
+    padding: "49px 69px 0px",
   },
   errorMessage: {
     color: "#FF0000",
-    fontWeight: "bold",
-    fontSize: 12,
-    marginTop: 6,
-    marginBottom: 6,
+    fontSize: 14,
+    textAlign: "end",
+  },
+  inputLabel: {
+    color: "#838181",
+    textAlign: "left",
+    fontSize: 14,
+  },
+  input: {
+    backgroundColor: "#EAEAEA",
+    padding: "8px 12px",
+    marginBottom: 18,
   },
 }));
 
@@ -87,6 +85,7 @@ function SignUpPage() {
   const [accountCreated, setAccountCreated] = useState(false);
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
+  const [showPassword, setShowPassword] = useState(false);
   const emailRegex = /.+@.*ust.hk$/gm;
   const passwordRegex = /^.{8,}$/gm;
 
@@ -145,54 +144,61 @@ function SignUpPage() {
   }, [emailError, passwordError]);
 
   return (
-    <Grid container className={classes.container}>
-      <NavigationBar />
+    <Grid
+      container
+      className={classes.container}
+      direction='column'
+      alignItems='center'
+    >
+      <IconButton
+        style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+        onClick={() => history.goBack()}
+      >
+        <img alt='arrowLeft' src={arrowLeftImage} />
+      </IconButton>
+      <Typography className={classes.title}>Let’s get started!</Typography>
+      <Typography className={classes.description}>
+        come and join us💜
+      </Typography>
       <Grid container item direction='column' className={classes.inputForm}>
-        <Typography className={classes.title}>{`DEAR\nDREAMER,`}</Typography>
-        <Typography className={classes.description}>
-          come and join us💜
-        </Typography>
-        <Input
-          size={isMobile ? "small" : "medium"}
-          label='FULL ITSC EMAIL ADDRESS'
+        <Typography className={classes.inputLabel}>ITSC Email</Typography>
+        <InputBase
+          className={classes.input}
+          autoComplete='email'
+          autoFocus
+          inputProps={{ autoCapitalize: "none" }}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
-          style={{
-            marginBottom: emailError ? 0 : 26,
-          }}
-        ></Input>
-        {emailError && (
-          <Typography className={classes.errorMessage}>
-            Please use a ITSC Email Address😉
-          </Typography>
-        )}
-        <Input
-          size={isMobile ? "small" : "medium"}
-          label='SECRET WORD'
-          isPassword={true}
+        ></InputBase>
+        <Typography className={classes.inputLabel}>Your secret word</Typography>
+        <InputBase
+          className={classes.input}
+          type={showPassword ? "text" : "password"}
           onChange={(e) => setPassword(e.target.value)}
           value={password}
-          style={{
-            marginBottom: passwordError ? 0 : 26,
-          }}
-        ></Input>
+          endAdornment={
+            <InputAdornment position='end'>
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                edge='end'
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        ></InputBase>
         {passwordError && (
           <Typography className={classes.errorMessage}>
             Secret word is too short😳 Use {">"}= 8 characters
           </Typography>
         )}
-        <Grid container className={classes.confirmContainer}>
-          <NextButton onClick={handleClick} />
-        </Grid>
+        {emailError && (
+          <Typography className={classes.errorMessage}>
+            Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
+          </Typography>
+        )}
+        <NextButton onClick={() => handleClick()} />
       </Grid>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        open={accountCreated}
-        onClose={handleClose}
-        autoHideDuration={9000}
-        message='Verify your ITSC email address now to talk in the forum!'
-        ContentProps={{ style: { backgroundColor: "#3546a2" } }}
-      />
     </Grid>
   );
 }
