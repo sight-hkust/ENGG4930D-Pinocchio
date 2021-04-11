@@ -48,6 +48,10 @@ function CommentPage() {
   const handlePreviousPage = () => history.push("/forum");
 
   useEffect(() => {
+    fetchComment();
+  }, []);
+
+  const fetchComment = () => {
     fetchStoryByID({ storyID: id }).then((doc) => {
       if (doc.data().isPublic) {
         setComments(doc.data().comments);
@@ -55,7 +59,7 @@ function CommentPage() {
         throw Error("ERROR_NO_PERMISSION");
       }
     });
-  }, []);
+  };
 
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
@@ -112,6 +116,7 @@ function CommentPage() {
                 disableUnderline
                 multiline
                 onChange={(e) => setNewComment(e.target.value)}
+                value={newComment}
               />
             </Grid>
             <Grid
@@ -129,7 +134,10 @@ function CommentPage() {
                 }}
                 onClick={() => {
                   uploadComment(id, newComment);
-                  window.location.reload();
+                  setTimeout(() => {
+                    fetchComment();
+                    setNewComment("");
+                  }, 500);
                 }}
               >
                 Send
