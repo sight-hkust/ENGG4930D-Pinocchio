@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     marginBottom: "1vh",
     height: 130,
-    width: 300,
   },
   boxText: {
     fontSize: 10,

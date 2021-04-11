@@ -127,7 +127,10 @@ function CommentPage() {
                   maxHeight: 24,
                   marginTop: 8,
                 }}
-                onClick={() => uploadComment(id, newComment)}
+                onClick={() => {
+                  uploadComment(id, newComment);
+                  window.location.reload();
+                }}
               >
                 Send
               </Button>
