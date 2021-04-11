@@ -130,7 +130,7 @@ function SignUpPage() {
               });
           })
           .catch((error) => {
-            setEmailError(true);
+            console.log(error);
           });
       signUp();
     }
@@ -194,7 +194,7 @@ function SignUpPage() {
         )}
         <NextButton onClick={() => handleClick()} />
       </Grid>
-      <img
+      {/* <img
         alt=''
         src={signupLogo}
         style={{
@@ -204,7 +204,7 @@ function SignUpPage() {
           height: "35vh",
           zIndex: -1,
         }}
-      />
+      /> */}
     </Grid>
   );
 }

@@ -120,11 +120,11 @@ function InterestsPage() {
           .doc(user.uid)
           .set(
             {
-              interests: [...selected.map((index) => interests[index])],
+              interests: [...selected.map((index) => interests[index][0])],
             },
             { merge: true }
           );
-        history.push("/guidelines");
+        history.push("/home");
       }
     });
   };
