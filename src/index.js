@@ -10,6 +10,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import Router from "./containers/RouteCollection";
+import store from "./store";
+import { Provider } from "react-redux";
 
 const theme = createMuiTheme({
   typography: {
@@ -32,7 +34,9 @@ firebase.analytics();
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Router />
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

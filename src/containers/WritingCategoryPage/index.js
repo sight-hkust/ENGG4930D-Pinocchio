@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import depressionIcon from "../../assets/depressionIcon.png";
 import motivationIcon from "../../assets/motivationIcon.png";
@@ -104,6 +105,7 @@ function WritingCategoryPage() {
   const [openDialogPublishForAll, setOpenDialogPublishForAll] = useState(false);
   const [openDialogPublishForMe, setOpenDialogPublishForMe] = useState(false);
   const isMobile = useMediaQuery("(max-width:480px)");
+  const userUID = useSelector((state) => state.auth.userUID);
 
   const interests = [
     ["Depression", depressionIcon],
@@ -128,8 +130,7 @@ function WritingCategoryPage() {
     let title = sessionStorage.getItem("title");
     let storyText = sessionStorage.getItem("storyText");
     if (title && storyText && selected !== undefined) {
-      //will implement Dialog Box here
-      uploadStory(storyText, title, interests[selected][0], isPublic);
+      uploadStory(userUID, storyText, title, interests[selected][0], isPublic);
       history.push("/forum");
     } else {
       throw Error("ERROR_NO_STORY_STORED");

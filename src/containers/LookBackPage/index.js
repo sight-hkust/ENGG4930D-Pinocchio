@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector } from "react-redux";
+
 import StoryPreviewCard from "../../components/StoryPreviewCard";
 import NavigationBar from "../../components/NavigationBar";
 import {
@@ -38,31 +40,39 @@ function LookBackPage() {
   const [stories, setStories] = useState([]);
   const [hasMoreStories, setHasMoreStories] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState([]);
+  const userUID = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
-    fetchUserStory({ numberOfStory: 5 }).then((querySnapshot) => {
-      if (querySnapshot) {
-        querySnapshot.forEach((doc) => {
-          setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
-          checkStoryBookmarked(doc.id).then((result) =>
-            setIsBookmarked((oldResults) => [...oldResults, result])
-          );
-        });
+    fetchUserStory({ userUID: userUID, numberOfStory: 5 }).then(
+      (querySnapshot) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+            checkStoryBookmarked(userUID, doc.id).then((result) =>
+              setIsBookmarked((oldResults) => [...oldResults, result])
+            );
+          });
+        }
       }
-    });
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = () => {
-    fetchNextFiveUserStories({ numberOfStory: 5 }).then((querySnapshot) => {
-      if (querySnapshot) {
-        querySnapshot.forEach((doc) => {
-          setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
-        });
-      } else {
-        setHasMoreStories(false);
+    fetchNextFiveUserStories({ userUID: userUID, numberOfStory: 5 }).then(
+      (querySnapshot) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+            checkStoryBookmarked(userUID, doc.id).then((result) =>
+              setIsBookmarked((oldResults) => [...oldResults, result])
+            );
+          });
+        } else {
+          setHasMoreStories(false);
+        }
       }
-    });
+    );
   };
 
   return (

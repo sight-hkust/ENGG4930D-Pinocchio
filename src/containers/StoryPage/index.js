@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, IconButton } from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
 import commentIcon from "../../assets/commentIcon.png";
 import bookmarkIcon from "../../assets/bookmarkedIcon.png";
 import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
-import { bookmarkStory, checkStoryBookmarked } from "../../utils/bookmarkStory";
+import { bookmarkStory } from "../../utils/bookmarkStory";
 import { fetchStoryByID } from "../../utils/fetchStory";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,7 @@ function StoryPage() {
     category: null,
   });
   const { id } = useParams();
+  const userUID = useSelector((state) => state.auth.userUID);
   const handlePreviousPage = () => history.goBack();
 
   useEffect(() => {
@@ -57,12 +59,12 @@ function StoryPage() {
         text: doc.data().text,
         category: doc.data().category,
       });
+      setIsBookmarked(doc.data().bookmarkUserRef.includes(userUID));
     });
-    checkStoryBookmarked(id).then((result) => setIsBookmarked(result));
   }, []);
 
   const handleBookmark = () => {
-    bookmarkStory(id);
+    bookmarkStory(userUID, id);
     setIsBookmarked(!isBookmarked);
   };
 

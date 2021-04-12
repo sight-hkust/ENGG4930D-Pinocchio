@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -12,6 +11,8 @@ import {
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../store/authSlice";
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import loginLogo from "../../assets/loginLogo.png";
@@ -86,43 +87,25 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleClick = () => {
-    console.log("clicked");
-    firebase.auth().onAuthStateChanged(function (user) {
-      console.log("hi");
-      if (user) {
-        console.log("login");
-        history.push("/home");
-        console.log("login2");
-      } else {
-        login();
-      }
-    });
+  var isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setLoginError(false);
+      history.push("/home");
+    }
+  }, [isLoggedIn, dispatch]);
+
+  const handleClick = async () => {
+    if (isLoggedIn) {
+      setLoginError(false);
+      history.push("/home");
+    } else {
+      dispatch(login({ email: email.trim(), password: password.trim() }));
+    }
   };
-
-  const login = () =>
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
-        return firebase
-          .auth()
-          .signInWithEmailAndPassword(email.trim(), password.trim())
-          .then((userCredential) => {
-            var user = userCredential.user;
-            var myStorage = window.localStorage;
-            myStorage.setItem("userUID", user.uid);
-            setUsername(user.displayName);
-            setLoginError(false);
-            console.log("login3");
-            history.push("/home");
-          })
-          .catch((error) => setLoginError(error));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
   return (
     <Grid

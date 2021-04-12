@@ -8,7 +8,6 @@ import {
   Link,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
 

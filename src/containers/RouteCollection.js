@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
-import firebase from "firebase/app";
+import { useSelector } from "react-redux";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage";
 import InterestsPage from "./InterestsPage";
@@ -22,15 +22,7 @@ import BookmarkPage from "./BookmarkPage";
 import LookBackPage from "./LookBackPage";
 
 function RouteCollection() {
-  const [isLoggedIn, setIsLoggedIn] = useState();
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  });
+  var isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>

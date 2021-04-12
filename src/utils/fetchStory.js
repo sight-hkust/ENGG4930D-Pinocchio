@@ -54,10 +54,8 @@ export async function fetchNextFiveStories({ isPublic }) {
     });
 }
 
-export async function fetchBookmarkedStories({ numberOfStory }) {
+export async function fetchBookmarkedStories({ userUID, numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.localStorage;
-  var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
     .where("bookmarkUserRef", "array-contains", userUID)
@@ -75,10 +73,11 @@ export async function fetchBookmarkedStories({ numberOfStory }) {
     .catch((error) => console.log(error));
 }
 
-export async function fetchNextFiveBookmarkedStories({ numberOfStory }) {
+export async function fetchNextFiveBookmarkedStories({
+  userUID,
+  numberOfStory,
+}) {
   const db = firebase.firestore();
-  var myStorage = window.localStorage;
-  var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
     .where("bookmarkUserRef", "array-contains", userUID)
@@ -100,10 +99,8 @@ export async function fetchNextFiveBookmarkedStories({ numberOfStory }) {
     });
 }
 
-export async function fetchUserStory({ numberOfStory }) {
+export async function fetchUserStory({ userUID, numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.localStorage;
-  var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
     .where("userRef", "==", userUID)
@@ -119,10 +116,8 @@ export async function fetchUserStory({ numberOfStory }) {
     .catch((error) => console.log(error));
 }
 
-export async function fetchNextFiveUserStories({ numberOfStory }) {
+export async function fetchNextFiveUserStories({ userUID, numberOfStory }) {
   const db = firebase.firestore();
-  var myStorage = window.localStorage;
-  var userUID = myStorage.getItem("userUID");
   return await db
     .collection("posts")
     .where("userRef", "==", userUID)

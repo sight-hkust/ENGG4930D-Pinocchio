@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import firebase from "firebase/app";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
@@ -99,6 +100,7 @@ function InterestsPage() {
   const history = useHistory();
   const [selected, setSelected] = useState([]);
   const isMobile = useMediaQuery("(max-width:480px)");
+  const userID = useSelector((state) => state.auth.userUID);
 
   const interests = [
     ["Depression", depressionIcon],
@@ -112,21 +114,18 @@ function InterestsPage() {
   ];
 
   const handleSubmit = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(user.uid)
-          .set(
-            {
-              interests: [...selected.map((index) => interests[index][0])],
-            },
-            { merge: true }
-          );
-        history.push("/home");
-      }
-    });
+    console.log(userID);
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(userID)
+      .set(
+        {
+          interests: [...selected.map((index) => interests[index][0])],
+        },
+        { merge: true }
+      );
+    history.push("/home");
   };
 
   return (

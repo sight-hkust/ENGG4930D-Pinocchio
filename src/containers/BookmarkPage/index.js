@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector } from "react-redux";
 import StoryPreviewCard from "../../components/StoryPreviewCard";
 import NavigationBar from "../../components/NavigationBar";
 import {
   fetchBookmarkedStories,
   fetchNextFiveBookmarkedStories,
 } from "../../utils/fetchStory";
-import { checkStoryBookmarked } from "../../utils/bookmarkStory";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -38,23 +38,23 @@ function BookmarkPage() {
   const [stories, setStories] = useState([]);
   const [hasMoreStories, setHasMoreStories] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState([]);
+  const userUID = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
-    fetchBookmarkedStories({ numberOfStory: 5 }).then((querySnapshot) => {
-      if (querySnapshot) {
-        querySnapshot.forEach((doc) => {
-          setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
-          checkStoryBookmarked(doc.id).then((result) =>
-            setIsBookmarked((oldResults) => [...oldResults, result])
-          );
-        });
+    fetchBookmarkedStories({ userUID: userUID, numberOfStory: 5 }).then(
+      (querySnapshot) => {
+        if (querySnapshot) {
+          querySnapshot.forEach((doc) => {
+            setStories((oldStories) => [...oldStories, [doc.id, doc.data()]]);
+          });
+        }
       }
-    });
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = () => {
-    fetchNextFiveBookmarkedStories({ numberOfStory: 5 }).then(
+    fetchNextFiveBookmarkedStories({ userUID: userUID, numberOfStory: 5 }).then(
       (querySnapshot) => {
         if (querySnapshot) {
           querySnapshot.forEach((doc) => {
@@ -80,8 +80,8 @@ function BookmarkPage() {
           {stories.map((story, index) => (
             <StoryPreviewCard
               key={index}
-              isBookmarked={isBookmarked[index]}
-              isPublic
+              isBookmarked={true}
+              isPublic={story[1].isPublic}
               title={story[1].title}
               category={story[1].category}
               storyText={story[1].text}

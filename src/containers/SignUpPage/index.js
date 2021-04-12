@@ -9,7 +9,8 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
+import { useSelector, useDispatch } from "react-redux";
+import { signup } from "../../store/authSlice";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
@@ -81,6 +82,9 @@ function SignUpPage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
@@ -103,39 +107,22 @@ function SignUpPage() {
     } else {
       setPasswordError(false);
     }
+    if (
+      email &&
+      password &&
+      !emailRegex.test(email) &&
+      !passwordRegex.test(password)
+    ) {
+      dispatch(signup({ email: email.trim(), password: password.trim() }));
+    }
   };
 
   useEffect(() => {
-    if (email && password && !emailError && !passwordError) {
-      const signUp = () =>
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(email.trim(), password.trim())
-          .then((userCredential) => {
-            setAccountCreated(true);
-            var user = userCredential.user;
-            firebase.firestore().collection("users").doc(user.uid).set(
-              {
-                email: user.email,
-                emailVerified: user.emailVerified,
-                isAdmin: false,
-              },
-              { merge: true }
-            );
-            user
-              .sendEmailVerification()
-              .then(() => history.push("/interests"))
-              .catch((error) => {
-                console.log("ERROR_EMAIL_VERIFY", error);
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      signUp();
+    if (isLoggedIn) {
+      setAccountCreated(true);
+      history.push("/interests");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [emailError, passwordError]);
+  }, [isLoggedIn, dispatch]);
 
   return (
     <Grid

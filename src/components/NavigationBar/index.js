@@ -11,8 +11,9 @@ import {
   ListItemIcon,
   IconButton,
 } from "@material-ui/core";
-import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/authSlice";
 import menuLogo from "../../assets/menuIcon.png";
 import homeMenuIcon from "../../assets/homeMenuIcon.png";
 import storyBookMenuIcon from "../../assets/storyBookMenuIcon.png";
@@ -62,19 +63,23 @@ function NavigationBar({ showMenu }) {
     left: false,
   });
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+
   const logOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        var myStorage = window.localStorage;
-        myStorage.removeItem("userUID");
-        setIsOpen(true);
-        history.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => {
+    //     var myStorage = window.localStorage;
+    //     myStorage.removeItem("userUID");
+    //     setIsOpen(true);
+    //     history.push("/");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    dispatch(logout());
+    history.push("/");
   };
 
   const toggleDrawer = (anchor, open) => (event) => {

@@ -84,11 +84,17 @@ function CommentPage() {
             {comments.length > 0 ? (
               comments.map((comment, index) => (
                 <>
-                  <Typography key={comment} style={{ padding: "14px 0" }}>
+                  <Typography
+                    key={`typo${comment}`}
+                    style={{ padding: "14px 0" }}
+                  >
                     "{comment}"
                   </Typography>
                   {index < comments.length - 1 && (
-                    <Divider key={index} classes={{ root: classes.divider }} />
+                    <Divider
+                      key={`divider${index}`}
+                      classes={{ root: classes.divider }}
+                    />
                   )}
                 </>
               ))
