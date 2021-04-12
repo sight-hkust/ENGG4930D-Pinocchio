@@ -87,19 +87,14 @@ function LoginPage() {
   const [loginError, setLoginError] = useState();
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        history.push("/home");
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleClick = () => {
+    console.log("clicked");
     firebase.auth().onAuthStateChanged(function (user) {
+      console.log("hi");
       if (user) {
-        return;
+        console.log("login");
+        history.push("/home");
+        console.log("login2");
       } else {
         login();
       }
@@ -120,6 +115,8 @@ function LoginPage() {
             myStorage.setItem("userUID", user.uid);
             setUsername(user.displayName);
             setLoginError(false);
+            console.log("login3");
+            history.push("/home");
           })
           .catch((error) => setLoginError(error));
       })
@@ -174,7 +171,7 @@ function LoginPage() {
             Incorrect Email or Password😕
           </Typography>
         )}
-        <NextButton onClick={handleClick} />
+        <NextButton onClick={() => handleClick()} />
       </Grid>
       <img
         alt=''

@@ -68,7 +68,7 @@ function LookBackPage() {
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>The Storybook</Typography>
+      <Typography className={classes.title}>Look back</Typography>
       {stories.length > 0 ? (
         <InfiniteScroll
           dataLength={stories.length}

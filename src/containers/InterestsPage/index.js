@@ -187,7 +187,7 @@ function InterestsPage() {
         {selected.length !== 0 && (
           <NextButton
             style={{ marginLeft: 285, marginBottom: 20 }}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           />
         )}
       </Grid>

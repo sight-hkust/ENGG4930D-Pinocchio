@@ -150,7 +150,14 @@ function HomePage() {
             </Typography>
           </Grid>
         </Button>
-        <Grid container item justify='flex-end'>
+        <Grid
+          container
+          item
+          direction='row'
+          justify='flex-end'
+          style={{ alignItems: "center" }}
+        >
+          <Typography>Ask For Help</Typography>
           <IconButton
             onClick={(e) => handleCall(e)}
             style={{ marginRight: 20 }}

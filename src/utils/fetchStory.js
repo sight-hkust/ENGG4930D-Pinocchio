@@ -65,7 +65,6 @@ export async function fetchBookmarkedStories({ numberOfStory }) {
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
-      console.log("querySnapshot:", querySnapshot);
       if (!querySnapshot.empty) {
         lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
         return querySnapshot;

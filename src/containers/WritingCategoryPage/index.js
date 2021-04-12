@@ -140,7 +140,7 @@ function WritingCategoryPage() {
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
-        <Typography className={classes.title}>Choose your interests</Typography>
+        <Typography className={classes.title}>Write your thoughts</Typography>
         <Typography className={classes.description}>
           Choose a category for your story:
         </Typography>
@@ -179,7 +179,7 @@ function WritingCategoryPage() {
               onClick={() => comfirmUpload({ isPublic: false })}
             >
               <Typography className={classes.buttonBoldText}>
-                Pubslih For Me
+                Publish For Me
               </Typography>
             </Button>
             <Button
