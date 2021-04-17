@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -19,13 +19,10 @@ const useStyles = makeStyles((theme) => ({
       alignItems: "center",
     },
   },
-
   title: {
     fontWeight: "bold",
-    lineHeight: 1,
     fontSize: 50,
     textAlign: "center",
-    paddingBottom: 9,
     paddingTop: 25,
     "@media (max-width:480px)": {
       fontSize: 35,
@@ -109,9 +106,12 @@ function LandingPage() {
       {isMobile ? (
         <Grid container direction='column' alignItems='center'>
           <NavigationBar showMenu />
-          <Typography className={classes.title}>
-            Welcome to Pinocchio
-          </Typography>
+          <b className={classes.title}>
+            {"Welcome to "}
+            <span style={{ boxShadow: "inset 0 -13px 0 0 #FEBD7D" }}>
+              Pinocchio
+            </span>
+          </b>
           <Typography className={classes.description}>
             Start your journey with us
           </Typography>
@@ -139,10 +139,12 @@ function LandingPage() {
       ) : (
         <>
           <Grid container direction='column' alignItems='center'>
-            <Typography className={classes.title}>
-              {" "}
-              Welcome to Pinocchio
-            </Typography>
+            <b className={classes.title}>
+              {"Welcome to "}
+              <span style={{ boxShadow: "inset 0 -10px 0 0 #FEBD7D" }}>
+                Pinocchio
+              </span>
+            </b>
             <Typography className={classes.description}>
               Start your journey with us
             </Typography>

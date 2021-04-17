@@ -120,7 +120,10 @@ function LoginPage() {
       >
         <img alt='arrowLeft' src={arrowLeftImage} />
       </IconButton>
-      <Typography className={classes.title}>Welcome back!</Typography>
+      <b className={classes.title}>
+        <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>Welcome</span>
+        {" back!"}
+      </b>
       <Typography className={classes.description}>
         we’re happy you come back to us 💜
       </Typography>
@@ -161,9 +164,9 @@ function LoginPage() {
         src={loginLogo}
         style={{
           position: "absolute",
-          right: 0,
+          left: 0,
           bottom: 0,
-          height: "35vh",
+          height: "30vh",
           zIndex: -1,
         }}
       />

@@ -57,7 +57,10 @@ function WritingPage() {
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>Write your thoughts</Typography>
+      <Typography className={classes.title}>
+        Write your{" "}
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>thoughts</span>
+      </Typography>
       <StoryInput
         onBodyTextChange={(e) => setStoryText(e.target.value)}
         onTitleChange={(e) => setTitle(e.target.value)}

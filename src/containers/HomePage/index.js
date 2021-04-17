@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";
@@ -18,15 +19,17 @@ import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    width: "fit-content",
     fontWeight: "bold",
-    lineHeight: 1,
-    fontSize: 100,
+    fontSize: 60,
+    lineHeight: "normal",
     textAlign: "center",
     "@media (max-width:480px)": {
-      fontSize: 35,
-      marginTop: "5vh",
+      marginLeft: 35,
+      paddingTop: 30,
+      fontSize: 40,
+      whiteSpace: "break-spaces",
       textAlign: "left",
-      paddingLeft: 20,
     },
   },
   button: {
@@ -83,9 +86,14 @@ function HomePage() {
   };
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>For You</Typography>
+      <Typography
+        className={classes.title}
+        style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}
+      >
+        For You
+      </Typography>
       <Grid container item direction='column' className={classes.cardContainer}>
         <Grid
           container

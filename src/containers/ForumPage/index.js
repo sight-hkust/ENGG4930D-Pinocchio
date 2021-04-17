@@ -69,7 +69,12 @@ function ForumPage() {
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography className={classes.title}>The Storybook</Typography>
+      <Typography className={classes.title}>
+        The{" "}
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
+          Storybook
+        </span>
+      </Typography>
       <InfiniteScroll
         dataLength={stories.length}
         next={fetchData}

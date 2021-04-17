@@ -23,11 +23,12 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight: "bold",
-    lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
+    paddingTop: 25,
     "@media (max-width:480px)": {
       fontSize: 35,
+      paddingTop: 0,
       marginTop: "5vh",
     },
   },
@@ -137,7 +138,12 @@ function SignUpPage() {
       >
         <img alt='arrowLeft' src={arrowLeftImage} />
       </IconButton>
-      <Typography className={classes.title}>Let’s get started!</Typography>
+      <b className={classes.title}>
+        <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>
+          Let’s get
+        </span>
+        {" started!"}
+      </b>
       <Typography className={classes.description}>
         come and join us💜
       </Typography>
@@ -181,17 +187,17 @@ function SignUpPage() {
         )}
         <NextButton onClick={() => handleClick()} />
       </Grid>
-      {/* <img
+      <img
         alt=''
         src={signupLogo}
         style={{
           position: "absolute",
           right: 0,
           bottom: 0,
-          height: "35vh",
+          height: "30vh",
           zIndex: -1,
         }}
-      /> */}
+      />
     </Grid>
   );
 }

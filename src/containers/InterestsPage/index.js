@@ -132,7 +132,12 @@ function InterestsPage() {
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
-        <Typography className={classes.title}>Choose your interests</Typography>
+        <b className={classes.title}>
+          {"Choose your "}
+          <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
+            interests
+          </span>
+        </b>
         <Typography className={classes.description}>
           As your heart desires
         </Typography>
