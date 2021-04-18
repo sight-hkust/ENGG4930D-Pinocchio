@@ -99,7 +99,7 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 
-  var isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  var isLoggedIn = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
     if (isLoggedIn) {

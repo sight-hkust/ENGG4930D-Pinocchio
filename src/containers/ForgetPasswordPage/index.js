@@ -11,6 +11,7 @@ import {
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import { sendPasswordResetEmail } from "../../utils/auth";
+import loginLogo from "../../assets/loginLogo.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -43,6 +44,16 @@ const useStyles = makeStyles((theme) => ({
   input: {
     backgroundColor: "#EAEAEA",
     padding: "8px 12px",
+  },
+  description: {
+    fontSize: 25,
+    textAlign: "center",
+    margin: 0,
+    color: "#838181",
+    "@media (max-width:480px)": {
+      fontSize: 20,
+      paddingTop: "2vh",
+    },
   },
 }));
 
@@ -78,8 +89,14 @@ function ForgetPasswordPage() {
       >
         <img alt='arrowLeft' src={arrowLeftImage} />
       </IconButton>
-      <Typography className={classes.title}>
-        Oops! Forget your password?
+      <b className={classes.title}>
+        <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>
+          Forgot Pa
+        </span>
+        {"ssword?"}
+      </b>
+      <Typography className={classes.description}>
+        No worries, we got your back!
       </Typography>
       <Grid container item className={classes.inputForm} direction='column'>
         <Typography className={classes.inputLabel}>
@@ -100,6 +117,16 @@ function ForgetPasswordPage() {
         <NextButton
           onClick={() => handleClick()}
           style={{ padding: 0, paddingTop: 10 }}
+        />
+        <img
+          alt=''
+          src={loginLogo}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            width: "70vw",
+            zIndex: -1,
+          }}
         />
       </Grid>
     </Grid>

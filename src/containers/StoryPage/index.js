@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, IconButton } from "@material-ui/core";
+import { Typography, Grid, IconButton, Button } from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
@@ -10,6 +10,7 @@ import bookmarkIcon from "../../assets/bookmarkedIcon.png";
 import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
 import { bookmarkStory } from "../../utils/bookmarkStory";
 import { fetchStoryByID } from "../../utils/fetchStory";
+import { deleteStory } from "../../utils/deleteStory";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -28,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     flexWrap: "nowrap",
   },
+  deleteButton: {
+    background: "#F59598",
+    borderRadius: 20,
+    padding: "5px 20px",
+    marginRight: 8,
+  },
 }));
 
 function StoryPage() {
@@ -43,6 +50,8 @@ function StoryPage() {
   });
   const { id } = useParams();
   const userUID = useSelector((state) => state.auth.userUID);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+
   const handlePreviousPage = () => history.goBack();
 
   useEffect(() => {
@@ -66,6 +75,11 @@ function StoryPage() {
   const handleBookmark = () => {
     bookmarkStory(userUID, id);
     setIsBookmarked(!isBookmarked);
+  };
+
+  const handleDelete = () => {
+    deleteStory(id);
+    history.push("/forum");
   };
 
   return (
@@ -112,6 +126,14 @@ function StoryPage() {
             onClick={() => handlePreviousPage()}
           />
           <Grid style={{ alignSelf: "center" }}>
+            {isAdmin && (
+              <Button
+                className={classes.deleteButton}
+                onClick={() => handleDelete()}
+              >
+                Delete
+              </Button>
+            )}
             <IconButton
               style={{
                 padding: 0,

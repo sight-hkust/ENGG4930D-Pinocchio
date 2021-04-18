@@ -85,7 +85,7 @@ function SignUpPage() {
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.userUID);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

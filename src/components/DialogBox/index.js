@@ -16,9 +16,8 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:480px)": {
       width: 30,
       height: 30,
-      minWidth: 80,
+      minWidth: 90,
       fontWeight: "bold",
-      marginLeft: 30,
     },
   },
   nobutton: {
@@ -46,18 +45,15 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
   },
   box: {
+    padding: 10,
     backgroundColor: "#FFD7D7",
     borderRadius: 20,
-    marginBottom: "1vh",
-    height: 130,
   },
   boxText: {
     fontSize: 10,
     "@media (max-width:480px)": {
       fontSize: 14,
-      paddingLeft: 20,
-      paddingRight: 12,
-      paddingTop: 30,
+      padding: 20,
     },
   },
   headsUp: {
@@ -70,12 +66,26 @@ const useStyles = makeStyles((theme) => ({
 
 function DialogBox(props) {
   const classes = useStyles();
-  const { open, text, onClose, onClickYes, onClickNo, ...rest } = props;
+  const {
+    open,
+    text,
+    onClose,
+    onClickYes,
+    onClickNo,
+    HTMLString,
+    yesText,
+    ...rest
+  } = props;
   return (
     <Modal
       open={open}
       onClose={onClose}
-      style={{ top: "35vh", width: "75vw", left: "14vw" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "0 10vw",
+      }}
     >
       <Grid
         container
@@ -105,18 +115,25 @@ function DialogBox(props) {
           className={classes.box}
           justify='flex-end'
         >
-          <Typography className={classes.boxText}>{text}</Typography>
-
+          {text && <Typography className={classes.boxText}>{text}</Typography>}
+          {HTMLString && (
+            <div
+              style={{ fontFamily: "Open Sans", padding: "20px 15px" }}
+              dangerouslySetInnerHTML={{ __html: HTMLString }}
+            />
+          )}
           <Button className={classes.yesbutton}>
             <Typography className={classes.buttontext} onClick={onClickYes}>
-              Yes
+              {yesText ? yesText : "Yes"}
             </Typography>
           </Button>
-          <Button className={classes.nobutton}>
-            <Typography className={classes.buttontext} onClick={onClickNo}>
-              No
-            </Typography>
-          </Button>
+          {onClickNo && (
+            <Button className={classes.nobutton}>
+              <Typography className={classes.buttontext} onClick={onClickNo}>
+                No
+              </Typography>
+            </Button>
+          )}
         </Grid>
       </Grid>
     </Modal>

@@ -8,7 +8,6 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";

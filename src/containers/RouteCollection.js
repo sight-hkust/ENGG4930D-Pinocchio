@@ -23,7 +23,7 @@ import LookBackPage from "./LookBackPage";
 import ForgetPasswordPage from "./ForgetPasswordPage";
 
 function RouteCollection() {
-  var isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  var isLoggedIn = useSelector((state) => state.auth.userUID);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>

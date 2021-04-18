@@ -10,6 +10,7 @@ export function uploadComment(userUID, storyID, comment) {
           userRef: userUID,
           comment: comment,
           toxicity: score,
+          time: firebase.firestore.Timestamp.now(),
         })
         .catch((error) => console.log(error));
     } else {

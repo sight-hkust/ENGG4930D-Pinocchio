@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -10,6 +10,7 @@ import {
 import { useHistory } from "react-router-dom";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
+import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -97,9 +98,17 @@ function LandingPage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
+  const [showDialogBox, setShowDialogBox] = useState(false);
 
   return (
     <Grid container direction='column'>
+      <DialogBox
+        open={showDialogBox}
+        HTMLString="<b>Your data will be kept safe with us</b><br><br>All posts are <u>anonymous</u> and private posts are only accessible to <u>you</u>.<br><br>If you ever feel like your privacy is breached, you can <u>delete all your posts</u>, and our database will remove them immediately.<br><br>So don't worry and write away!"
+        onClose={() => setShowDialogBox(false)}
+        onClickYes={() => history.push("/signUp")}
+        yesText="Let's Start"
+      ></DialogBox>
       <NavigationBar showMenu />
       <Grid
         container
@@ -135,10 +144,7 @@ function LandingPage() {
         </Typography>
         <Typography className={classes.linkText}>
           New to Pinocchio?
-          <Link
-            className={classes.link}
-            onClick={() => history.push("/signUp")}
-          >
+          <Link className={classes.link} onClick={() => setShowDialogBox(true)}>
             {" Sign Up"}
           </Link>
         </Typography>

@@ -6,9 +6,16 @@ export const login = createAsyncThunk("auth/login", async (data) => {
   return await firebase
     .auth()
     .signInWithEmailAndPassword(data.email, data.password)
-    .then((userCredential) => {
-      var user = userCredential.user;
-      return user.uid;
+    .then(async (userCredential) => {
+      var userUID = userCredential.user.uid;
+      return await firebase
+        .firestore()
+        .collection("users")
+        .doc(userUID)
+        .get()
+        .then((result) => {
+          return { userUID: userUID, isAdmin: result.data().isAdmin };
+        });
     })
     .catch((error) => console.log(error));
 });
@@ -50,18 +57,21 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     userUID: "",
-    isLoggedIn: false,
+    isAdmin: false,
   },
   reducers: {},
   extraReducers: {
     [login.fulfilled]: (state, action) => {
-      return { userUID: action.payload, isLoggedIn: true };
+      return {
+        userUID: action.payload.userUID,
+        isAdmin: action.payload.isAdmin,
+      };
     },
     [logout.fulfilled]: (state, action) => {
-      return { userUID: "", isLoggedIn: false };
+      return { userUID: "", isAdmin: false };
     },
     [signup.fulfilled]: (state, action) => {
-      return { userUID: action.payload, isLoggedIn: true };
+      return { userUID: action.payload, isAdmin: false };
     },
   },
 });

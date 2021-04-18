@@ -24,7 +24,9 @@ export async function checkStoryBookmarked(userUID, storyID) {
   return await story
     .get()
     .then(async (doc) => {
-      return doc.data().bookmarkUserRef.includes(userUID);
+      if (doc.exists) {
+        return doc.data().bookmarkUserRef.includes(userUID);
+      }
     })
     .catch((error) => console.log(error));
 }
