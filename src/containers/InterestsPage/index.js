@@ -114,7 +114,6 @@ function InterestsPage() {
   ];
 
   const handleSubmit = () => {
-    console.log(userID);
     firebase
       .firestore()
       .collection("users")

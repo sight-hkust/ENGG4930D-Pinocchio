@@ -8,6 +8,7 @@ import {
   InputBase,
   IconButton,
   InputAdornment,
+  Link,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "49px 69px 0px",
+    padding: "2vh 15vw 0vh",
   },
   errorMessage: {
     color: "#FF0000",
@@ -70,11 +71,20 @@ const useStyles = makeStyles((theme) => ({
     color: "#838181",
     textAlign: "left",
     fontSize: 14,
+    marginTop: 18,
   },
   input: {
     backgroundColor: "#EAEAEA",
     padding: "8px 12px",
-    marginBottom: 18,
+  },
+  forgetPasswordText: {
+    color: "#838181",
+    fontSize: 14,
+  },
+  passwordResetAndSubmitGrid: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 10,
   },
 }));
 
@@ -128,7 +138,9 @@ function LoginPage() {
         we’re happy you come back to us 💜
       </Typography>
       <Grid container item className={classes.inputForm} direction='column'>
-        <Typography className={classes.inputLabel}>ITSC Email</Typography>
+        <Typography className={classes.inputLabel}>
+          Full ITSC Email Address
+        </Typography>
         <InputBase
           className={classes.input}
           autoComplete='email'
@@ -140,6 +152,7 @@ function LoginPage() {
         <InputBase
           className={classes.input}
           type={showPassword ? "text" : "password"}
+          autoComplete='current-password'
           onChange={(e) => setPassword(e.target.value)}
           endAdornment={
             <InputAdornment position='end'>
@@ -157,7 +170,19 @@ function LoginPage() {
             Incorrect Email or Password😕
           </Typography>
         )}
-        <NextButton onClick={() => handleClick()} />
+        <Grid
+          container
+          direction='row'
+          className={classes.passwordResetAndSubmitGrid}
+        >
+          <Link
+            className={classes.forgetPasswordText}
+            onClick={() => history.push("/forgetPassword")}
+          >
+            Forgot your secret word?
+          </Link>
+          <NextButton onClick={() => handleClick()} style={{ padding: 0 }} />
+        </Grid>
       </Grid>
       <img
         alt=''

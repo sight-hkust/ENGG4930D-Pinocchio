@@ -16,6 +16,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import signupLogo from "../../assets/signupLogo.png";
+import { checkIfUserExists } from "../../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "49px 69px 0px",
+    padding: "2vh 15vw 0vh",
   },
   errorMessage: {
     color: "#FF0000",
@@ -71,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
     color: "#838181",
     textAlign: "left",
     fontSize: 14,
+    marginTop: 18,
   },
   input: {
     backgroundColor: "#EAEAEA",
     padding: "8px 12px",
-    marginBottom: 18,
   },
 }));
 
@@ -89,8 +90,8 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
-  const [emailError, setEmailError] = useState();
-  const [passwordError, setPasswordError] = useState();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const emailRegex = /.+@.*ust.hk$/gm;
   const passwordRegex = /^.{8,}$/gm;
@@ -98,9 +99,9 @@ function SignUpPage() {
   const handleClick = () => {
     if (!emailRegex.test(email)) {
       setEmail("");
-      setEmailError(true);
+      setEmailError("Please use ITSC account eg. xxxxxxxx@connect.ust.hk");
     } else {
-      setEmailError(false);
+      setEmailError("");
     }
     if (!passwordRegex.test(password)) {
       setPassword("");
@@ -108,13 +109,14 @@ function SignUpPage() {
     } else {
       setPasswordError(false);
     }
-    if (
-      email &&
-      password &&
-      !emailRegex.test(email) &&
-      !passwordRegex.test(password)
-    ) {
-      dispatch(signup({ email: email.trim(), password: password.trim() }));
+    if (email && password && !(emailError.length > 0) && !passwordError) {
+      checkIfUserExists(email).then((res) => {
+        if (res) {
+          setEmailError("Account already created");
+        } else {
+          dispatch(signup({ email: email.trim(), password: password.trim() }));
+        }
+      });
     }
   };
 
@@ -160,6 +162,7 @@ function SignUpPage() {
         <Typography className={classes.inputLabel}>Your secret word</Typography>
         <InputBase
           className={classes.input}
+          autoComplete='new-password'
           type={showPassword ? "text" : "password"}
           onChange={(e) => setPassword(e.target.value)}
           value={password}
@@ -181,11 +184,12 @@ function SignUpPage() {
           </Typography>
         )}
         {emailError && (
-          <Typography className={classes.errorMessage}>
-            Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
-          </Typography>
+          <Typography className={classes.errorMessage}>{emailError}</Typography>
         )}
-        <NextButton onClick={() => handleClick()} />
+        <NextButton
+          onClick={() => handleClick()}
+          style={{ padding: 0, paddingTop: 10 }}
+        />
       </Grid>
       <img
         alt=''

@@ -66,18 +66,6 @@ function NavigationBar({ showMenu }) {
   const dispatch = useDispatch();
 
   const logOut = () => {
-    // firebase
-    //   .auth()
-    //   .signOut()
-    //   .then(() => {
-    //     var myStorage = window.localStorage;
-    //     myStorage.removeItem("userUID");
-    //     setIsOpen(true);
-    //     history.push("/");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     dispatch(logout());
     history.push("/");
   };
@@ -140,7 +128,7 @@ function NavigationBar({ showMenu }) {
           <ListItem
             button
             key={text + index}
-            onClick={() => history.push("/lookback")}
+            onClick={() => history.push("/lookBack")}
           >
             <ListItemIcon>
               <img alt='lookback' src={lookBackMenuIcon}></img>

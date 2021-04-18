@@ -102,7 +102,7 @@ function HomePage() {
         >
           <Button
             className={classes.button}
-            onClick={() => history.push("/lookback")}
+            onClick={() => history.push("/lookBack")}
           >
             <img alt='lookback' src={lookBackImage}></img>
             <Typography className={classes.buttonHeadingText}>

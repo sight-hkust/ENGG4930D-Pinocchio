@@ -20,6 +20,7 @@ import StoryPage from "./StoryPage";
 import CommentPage from "./CommentPage";
 import BookmarkPage from "./BookmarkPage";
 import LookBackPage from "./LookBackPage";
+import ForgetPasswordPage from "./ForgetPasswordPage";
 
 function RouteCollection() {
   var isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -30,11 +31,14 @@ function RouteCollection() {
         <Route exact path='/'>
           <LandingPage />
         </Route>
-        <Route exact path='/signup'>
+        <Route exact path='/signUp'>
           <SignUpPage />
         </Route>
         <Route exact path='/login'>
           <LoginPage />
+        </Route>
+        <Route exact path='/forgetPassword'>
+          <ForgetPasswordPage />
         </Route>
         <Route exact path='/interests'>
           <InterestsPage />
@@ -67,7 +71,7 @@ function RouteCollection() {
         <Route exact path='/bookmark'>
           {isLoggedIn ? <BookmarkPage /> : <Redirect to={{ pathname: "/" }} />}
         </Route>
-        <Route exact path='/lookback'>
+        <Route exact path='/lookBack'>
           {isLoggedIn ? <LookBackPage /> : <Redirect to={{ pathname: "/" }} />}
         </Route>
         <Route exact path='*'>

@@ -13,11 +13,7 @@ import NavigationBar from "../../components/NavigationBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    alignContent: "flex-start",
     alignItems: "center",
-    "@media (max-width:480px)": {
-      alignItems: "center",
-    },
   },
   title: {
     fontWeight: "bold",
@@ -54,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: "5vh",
     },
   },
-  signInText: {
+  linkText: {
     color: "#838181",
     fontSize: 28,
+    padding: "5px 0",
     "@media (max-width:480px)": {
       fontSize: 14,
     },
@@ -102,75 +99,50 @@ function LandingPage() {
   const isMobile = useMediaQuery("(max-width:480px)");
 
   return (
-    <Grid container className={classes.container}>
-      {isMobile ? (
-        <Grid container direction='column' alignItems='center'>
-          <NavigationBar showMenu />
-          <b className={classes.title}>
-            {"Welcome to "}
-            <span style={{ boxShadow: "inset 0 -13px 0 0 #FEBD7D" }}>
-              Pinocchio
-            </span>
-          </b>
-          <Typography className={classes.description}>
-            Start your journey with us
-          </Typography>
-          <img
-            src={landingPinocchio}
-            alt='Logo'
-            className={classes.landingPinocchio}
-          ></img>
-          <Button
-            className={classes.button}
-            onClick={() => history.push("/signup")}
+    <Grid container direction='column'>
+      <NavigationBar showMenu />
+      <Grid
+        container
+        className={classes.container}
+        direction='column'
+        alignItems='center'
+      >
+        <b className={classes.title}>
+          {"Welcome to "}
+          <span style={{ boxShadow: "inset 0 -10px 0 0 #FEBD7D" }}>
+            Pinocchio
+          </span>
+        </b>
+        <Typography className={classes.description}>
+          Start your journey with us
+        </Typography>
+        <img
+          src={landingPinocchio}
+          alt='Logo'
+          className={classes.landingPinocchio}
+        ></img>
+        <Button
+          className={classes.button}
+          onClick={() => history.push("/forum")}
+        >
+          <Typography className={classes.buttonText}>Try Now</Typography>
+        </Button>
+        <Typography className={classes.linkText}>
+          Already have an account?
+          <Link className={classes.link} onClick={() => history.push("/login")}>
+            {" Sign In"}
+          </Link>
+        </Typography>
+        <Typography className={classes.linkText}>
+          New to Pinocchio?
+          <Link
+            className={classes.link}
+            onClick={() => history.push("/signUp")}
           >
-            <Typography className={classes.buttonText}>Sign Up</Typography>
-          </Button>
-          <Typography className={classes.signInText}>
-            Already have an account?
-            <Link
-              className={classes.link}
-              onClick={() => history.push("/login")}
-            >
-              {" Sign In"}
-            </Link>
-          </Typography>
-        </Grid>
-      ) : (
-        <>
-          <Grid container direction='column' alignItems='center'>
-            <b className={classes.title}>
-              {"Welcome to "}
-              <span style={{ boxShadow: "inset 0 -10px 0 0 #FEBD7D" }}>
-                Pinocchio
-              </span>
-            </b>
-            <Typography className={classes.description}>
-              Start your journey with us
-            </Typography>
-            <img
-              src={landingPinocchio}
-              alt='Logo'
-              className={classes.landingPinocchio}
-            ></img>
-            <Button
-              className={classes.button}
-              onClick={() => history.push("/signup")}
-            >
-              <Typography className={classes.buttonText}>Sign Up</Typography>
-            </Button>
-            <Typography className={classes.signInText}>
-              Already have an account?
-              <Link
-                className={classes.link}
-                onClick={() => history.push("/login")}
-              >
-                {" Sign In"}
-              </Link>
-            </Typography>
-          </Grid>
-        </>
-      )}
+            {" Sign Up"}
+          </Link>
+        </Typography>
+      </Grid>
     </Grid>
   );
 }

@@ -23,3 +23,29 @@ export function uploadStory(userUID, storyText, title, category, isPublic) {
     )
     .catch((error) => console.log(error));
 }
+
+export function uploadToxicStory(
+  userUID,
+  storyText,
+  title,
+  category,
+  isPublic,
+  titleToxicity,
+  textToxicity
+) {
+  var db = firebase.firestore();
+  db.collection("toxicPosts")
+    .add({
+      userRef: userUID,
+      category: category,
+      title: title,
+      text: storyText,
+      time: firebase.firestore.Timestamp.now(),
+      isPublic: isPublic,
+      bookmarkUserRef: [],
+      comments: [],
+      titleToxicity: titleToxicity,
+      textToxicity: textToxicity,
+    })
+    .catch((error) => console.log(error));
+}

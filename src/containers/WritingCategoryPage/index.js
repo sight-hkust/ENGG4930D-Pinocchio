@@ -12,8 +12,9 @@ import ptsdIcon from "../../assets/ptsdIcon.png";
 import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
-import { uploadStory } from "../../utils/uploadStory";
+import { uploadStory, uploadToxicStory } from "../../utils/uploadStory";
 import DialogBox from "../../components/DialogBox";
+import { processStory } from "../../utils/toxicity";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -130,10 +131,20 @@ function WritingCategoryPage() {
     let title = sessionStorage.getItem("title");
     let storyText = sessionStorage.getItem("storyText");
     if (title && storyText && selected !== undefined) {
-      uploadStory(userUID, storyText, title, interests[selected][0], isPublic);
+      if (isPublic) {
+        processStory(userUID, title, storyText, interests[selected][0]);
+      } else {
+        uploadStory(
+          userUID,
+          storyText,
+          title,
+          interests[selected][0],
+          false // Private post
+        );
+      }
       history.push("/forum");
     } else {
-      throw Error("ERROR_NO_STORY_STORED");
+      throw Error("ERROR_NO_STORY_IN_SESSION_STORAGE");
     }
   };
 
