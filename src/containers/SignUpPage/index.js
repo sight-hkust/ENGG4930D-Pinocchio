@@ -16,6 +16,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NextButton from "../../components/NextButton";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import signupLogo from "../../assets/signupLogo.png";
+import signUpLogoWeb from "../../assets/signUpLogoWeb.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: "bold",
     lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
     "@media (max-width:480px)": {
       fontSize: 35,
       marginTop: "5vh",
     },
   },
+
   description: {
     fontSize: 25,
     textAlign: "center",
@@ -59,7 +61,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "49px 69px 0px",
+    padding: "80px 450px 0px",
+    paddingLeft: 100,
+    paddingRight: 900,
   },
   errorMessage: {
     color: "#FF0000",
@@ -73,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     backgroundColor: "#EAEAEA",
-    padding: "8px 12px",
+    padding: "12px 12px",
     marginBottom: 18,
   },
 }));
@@ -131,16 +135,100 @@ function SignUpPage() {
       direction='column'
       alignItems='center'
     >
+    {isMobile ? (
+       <Grid
+       container
+       className={classes.container}
+       direction='column'
+       alignItems='center'
+      >
+        <IconButton
+          style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+          onClick={() => history.goBack()}
+        >
+          <img alt='arrowLeft' src={arrowLeftImage}  />
+        </IconButton>
+        <Typography className={classes.title}>Let’s get started!</Typography>
+        <Typography className={classes.description}>
+          come and join us💜
+        </Typography>
+        <Grid container item direction='column' className={classes.inputForm}>
+          <Typography className={classes.inputLabel}>ITSC Email</Typography>
+          <InputBase
+            className={classes.input}
+            autoComplete='email'
+            autoFocus
+            inputProps={{ autoCapitalize: "none" }}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          ></InputBase>
+          <Typography className={classes.inputLabel}>Your secret word</Typography>
+          <InputBase
+            className={classes.input}
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge='end'
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          ></InputBase>
+
+          {passwordError && (
+            <Typography className={classes.errorMessage}>
+              Secret word is too short😳 Use {">"}= 8 characters
+            </Typography>
+          )}
+          {emailError && (
+            <Typography className={classes.errorMessage}>
+              Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
+            </Typography>
+          )}
+          <NextButton onClick={() => handleClick()} />
+      </Grid>
+      { <img
+        alt=''
+        src={signupLogo}
+        style={{
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          height: "35vh",
+          zIndex: -1,
+        }}
+      /> }
+      </Grid>
+    ) : (
+      <Grid
+       container
+       className={classes.container}
+       direction='column'
+       alignItems='center'
+        >
       <IconButton
         style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
         onClick={() => history.goBack()}
       >
         <img alt='arrowLeft' src={arrowLeftImage} />
       </IconButton>
-      <Typography className={classes.title}>Let’s get started!</Typography>
-      <Typography className={classes.description}>
-        come and join us💜
+      <Grid
+       container
+       direction='column'
+       className={classes.container}
+       style = {{ alignSelf : "flex-start"}}
+       >
+      <Typography className={classes.title} style = {{ alignSelf : "flex-start", paddingLeft: 130, paddingTop: 100}}>
+        Let’s get started!</Typography>
+      <Typography className={classes.description} style = {{ alignSelf : "flex-start", paddingLeft: 190, paddingTop: 20}}>
+        No request is too extreme
       </Typography>
+      </Grid>
       <Grid container item direction='column' className={classes.inputForm}>
         <Typography className={classes.inputLabel}>ITSC Email</Typography>
         <InputBase
@@ -151,7 +239,7 @@ function SignUpPage() {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         ></InputBase>
-        <Typography className={classes.inputLabel}>Your secret word</Typography>
+        <Typography className={classes.inputLabel}>Choose a secret word</Typography>
         <InputBase
           className={classes.input}
           type={showPassword ? "text" : "password"}
@@ -181,17 +269,19 @@ function SignUpPage() {
         )}
         <NextButton onClick={() => handleClick()} />
       </Grid>
-      {/* <img
+      {<img
         alt=''
-        src={signupLogo}
+        src={signUpLogoWeb}
         style={{
           position: "absolute",
           right: 0,
           bottom: 0,
-          height: "35vh",
+          height: 650,
           zIndex: -1,
         }}
-      /> */}
+      /> }
+      </Grid>
+    )}
     </Grid>
   );
 }

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 50,
     textAlign: "center",
     paddingBottom: 9,
-    paddingTop: 25,
+    paddingTop: 10,
     "@media (max-width:480px)": {
       fontSize: 35,
       paddingTop: 0,
@@ -153,9 +153,9 @@ function LandingPage() {
             ></img>
             <Button
               className={classes.button}
-              onClick={() => history.push("/signup")}
+              //onClick={() => history.push("/signup")}
             >
-              <Typography className={classes.buttonText}>Sign Up</Typography>
+              <Typography className={classes.buttonText}>Try Now</Typography>
             </Button>
             <Typography className={classes.signInText}>
               Already have an account?
@@ -164,6 +164,15 @@ function LandingPage() {
                 onClick={() => history.push("/login")}
               >
                 {" Sign In"}
+              </Link>
+            </Typography>
+            <Typography className={classes.signInText}>
+              New to Pinocchio?
+              <Link
+                className={classes.link}
+                onClick={() => history.push("/signup")}
+              >
+                {" Sign Up"}
               </Link>
             </Typography>
           </Grid>

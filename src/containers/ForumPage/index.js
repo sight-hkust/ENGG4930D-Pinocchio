@@ -11,7 +11,7 @@ import { checkStoryBookmarked } from "../../utils/bookmarkStory";
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: "bold",
-    fontSize: 60,
+    fontSize: 50,
     lineHeight: "normal",
     textAlign: "center",
     "@media (max-width:480px)": {

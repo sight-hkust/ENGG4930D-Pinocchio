@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: "bold",
     lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
     "@media (max-width:480px)": {
       fontSize: 35,

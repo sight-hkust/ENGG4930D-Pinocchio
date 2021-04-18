@@ -24,13 +24,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: "bold",
     lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
     "@media (max-width:480px)": {
       fontSize: 35,
       marginTop: "5vh",
     },
   },
+
   description: {
     fontSize: 25,
     textAlign: "center",
@@ -59,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "49px 69px 0px",
+    padding: "80px 450px 0px",
+    paddingLeft: 100,
+    paddingRight: 900,
   },
   errorMessage: {
     color: "#FF0000",
@@ -73,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     backgroundColor: "#EAEAEA",
-    padding: "8px 12px",
+    padding: "12px 12px",
     marginBottom: 18,
   },
 }));
@@ -108,22 +111,99 @@ function LoginPage() {
   };
 
   return (
-    <Grid
-      container
-      className={classes.container}
-      direction='column'
-      alignItems='center'
-    >
+      <Grid
+        container
+        className={classes.container}
+        direction='column'
+        alignItems='center'
+      >
+      {isMobile ? (
+         <Grid
+          container
+          className={classes.container}
+          direction='column'
+          alignItems='center'
+        >
+        <IconButton
+          style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+          onClick={() => history.goBack()}
+        >
+          <img alt='arrowLeft' src={arrowLeftImage} />
+        </IconButton>
+        <Typography className={classes.title}>Welcome back!</Typography>
+        <Typography className={classes.description}>
+          we’re happy you come back to us 💜
+        </Typography>
+        <Grid container item className={classes.inputForm} direction='column'>
+          <Typography className={classes.inputLabel}>ITSC Email</Typography>
+          <InputBase
+            className={classes.input}
+            autoComplete='email'
+            autoFocus
+            inputProps={{ autoCapitalize: "none" }}
+            onChange={(e) => setEmail(e.target.value)}
+          ></InputBase>
+          <Typography className={classes.inputLabel}>Your secret word</Typography>
+          <InputBase
+            className={classes.input}
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge='end'
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          ></InputBase>
+          {loginError && (
+            <Typography className={classes.errorMessage}>
+              Incorrect Email or Password😕
+            </Typography>
+          )}
+          <NextButton onClick={() => handleClick()} />
+        </Grid>
+        <img
+          alt=''
+          src={loginLogo}
+          style={{
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            height: "35vh",
+            zIndex: -1,
+          }}
+        />
+        </Grid>
+      ) : (
+        <Grid
+        container
+        className={classes.container}
+        direction='column'
+        alignItems='center'
+        >
       <IconButton
         style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
         onClick={() => history.goBack()}
       >
         <img alt='arrowLeft' src={arrowLeftImage} />
       </IconButton>
-      <Typography className={classes.title}>Welcome back!</Typography>
-      <Typography className={classes.description}>
+      <Grid
+       container
+       direction='column'
+       className={classes.container}
+       style = {{ alignSelf : "flex-start"}}
+       >
+      <Typography className={classes.title} style = {{ alignSelf : "flex-start", paddingLeft: 130, paddingTop: 100}}>
+        Welcome Back!
+        </Typography>
+      <Typography className={classes.description} style = {{ alignSelf : "flex-start", paddingLeft: 130, paddingTop: 20}}>
         we’re happy you come back to us 💜
       </Typography>
+      </Grid>
       <Grid container item className={classes.inputForm} direction='column'>
         <Typography className={classes.inputLabel}>ITSC Email</Typography>
         <InputBase
@@ -163,11 +243,15 @@ function LoginPage() {
           position: "absolute",
           right: 0,
           bottom: 0,
-          height: "35vh",
+          height: 650,
           zIndex: -1,
         }}
       />
-    </Grid>
+      </Grid>
+      )}
+      </Grid>
+
+ 
   );
 }
 
