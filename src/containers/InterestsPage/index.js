@@ -100,7 +100,7 @@ function InterestsPage() {
   const history = useHistory();
   const [selected, setSelected] = useState([]);
   const isMobile = useMediaQuery("(max-width:480px)");
-  const userID = useSelector((state) => state.auth.userUID);
+  const userUID = useSelector((state) => state.auth.userUID);
 
   const interests = [
     ["Depression", depressionIcon],
@@ -117,7 +117,7 @@ function InterestsPage() {
     firebase
       .firestore()
       .collection("users")
-      .doc(userID)
+      .doc(userUID)
       .set(
         {
           interests: [...selected.map((index) => interests[index][0])],

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button, Input } from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
+import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
 import commentIcon from "../../assets/commentIcon.png";
@@ -46,6 +47,7 @@ function CommentPage() {
   const [newComment, setNewComment] = useState();
   const { id } = useParams();
   const handlePreviousPage = () => history.push("/forum");
+  const userUID = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
     fetchComment();
@@ -139,7 +141,7 @@ function CommentPage() {
                   marginTop: 8,
                 }}
                 onClick={() => {
-                  uploadComment(id, newComment);
+                  uploadComment(userUID, id, newComment);
                   setTimeout(() => {
                     fetchComment();
                     setNewComment("");

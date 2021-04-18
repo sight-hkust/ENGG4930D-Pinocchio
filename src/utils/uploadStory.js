@@ -34,7 +34,7 @@ export function uploadToxicStory(
   textToxicity
 ) {
   var db = firebase.firestore();
-  db.collection("toxicPosts")
+  db.collection("toxic")
     .add({
       userRef: userUID,
       category: category,
