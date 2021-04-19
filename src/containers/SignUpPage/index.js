@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EAEAEA",
     padding: "12px 12px",
     marginBottom: 18,
+    minWidth: 216,
   },
 }));
 
@@ -135,153 +136,176 @@ function SignUpPage() {
       direction='column'
       alignItems='center'
     >
-    {isMobile ? (
-       <Grid
-       container
-       className={classes.container}
-       direction='column'
-       alignItems='center'
-      >
-        <IconButton
-          style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-          onClick={() => history.goBack()}
+      {isMobile ? (
+        <Grid
+          container
+          className={classes.container}
+          direction='column'
+          alignItems='center'
         >
-          <img alt='arrowLeft' src={arrowLeftImage}  />
-        </IconButton>
-        <Typography className={classes.title}>Let’s get started!</Typography>
-        <Typography className={classes.description}>
-          come and join us💜
-        </Typography>
-        <Grid container item direction='column' className={classes.inputForm}>
-          <Typography className={classes.inputLabel}>ITSC Email</Typography>
-          <InputBase
-            className={classes.input}
-            autoComplete='email'
-            autoFocus
-            inputProps={{ autoCapitalize: "none" }}
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          ></InputBase>
-          <Typography className={classes.inputLabel}>Your secret word</Typography>
-          <InputBase
-            className={classes.input}
-            type={showPassword ? "text" : "password"}
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge='end'
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-          ></InputBase>
+          <IconButton
+            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+            onClick={() => history.goBack()}
+          >
+            <img alt='arrowLeft' src={arrowLeftImage} />
+          </IconButton>
+          <Typography className={classes.title}>Let’s get started!</Typography>
+          <Typography className={classes.description}>
+            come and join us💜
+          </Typography>
+          <Grid container item direction='column' className={classes.inputForm}>
+            <Typography className={classes.inputLabel}>ITSC Email</Typography>
+            <InputBase
+              className={classes.input}
+              autoComplete='email'
+              autoFocus
+              inputProps={{ autoCapitalize: "none" }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            ></InputBase>
+            <Typography className={classes.inputLabel}>
+              Your secret word
+            </Typography>
+            <InputBase
+              className={classes.input}
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            ></InputBase>
 
-          {passwordError && (
-            <Typography className={classes.errorMessage}>
-              Secret word is too short😳 Use {">"}= 8 characters
-            </Typography>
-          )}
-          {emailError && (
-            <Typography className={classes.errorMessage}>
-              Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
-            </Typography>
-          )}
-          <NextButton onClick={() => handleClick()} />
-      </Grid>
-      { <img
-        alt=''
-        src={signupLogo}
-        style={{
-          position: "absolute",
-          right: 0,
-          bottom: 0,
-          height: "35vh",
-          zIndex: -1,
-        }}
-      /> }
-      </Grid>
-    ) : (
-      <Grid
-       container
-       className={classes.container}
-       direction='column'
-       alignItems='center'
-        >
-      <IconButton
-        style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-        onClick={() => history.goBack()}
-      >
-        <img alt='arrowLeft' src={arrowLeftImage} />
-      </IconButton>
-      <Grid
-       container
-       direction='column'
-       className={classes.container}
-       style = {{ alignSelf : "flex-start"}}
-       >
-      <Typography className={classes.title} style = {{ alignSelf : "flex-start", paddingLeft: 130, paddingTop: 100}}>
-        Let’s get started!</Typography>
-      <Typography className={classes.description} style = {{ alignSelf : "flex-start", paddingLeft: 190, paddingTop: 20}}>
-        No request is too extreme
-      </Typography>
-      </Grid>
-      <Grid container item direction='column' className={classes.inputForm}>
-        <Typography className={classes.inputLabel}>ITSC Email</Typography>
-        <InputBase
-          className={classes.input}
-          autoComplete='email'
-          autoFocus
-          inputProps={{ autoCapitalize: "none" }}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        ></InputBase>
-        <Typography className={classes.inputLabel}>Choose a secret word</Typography>
-        <InputBase
-          className={classes.input}
-          type={showPassword ? "text" : "password"}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton
-                onClick={() => setShowPassword(!showPassword)}
-                edge='end'
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
+            {passwordError && (
+              <Typography className={classes.errorMessage}>
+                Secret word is too short😳 Use {">"}= 8 characters
+              </Typography>
+            )}
+            {emailError && (
+              <Typography className={classes.errorMessage}>
+                Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
+              </Typography>
+            )}
+            <NextButton onClick={() => handleClick()} />
+          </Grid>
+          {
+            <img
+              alt=''
+              src={signupLogo}
+              style={{
+                position: "absolute",
+                right: 0,
+                bottom: 0,
+                height: "35vh",
+                zIndex: -1,
+              }}
+            />
           }
-        ></InputBase>
+        </Grid>
+      ) : (
+        <Grid
+          container
+          className={classes.container}
+          direction='column'
+          alignItems='center'
+        >
+          <IconButton
+            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+            onClick={() => history.goBack()}
+          >
+            <img alt='arrowLeft' src={arrowLeftImage} />
+          </IconButton>
+          <Grid
+            container
+            direction='column'
+            className={classes.container}
+            style={{ alignSelf: "flex-start" }}
+          >
+            <Typography
+              className={classes.title}
+              style={{
+                alignSelf: "flex-start",
+                paddingLeft: 130,
+                paddingTop: 100,
+              }}
+            >
+              Let’s get started!
+            </Typography>
+            <Typography
+              className={classes.description}
+              style={{
+                alignSelf: "flex-start",
+                paddingLeft: 190,
+                paddingTop: 20,
+              }}
+            >
+              No request is too extreme
+            </Typography>
+          </Grid>
+          <Grid container item direction='column' className={classes.inputForm}>
+            <Typography className={classes.inputLabel}>ITSC Email</Typography>
+            <InputBase
+              className={classes.input}
+              autoComplete='email'
+              autoFocus
+              inputProps={{ autoCapitalize: "none" }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            ></InputBase>
+            <Typography className={classes.inputLabel}>
+              Choose a secret word
+            </Typography>
+            <InputBase
+              className={classes.input}
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            ></InputBase>
 
-        {passwordError && (
-          <Typography className={classes.errorMessage}>
-            Secret word is too short😳 Use {">"}= 8 characters
-          </Typography>
-        )}
-        {emailError && (
-          <Typography className={classes.errorMessage}>
-            Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
-          </Typography>
-        )}
-        <NextButton onClick={() => handleClick()} />
-      </Grid>
-      {<img
-        alt=''
-        src={signUpLogoWeb}
-        style={{
-          position: "absolute",
-          right: 0,
-          bottom: 0,
-          height: 650,
-          zIndex: -1,
-        }}
-      /> }
-      </Grid>
-    )}
+            {passwordError && (
+              <Typography className={classes.errorMessage}>
+                Secret word is too short😳 Use {">"}= 8 characters
+              </Typography>
+            )}
+            {emailError && (
+              <Typography className={classes.errorMessage}>
+                Please use ITSC account{" eg. xxxxxxxx@connect.ust.hk"}
+              </Typography>
+            )}
+            <NextButton onClick={() => handleClick()} />
+          </Grid>
+          {
+            <img
+              alt=''
+              src={signUpLogoWeb}
+              style={{
+                position: "absolute",
+                right: 0,
+                bottom: 0,
+                height: 650,
+                zIndex: -1,
+              }}
+            />
+          }
+        </Grid>
+      )}
     </Grid>
   );
 }
