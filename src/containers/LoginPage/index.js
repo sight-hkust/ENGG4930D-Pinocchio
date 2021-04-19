@@ -60,9 +60,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "80px 450px 0px",
+    paddingTop: "80px",
     paddingLeft: 100,
     paddingRight: 900,
+    "@media (max-width:480px)": {
+      padding: "49px 69px 0px",
+    },
   },
   errorMessage: {
     color: "#FF0000",
@@ -78,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EAEAEA",
     padding: "12px 12px",
     marginBottom: 18,
+    "@media (max-width:480px)": {
+      padding: "8px 12px",
+    },
   },
 }));
 
@@ -132,7 +138,7 @@ function LoginPage() {
         </IconButton>
         <Typography className={classes.title}>Welcome back!</Typography>
         <Typography className={classes.description}>
-          we’re happy you come back to us 💜
+          we’re happy you came back to us 💜
         </Typography>
         <Grid container item className={classes.inputForm} direction='column'>
           <Typography className={classes.inputLabel}>ITSC Email</Typography>
@@ -201,10 +207,10 @@ function LoginPage() {
         Welcome Back!
         </Typography>
       <Typography className={classes.description} style = {{ alignSelf : "flex-start", paddingLeft: 130, paddingTop: 20}}>
-        we’re happy you come back to us 💜
+        we’re happy you came back to us 💜
       </Typography>
       </Grid>
-      <Grid container item className={classes.inputForm} direction='column'>
+      <Grid container item className={classes.inputForm} direction='column' style = {{minWidth: 1000}}>
         <Typography className={classes.inputLabel}>ITSC Email</Typography>
         <InputBase
           className={classes.input}

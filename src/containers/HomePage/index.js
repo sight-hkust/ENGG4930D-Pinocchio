@@ -30,14 +30,27 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    width: "41vw",
+    width: "15vw",
     height: "25vh",
     borderRadius: 40,
     backgroundColor: "#FFD7D7",
     display: "table-column",
+    margin: "10px 25px",
     "&:hover": {
       backgroundColor: "#FFD7D7",
     },
+    "@media (max-width:480px)": {
+      width: "41vw",
+      margin: 0,
+    }
+  },
+  buttonLargeWeb: {
+    width: "35vw",
+    height: "25vh",
+    borderRadius: 40,
+    backgroundColor: "#FFD7D7",
+    margin: "10px 25px",
+    textAlign: "left",
   },
   buttonLarge: {
     borderRadius: 40,
@@ -47,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "10px 25px",
     "&:hover": {
       backgroundColor: "#FFD7D7",
-    },
+    }
   },
   cardContainer: {
     paddingTop: 20,
@@ -83,9 +96,11 @@ function HomePage() {
   };
 
   return (
+
     <Grid container direction='column'>
       <NavigationBar showMenu />
       <Typography className={classes.title}>For You</Typography>
+      {isMobile ? (
       <Grid container item direction='column' className={classes.cardContainer}>
         <Grid
           container
@@ -173,6 +188,103 @@ function HomePage() {
           onClickNo={handleClose}
         ></DialogBox>
       </Grid>
+    ) : (
+      <Grid container item direction='column' className={classes.cardContainer}>
+        <Grid container item direction='row' 
+        // style = {{paddingLeft: 200, paddingTop: 30, paddingRight: 30}}>
+        style = {{justifyContent: "center", paddingTop: 50}}>
+        <Button
+          className={classes.buttonLargeWeb}
+          onClick={() => history.push("/writing")}
+
+        >
+          <img alt='bookmark' src={writeNowImage} style = {{paddingLeft:15}}></img>
+          <Grid
+            container
+            item
+            direction='column'
+            className={classes.buttonTextGroup}
+          >
+            <Typography className={classes.buttonHeadingText} style = {{paddingLeft:20}}>
+              Write now
+            </Typography>
+            <Typography className={classes.buttonText} style = {{paddingLeft:20, paddingRight:20}}>
+              Write down your life's tales because good or bad, they are part of your alluring tale
+            </Typography>
+          </Grid>
+        </Button>
+        <Button
+            className={classes.button}
+            onClick={() => history.push("/lookback")}
+          >
+            <img alt='lookback' src={lookBackImage}></img>
+            <Typography className={classes.buttonHeadingText}>
+              Look back
+            </Typography>
+          </Button>
+        </Grid>
+        <Grid
+          container
+          direction='row'
+          // style = {{paddingLeft: 200, paddingTop: 30, paddingRight: 30}}
+          style = {{justifyContent: "center"}}
+        >
+          <Button
+          className={classes.buttonLargeWeb}
+          onClick={() => history.push("/forum")}
+        >
+          <img alt='bookmark' src={readNowImage} style = {{paddingLeft:15}}></img>
+          <Grid
+            container
+            item
+            direction='column'
+            className={classes.buttonTextGroup}
+          >
+            <Typography className={classes.buttonHeadingText} style = {{paddingLeft:20}}>
+              Read stories
+            </Typography>
+            <Typography className={classes.buttonText} style = {{paddingLeft:20, paddingRight: 20}}>
+              Delve into our inspirational and beautiful stories
+            </Typography>
+          </Grid>
+        </Button>
+          <Button
+            className={classes.button}
+            onClick={() => history.push("/bookmark")}
+          >
+            <img alt='bookmark' src={bookmarkImage}></img>
+            <Typography className={classes.buttonHeadingText}>
+              Bookmarks
+            </Typography>
+          </Button>
+        </Grid>
+        <Grid
+          container
+          item
+          direction='row'
+          justify='flex-end'
+          style={{ alignItems: "center", paddingTop: 40}}
+        >
+          <Typography>Ask For Help</Typography>
+          <IconButton
+            onClick={(e) => handleCall(e)}
+            style={{ marginRight: 20 }}
+          >
+            <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
+          </IconButton>
+        </Grid>
+        
+        <DialogBox
+          open={isOpen}
+          text='Do you wish to contact our magical counsellors through the 24-hour helpline?'
+          onClose={handleClose}
+          onClickYes={() => (window.location.href = "tel:+85282082688")}
+          onClickNo={handleClose}
+        ></DialogBox>
+      </Grid>
+
+
+    )}
     </Grid>
   );
 }

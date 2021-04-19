@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "80px 450px 0px",
     paddingLeft: 100,
     paddingRight: 900,
+    "@media (max-width:480px)": {
+      padding: "49px 69px 0px",
+    },
   },
   errorMessage: {
     color: "#FF0000",
@@ -79,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EAEAEA",
     padding: "12px 12px",
     marginBottom: 18,
+    "@media (max-width:480px)": {
+      padding: "8px 12px",
+    },
   },
 }));
 

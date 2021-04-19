@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 60,
     lineHeight: "normal",
     textAlign: "center",
+    paddingTop: 30,
+    whiteSpace: "break-spaces",
     "@media (max-width:480px)": {
       paddingLeft: 35,
       paddingTop: 30,
@@ -58,14 +60,13 @@ function WritingPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Typography className={classes.title}>Write your thoughts</Typography>
+      <NextButton
+        style={{ position: "relative", marginTop: 24}}
+        onClick={() => handleSubmit()}
+      />
       <StoryInput
         onBodyTextChange={(e) => setStoryText(e.target.value)}
         onTitleChange={(e) => setTitle(e.target.value)}
-      />
-
-      <NextButton
-        style={{ position: "relative", marginTop: 24 }}
-        onClick={() => handleSubmit()}
       />
     </Grid>
   );
