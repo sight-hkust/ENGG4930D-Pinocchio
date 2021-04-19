@@ -21,6 +21,7 @@ import CommentPage from "./CommentPage";
 import BookmarkPage from "./BookmarkPage";
 import LookBackPage from "./LookBackPage";
 import ForgetPasswordPage from "./ForgetPasswordPage";
+import GuidePage from "./GuidePage";
 
 function RouteCollection() {
   var isLoggedIn = useSelector((state) => state.auth.userUID);
@@ -36,6 +37,9 @@ function RouteCollection() {
         </Route>
         <Route exact path='/login'>
           <LoginPage />
+        </Route>
+        <Route exact path='/guide'>
+          <GuidePage />
         </Route>
         <Route exact path='/forgetPassword'>
           <ForgetPasswordPage />
