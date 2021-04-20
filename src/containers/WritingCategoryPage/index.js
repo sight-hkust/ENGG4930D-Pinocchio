@@ -62,8 +62,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   interestButton: {
-    height: 135,
-    width: 114,
     "@media (max-width:480px)": {
       height: "auto",
       padding: "13px 13px",
@@ -72,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonText: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 25,
     paddingTop: 10,
     textAlign: "center",
     textTransform: "capitalize",
@@ -156,7 +154,7 @@ function WritingCategoryPage() {
         <Typography className={classes.description}>
           Choose a category for your story:
         </Typography>
-        <Grid container item xs className={classes.buttonGroup}>
+        <Grid container item xs={isMobile ? 'auto' : 6} className={classes.buttonGroup}>
           {interests.map((interest, index) => (
             <Button
               className={classes.interestButton}
@@ -165,6 +163,7 @@ function WritingCategoryPage() {
                 setSelected(index);
               }}
               disableRipple
+              style={{alignitems: "center"}}
             >
               <Grid container item direction='column'>
                 <span

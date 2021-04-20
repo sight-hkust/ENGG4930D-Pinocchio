@@ -4,18 +4,24 @@ import { Grid, Input } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   inputBodyTextContainer: {
-    width: "90vw",
+    width: "100vw",
     height: "60vh",
     margin: "0 20px",
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
+    "@media (max-width:480px)": {
+      width: "90vw",
+    }
   },
   inputTitleContainer: {
-    width: "90vw",
+    width: "100vw",
     margin: 20,
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
     overflow: "auto",
+    "@media (max-width:480px)": {
+      width: "90vw",
+    }
   },
   inputBodyText: {
     fontSize: 14,
