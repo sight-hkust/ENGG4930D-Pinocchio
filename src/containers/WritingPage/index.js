@@ -63,8 +63,9 @@ function WritingPage() {
         Write your{" "}
         <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>thoughts</span>
       </Typography>
+
       <NextButton
-        style={{ position: "relative", marginTop: 24 }}
+        style={{ position: "relative", marginTop: 24, paddingRight: 30}}
         onClick={() => handleSubmit()}
       />
       <StoryInput

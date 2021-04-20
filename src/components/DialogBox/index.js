@@ -1,15 +1,17 @@
 import React from "react";
-import { Typography, Grid, Button, Modal } from "@material-ui/core";
+import { Typography, Grid, Button, Modal, useMediaQuery } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import headsUpIcon from "../../assets/headsUpIcon.png";
 
 const useStyles = makeStyles((theme) => ({
+
   yesbutton: {
     width: 75,
-    height: 50,
+    height: 30,
     backgroundColor: "#F9A586",
     color: "#000000",
     borderRadius: 30,
+    marginRight:15,
     "&:hover": {
       backgroundColor: "#F9A586",
     },
@@ -18,11 +20,13 @@ const useStyles = makeStyles((theme) => ({
       height: 30,
       minWidth: 90,
       fontWeight: "bold",
+      marginRight:0,
+      marginLeft: 30,
     },
   },
   nobutton: {
     width: 75,
-    height: 50,
+    height: 30,
     backgroundColor: "#FEBD7D",
     color: "#000000",
     borderRadius: 30,
@@ -48,9 +52,14 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     backgroundColor: "#FFD7D7",
     borderRadius: 20,
+    marginBottom:"1vh",
+    height:130,
   },
   boxText: {
-    fontSize: 10,
+    fontSize: 15,
+    paddingLeft: 20,
+    paddingRight: 12,
+    paddingTop: 30,
     "@media (max-width:480px)": {
       fontSize: 14,
       padding: 20,
@@ -60,7 +69,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     fontWeight: "bold",
     textTransform: "capitalize",
-    padding: "2vw 2vh",
+    padding: "1vw 2vh",
+    "@media (max-width:480px)": {
+      padding: "2vw 2vh",
+    },
   },
 }));
 
@@ -76,6 +88,7 @@ function DialogBox(props) {
     yesText,
     ...rest
   } = props;
+  const isMobile = useMediaQuery("(max-width:480px)");
   return (
     <Modal
       open={open}
@@ -84,8 +97,9 @@ function DialogBox(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        margin: "0 10vw",
+        margin: isMobile ? "0 10vw" : "0 38vw",
       }}
+
     >
       <Grid
         container
