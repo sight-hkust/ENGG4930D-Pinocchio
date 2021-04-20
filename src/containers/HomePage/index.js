@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFD7D7",
     margin: "10px 25px",
     textAlign: "left",
+    "&:hover": {
+      backgroundColor: "#FFD7D7",
+    },
   },
   buttonLarge: {
     borderRadius: 40,

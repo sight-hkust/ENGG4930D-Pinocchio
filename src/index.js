@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import firebase from "firebase/app";
+import { Suspense } from "react";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
@@ -12,6 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 import Router from "./containers/RouteCollection";
 import store from "./store";
 import { Provider } from "react-redux";
+import "./i18n";
 
 const theme = createMuiTheme({
   typography: {
@@ -35,7 +37,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <Router />
+        <Suspense fallback='...is loading'>
+          <Router />
+        </Suspense>
       </Provider>
     </ThemeProvider>
   </React.StrictMode>,

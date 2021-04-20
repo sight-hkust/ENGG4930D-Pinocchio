@@ -1,15 +1,37 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, useMediaQuery } from "@material-ui/core";
+import { Button, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import NavigationBar from "../../components/NavigationBar";
 import guidePage1 from "../../assets/guidePage1.png";
+import guidePage2 from "../../assets/guidePage2.png";
+import guidePage3 from "../../assets/guidePage3.png";
+import guidePage4 from "../../assets/guidePage4.png";
+import guidePage5 from "../../assets/guidePage5.png";
+import guidePage1Web from "../../assets/guidePage1Web.png";
+import guidePage2Web from "../../assets/guidePage2Web.png";
+import guidePage3Web from "../../assets/guidePage3Web.png";
+import guidePage4Web from "../../assets/guidePage4Web.png";
+import guidePage5Web from "../../assets/guidePage5Web.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    alignItems: "center",
+  button: {
+    textTransform: "capitalize",
+    backgroundColor: "#FFD7D7",
+    borderRadius: 10,
+    "&:hover": {
+      backgroundColor: "#FFD7D7",
+    },
+    "@media (max-width:480px)": {
+      marginBottom: 20,
+    },
+  },
+  text: {
+    fontSize: 30,
+    "@media (max-width:480px)": {
+      fontSize: 20,
+    },
   },
 }));
 
@@ -17,21 +39,82 @@ function GuidePage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
-  const [showDialogBox, setShowDialogBox] = useState(false);
-
+  const [currentSlide, setCurrentSlide] = useState(0);
   return (
-    <Grid container style={{ display: "flex" }}>
-      <Carousel showThumbs={false} showStatus={false}>
-        <div>
-          <img alt='' src={guidePage1} width='100%' height='100%' />
-        </div>
-        <div>
-          <img alt='' src={guidePage1} width='100%' height='100%' />
-        </div>
-        <div>
-          <img alt='' src={guidePage1} width='100%' height='100%' />
-        </div>
+    <Grid container>
+      <Carousel
+        showThumbs={false}
+        showStatus={false}
+        showIndicators={false}
+        selectedItem={currentSlide}
+        onChange={(index) => setCurrentSlide(index)}
+      >
+        {isMobile
+          ? [guidePage1, guidePage2, guidePage3, guidePage4, guidePage5].map(
+              (src) => (
+                <div>
+                  <img alt='' src={src} />
+                </div>
+              )
+            )
+          : [
+              guidePage1Web,
+              guidePage2Web,
+              guidePage3Web,
+              guidePage4Web,
+              guidePage5Web,
+            ].map((src) => (
+              <div>
+                <img
+                  alt=''
+                  src={src}
+                  style={{
+                    width: "80%",
+                  }}
+                />
+              </div>
+            ))}
       </Carousel>
+      <Grid container direction='row' justify='space-around'>
+        {isMobile ? (
+          currentSlide === 4 && (
+            <Button
+              className={classes.button}
+              style={{ alignSelf: "center" }}
+              onClick={() =>
+                currentSlide === 4
+                  ? history.push("/forum")
+                  : setCurrentSlide(currentSlide === 4 ? 4 : currentSlide + 1)
+              }
+            >
+              <Typography className={classes.text}>Go to Forum now!</Typography>
+            </Button>
+          )
+        ) : (
+          <>
+            <Button
+              className={classes.button}
+              onClick={() =>
+                setCurrentSlide(currentSlide === 0 ? 0 : currentSlide - 1)
+              }
+            >
+              <Typography className={classes.text}>Previous</Typography>
+            </Button>
+            <Button
+              className={classes.button}
+              onClick={() =>
+                currentSlide === 4
+                  ? history.push("/forum")
+                  : setCurrentSlide(currentSlide === 4 ? 4 : currentSlide + 1)
+              }
+            >
+              <Typography className={classes.text}>
+                {currentSlide === 4 ? "Go to Forum now!" : "Next"}
+              </Typography>
+            </Button>
+          </>
+        )}
+      </Grid>
     </Grid>
   );
 }
