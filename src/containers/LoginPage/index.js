@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:480px)": {
       padding: "8px 12px",
     },
+    minWidth: 216,
   },
 }));
 
@@ -145,7 +146,7 @@ function LoginPage() {
           </IconButton>
           <Typography className={classes.title}>Welcome back!</Typography>
           <Typography className={classes.description}>
-            we’re happy you came back to us 💜
+            we’re happy you come back to us 💜
           </Typography>
           <Grid container item className={classes.inputForm} direction='column'>
             <Typography className={classes.inputLabel}>ITSC Email</Typography>
@@ -206,19 +207,35 @@ function LoginPage() {
           >
             <img alt='arrowLeft' src={arrowLeftImage} />
           </IconButton>
-          <b className={classes.title}>
-            <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>
-              Welcome
-            </span>
-            {" back!"}
-          </b>
-          <Typography className={classes.description}>
-            we’re happy you come back to us 💜
-          </Typography>
-          <Grid container item className={classes.inputForm} direction='column'>
-            <Typography className={classes.inputLabel}>
-              Full ITSC Email Address
+          <Grid
+            container
+            direction='column'
+            className={classes.container}
+            style={{ alignSelf: "flex-start" }}
+          >
+            <Typography
+              className={classes.title}
+              style={{
+                alignSelf: "flex-start",
+                paddingLeft: 130,
+                paddingTop: 100,
+              }}
+            >
+              Welcome Back!
             </Typography>
+            <Typography
+              className={classes.description}
+              style={{
+                alignSelf: "flex-start",
+                paddingLeft: 130,
+                paddingTop: 20,
+              }}
+            >
+              we’re happy you come back to us 💜
+            </Typography>
+          </Grid>
+          <Grid container item className={classes.inputForm} direction='column'>
+            <Typography className={classes.inputLabel}>ITSC Email</Typography>
             <InputBase
               className={classes.input}
               autoComplete='email'

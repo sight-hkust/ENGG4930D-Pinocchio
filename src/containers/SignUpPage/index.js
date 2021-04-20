@@ -79,7 +79,9 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     backgroundColor: "#EAEAEA",
-    padding: "8px 12px",
+    padding: "12px 12px",
+    marginBottom: 18,
+    minWidth: 216,
   },
 }));
 
