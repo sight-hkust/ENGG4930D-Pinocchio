@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     width: "fit-content",
     fontWeight: "bold",
-    fontSize: 60,
+    fontSize: 50,
     lineHeight: "normal",
     textAlign: "center",
     "@media (max-width:480px)": {

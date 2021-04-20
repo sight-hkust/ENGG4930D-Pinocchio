@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 60,
     lineHeight: "normal",
     textAlign: "center",
+    paddingTop: 30,
+    whiteSpace: "break-spaces",
     "@media (max-width:480px)": {
       paddingLeft: 35,
       paddingTop: 30,
@@ -61,14 +63,13 @@ function WritingPage() {
         Write your{" "}
         <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>thoughts</span>
       </Typography>
-      <StoryInput
-        onBodyTextChange={(e) => setStoryText(e.target.value)}
-        onTitleChange={(e) => setTitle(e.target.value)}
-      />
-
       <NextButton
         style={{ position: "relative", marginTop: 24 }}
         onClick={() => handleSubmit()}
+      />
+      <StoryInput
+        onBodyTextChange={(e) => setStoryText(e.target.value)}
+        onTitleChange={(e) => setTitle(e.target.value)}
       />
     </Grid>
   );

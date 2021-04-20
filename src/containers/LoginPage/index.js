@@ -25,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: "bold",
     lineHeight: 1,
-    fontSize: 100,
+    fontSize: 50,
     textAlign: "center",
     "@media (max-width:480px)": {
       fontSize: 35,
       marginTop: "5vh",
     },
   },
+
   description: {
     fontSize: 25,
     textAlign: "center",
@@ -85,6 +86,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 10,
+    padding: "12px 12px",
+    marginBottom: 18,
+    "@media (max-width:480px)": {
+      padding: "8px 12px",
+    },
   },
 }));
 
@@ -124,77 +130,156 @@ function LoginPage() {
       direction='column'
       alignItems='center'
     >
-      <IconButton
-        style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-        onClick={() => history.goBack()}
-      >
-        <img alt='arrowLeft' src={arrowLeftImage} />
-      </IconButton>
-      <b className={classes.title}>
-        <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>Welcome</span>
-        {" back!"}
-      </b>
-      <Typography className={classes.description}>
-        we’re happy you come back to us 💜
-      </Typography>
-      <Grid container item className={classes.inputForm} direction='column'>
-        <Typography className={classes.inputLabel}>
-          Full ITSC Email Address
-        </Typography>
-        <InputBase
-          className={classes.input}
-          autoComplete='email'
-          autoFocus
-          inputProps={{ autoCapitalize: "none" }}
-          onChange={(e) => setEmail(e.target.value)}
-        ></InputBase>
-        <Typography className={classes.inputLabel}>Your secret word</Typography>
-        <InputBase
-          className={classes.input}
-          type={showPassword ? "text" : "password"}
-          autoComplete='current-password'
-          onChange={(e) => setPassword(e.target.value)}
-          endAdornment={
-            <InputAdornment position='end'>
-              <IconButton
-                onClick={() => setShowPassword(!showPassword)}
-                edge='end'
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        ></InputBase>
-        {loginError && (
-          <Typography className={classes.errorMessage}>
-            Incorrect Email or Password😕
-          </Typography>
-        )}
+      {isMobile ? (
         <Grid
           container
-          direction='row'
-          className={classes.passwordResetAndSubmitGrid}
+          className={classes.container}
+          direction='column'
+          alignItems='center'
         >
-          <Link
-            className={classes.forgetPasswordText}
-            onClick={() => history.push("/forgetPassword")}
+          <IconButton
+            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+            onClick={() => history.goBack()}
           >
-            Forgot your secret word?
-          </Link>
-          <NextButton onClick={() => handleClick()} style={{ padding: 0 }} />
+            <img alt='arrowLeft' src={arrowLeftImage} />
+          </IconButton>
+          <Typography className={classes.title}>Welcome back!</Typography>
+          <Typography className={classes.description}>
+            we’re happy you came back to us 💜
+          </Typography>
+          <Grid container item className={classes.inputForm} direction='column'>
+            <Typography className={classes.inputLabel}>ITSC Email</Typography>
+            <InputBase
+              className={classes.input}
+              autoComplete='email'
+              autoFocus
+              inputProps={{ autoCapitalize: "none" }}
+              onChange={(e) => setEmail(e.target.value)}
+            ></InputBase>
+            <Typography className={classes.inputLabel}>
+              Your secret word
+            </Typography>
+            <InputBase
+              className={classes.input}
+              type={showPassword ? "text" : "password"}
+              onChange={(e) => setPassword(e.target.value)}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            ></InputBase>
+            {loginError && (
+              <Typography className={classes.errorMessage}>
+                Incorrect Email or Password😕
+              </Typography>
+            )}
+            <NextButton onClick={() => handleClick()} />
+          </Grid>
+          <img
+            alt=''
+            src={loginLogo}
+            style={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              height: "35vh",
+              zIndex: -1,
+            }}
+          />
         </Grid>
-      </Grid>
-      <img
-        alt=''
-        src={loginLogo}
-        style={{
-          position: "absolute",
-          left: 0,
-          bottom: 0,
-          height: "30vh",
-          zIndex: -1,
-        }}
-      />
+      ) : (
+        <Grid
+          container
+          className={classes.container}
+          direction='column'
+          alignItems='center'
+        >
+          <IconButton
+            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
+            onClick={() => history.goBack()}
+          >
+            <img alt='arrowLeft' src={arrowLeftImage} />
+          </IconButton>
+          <b className={classes.title}>
+            <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>
+              Welcome
+            </span>
+            {" back!"}
+          </b>
+          <Typography className={classes.description}>
+            we’re happy you come back to us 💜
+          </Typography>
+          <Grid container item className={classes.inputForm} direction='column'>
+            <Typography className={classes.inputLabel}>
+              Full ITSC Email Address
+            </Typography>
+            <InputBase
+              className={classes.input}
+              autoComplete='email'
+              autoFocus
+              inputProps={{ autoCapitalize: "none" }}
+              onChange={(e) => setEmail(e.target.value)}
+            ></InputBase>
+            <Typography className={classes.inputLabel}>
+              Your secret word
+            </Typography>
+            <InputBase
+              className={classes.input}
+              type={showPassword ? "text" : "password"}
+              autoComplete='current-password'
+              onChange={(e) => setPassword(e.target.value)}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            ></InputBase>
+            {loginError && (
+              <Typography className={classes.errorMessage}>
+                Incorrect Email or Password😕
+              </Typography>
+            )}
+            <Grid
+              container
+              direction='row'
+              className={classes.passwordResetAndSubmitGrid}
+            >
+              <Link
+                className={classes.forgetPasswordText}
+                onClick={() => history.push("/forgetPassword")}
+              >
+                Forgot your secret word?
+              </Link>
+              <NextButton
+                onClick={() => handleClick()}
+                style={{ padding: 0 }}
+              />
+            </Grid>
+          </Grid>
+          <img
+            alt=''
+            src={loginLogo}
+            style={{
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              height: "30vh",
+              zIndex: -1,
+            }}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 }

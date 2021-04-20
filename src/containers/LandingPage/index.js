@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize: 50,
     textAlign: "center",
-    paddingTop: 25,
+    paddingBottom: 9,
+    paddingTop: 10,
     "@media (max-width:480px)": {
       fontSize: 35,
       paddingTop: 0,
@@ -109,7 +110,8 @@ function LandingPage() {
         onClickYes={() => history.push("/signUp")}
         yesText="Let's Start"
       ></DialogBox>
-      <NavigationBar showMenu />
+      {isMobile && <NavigationBar showMenu />}
+
       <Grid
         container
         className={classes.container}

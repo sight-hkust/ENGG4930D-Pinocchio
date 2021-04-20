@@ -24,7 +24,7 @@ function NextButton(props) {
     >
       <img
         alt='arrowRight'
-        src={isMobile ? arrowRightImage : arrowRightWebImage}
+        src={isMobile ? arrowRightImage : arrowRightImage}
       />
     </IconButton>
   );
