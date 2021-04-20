@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   whaleTextColumn: {
     alignItems: "center",
-    padding: "20px 20px",
+    padding: "20px 40px",
     maxWidth: "fit-content",
   },
 }));

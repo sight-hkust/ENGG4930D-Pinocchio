@@ -23,12 +23,15 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1,
     fontSize: 50,
     textAlign: "center",
+    alignSelf: "center",
+    paddingTop: 30,
     "@media (max-width:480px)": {
       marginLeft: 35,
       paddingTop: 30,
       fontSize: 40,
       whiteSpace: "break-spaces",
       textAlign: "left",
+      alignSelf: "flex-start",
     },
   },
   button: {
@@ -183,17 +186,19 @@ function HomePage() {
             justify='flex-end'
             style={{ alignItems: "center" }}
           >
-            <Typography>Ask For Help</Typography>
-            <IconButton
+            <Button
               onClick={(e) => handleCall(e)}
-              style={{ marginRight: 20 }}
+              style={{ marginRight: 20, textTransform: "capitalize" }}
             >
+              <Typography style={{ fontSize: 28, paddingRight: 10 }}>
+                Ask For Help
+              </Typography>
               <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
-            </IconButton>
+            </Button>
           </Grid>
           <DialogBox
             open={isOpen}
-            text='Do you wish to contact our magical counsellors through the 24-hour helpline?'
+            HTMLString='<b>Thank you for taking good care of yourself.<br>We are proud of you!</b><br><br>Do you wish to contact our counsellors through the 24-hour helpline?'
             onClose={handleClose}
             onClickYes={() => (window.location.href = "tel:+85282082688")}
             onClickNo={handleClose}
@@ -210,8 +215,7 @@ function HomePage() {
             container
             item
             direction='row'
-            // style = {{paddingLeft: 200, paddingTop: 30, paddingRight: 30}}>
-            style={{ justifyContent: "center", paddingTop: 50 }}
+            style={{ justifyContent: "center" }}
           >
             <Button
               className={classes.buttonLargeWeb}
@@ -253,12 +257,7 @@ function HomePage() {
               </Typography>
             </Button>
           </Grid>
-          <Grid
-            container
-            direction='row'
-            // style = {{paddingLeft: 200, paddingTop: 30, paddingRight: 30}}
-            style={{ justifyContent: "center" }}
-          >
+          <Grid container direction='row' style={{ justifyContent: "center" }}>
             <Button
               className={classes.buttonLargeWeb}
               onClick={() => history.push("/forum")}
@@ -305,18 +304,15 @@ function HomePage() {
             justify='flex-end'
             style={{ alignItems: "center", paddingTop: 40 }}
           >
-            <Typography>Ask For Help</Typography>
-            <IconButton
-              onClick={(e) => handleCall(e)}
-              style={{ marginRight: 20 }}
-            >
+            <Button onClick={(e) => handleCall(e)} style={{ marginRight: 20 }}>
+              <Typography style={{ fontSize: 28 }}>Ask For Help</Typography>
               <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
-            </IconButton>
+            </Button>
           </Grid>
 
           <DialogBox
             open={isOpen}
-            text='Do you wish to contact our magical counsellors through the 24-hour helpline?'
+            HTMLString='<b>Thank you for taking good care of yourself.<br>We are proud of you!</b><br><br>Do you wish to contact our counsellors through the 24-hour helpline?'
             onClose={handleClose}
             onClickYes={() => (window.location.href = "tel:+85282082688")}
             onClickNo={handleClose}
