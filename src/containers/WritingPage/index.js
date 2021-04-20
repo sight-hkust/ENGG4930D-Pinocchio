@@ -63,7 +63,7 @@ function WritingPage() {
       </Typography>
 
       <NextButton
-        style={{ position: "relative", marginTop: 24, paddingRight: 30}}
+        style={{ position: "relative", marginTop: 24, paddingRight: 40}}
         onClick={() => handleSubmit()}
       />
       <StoryInput
