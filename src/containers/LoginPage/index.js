@@ -15,8 +15,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../store/authSlice";
 import NextButton from "../../components/NextButton";
-import arrowLeftImage from "../../assets/arrowLeft.png";
-import loginLogo from "../../assets/loginLogo.png";
+import loginLogoMobile from "../../assets/loginLogoMobile.png";
+import loginLogoDesktop from "../../assets/loginLogoDesktop.png";
+import NavigationBar from "../../components/NavigationBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -38,9 +39,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: 0,
     color: "#838181",
+    paddingTop: "2vh",
     "@media (max-width:480px)": {
       fontSize: 20,
-      paddingTop: "2vh",
     },
   },
   button: {
@@ -61,7 +62,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputForm: {
-    padding: "2vh 15vw 0vh",
+    width: "auto",
+    padding: "15vh 15vw 0vh",
+    "@media (max-width:480px)": {
+      padding: "2vh 15vw 0vh",
+    },
   },
   errorMessage: {
     color: "#FF0000",
@@ -92,6 +97,20 @@ const useStyles = makeStyles((theme) => ({
       padding: "8px 12px",
     },
     minWidth: 216,
+  },
+  loginLogo: {
+    position: "absolute",
+    bottom: 0,
+    right: "5vw",
+    height: "90vh",
+    zIndex: -1,
+    "@media (max-width:480px)": {
+      position: "absolute",
+      bottom: 0,
+      right: "auto",
+      height: "35vh",
+      zIndex: -1,
+    },
   },
 }));
 
@@ -125,178 +144,83 @@ function LoginPage() {
   };
 
   return (
-    <Grid
-      container
-      className={classes.container}
-      direction='column'
-      alignItems='center'
-    >
-      {isMobile ? (
-        <Grid
-          container
-          className={classes.container}
-          direction='column'
-          alignItems='center'
-        >
-          <IconButton
-            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-            onClick={() => history.goBack()}
-          >
-            <img alt='arrowLeft' src={arrowLeftImage} />
-          </IconButton>
-          <Typography className={classes.title}>Welcome back!</Typography>
+    <Grid container direction='column'>
+      <NavigationBar showMenu />
+      <Grid
+        container
+        className={classes.container}
+        direction={isMobile ? "column" : "row"}
+        alignItems='center'
+      >
+        <Grid container item className={classes.inputForm} direction='column'>
+          <b className={classes.title}>
+            <span
+              style={{
+                boxShadow: "inset 0 -13px 0 0 #FFD7D7",
+              }}
+            >
+              Welcome
+            </span>{" "}
+            back!
+          </b>
           <Typography className={classes.description}>
-            we’re happy you come back to us 💜
+            we’re happy you came back to us 💜
           </Typography>
-          <Grid container item className={classes.inputForm} direction='column'>
-            <Typography className={classes.inputLabel}>ITSC Email</Typography>
-            <InputBase
-              className={classes.input}
-              autoComplete='email'
-              autoFocus
-              inputProps={{ autoCapitalize: "none" }}
-              onChange={(e) => setEmail(e.target.value)}
-            ></InputBase>
-            <Typography className={classes.inputLabel}>
-              Your secret word
+          <Typography className={classes.inputLabel}>
+            Full ITSC Email address
+          </Typography>
+          <InputBase
+            className={classes.input}
+            autoComplete='email'
+            autoFocus
+            inputProps={{ autoCapitalize: "none" }}
+            onChange={(e) => setEmail(e.target.value)}
+          ></InputBase>
+          <Typography className={classes.inputLabel}>
+            Your secret word
+          </Typography>
+          <InputBase
+            className={classes.input}
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete='current-password'
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge='end'
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          ></InputBase>
+          {loginError && (
+            <Typography className={classes.errorMessage}>
+              Incorrect Email or Password😕
             </Typography>
-            <InputBase
-              className={classes.input}
-              type={showPassword ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge='end'
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            ></InputBase>
-            {loginError && (
-              <Typography className={classes.errorMessage}>
-                Incorrect Email or Password😕
-              </Typography>
-            )}
-            <NextButton onClick={() => handleClick()} />
-          </Grid>
-          <img
-            alt=''
-            src={loginLogo}
-            style={{
-              position: "absolute",
-              right: 0,
-              bottom: 0,
-              height: "35vh",
-              zIndex: -1,
-            }}
-          />
-        </Grid>
-      ) : (
-        <Grid
-          container
-          className={classes.container}
-          direction='column'
-          alignItems='center'
-        >
-          <IconButton
-            style={{ alignSelf: "flex-start", paddingLeft: 22, paddingTop: 22 }}
-            onClick={() => history.goBack()}
-          >
-            <img alt='arrowLeft' src={arrowLeftImage} />
-          </IconButton>
+          )}
+
           <Grid
             container
-            direction='column'
-            className={classes.container}
-            style={{ alignSelf: "flex-start" }}
+            direction='row'
+            className={classes.passwordResetAndSubmitGrid}
           >
-            <Typography
-              className={classes.title}
-              style={{
-                alignSelf: "flex-start",
-                paddingLeft: 130,
-                paddingTop: 100,
-              }}
+            <Link
+              className={classes.forgetPasswordText}
+              onClick={() => history.push("/forgetPassword")}
             >
-              Welcome Back!
-            </Typography>
-            <Typography
-              className={classes.description}
-              style={{
-                alignSelf: "flex-start",
-                paddingLeft: 130,
-                paddingTop: 20,
-              }}
-            >
-              we’re happy you come back to us 💜
-            </Typography>
-          </Grid>
-          <Grid container item className={classes.inputForm} direction='column'>
-            <Typography className={classes.inputLabel}>ITSC Email</Typography>
-            <InputBase
-              className={classes.input}
-              autoComplete='email'
-              autoFocus
-              inputProps={{ autoCapitalize: "none" }}
-              onChange={(e) => setEmail(e.target.value)}
-            ></InputBase>
-            <Typography className={classes.inputLabel}>
-              Your secret word
-            </Typography>
-            <InputBase
-              className={classes.input}
-              type={showPassword ? "text" : "password"}
-              autoComplete='current-password'
-              onChange={(e) => setPassword(e.target.value)}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge='end'
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            ></InputBase>
-            {loginError && (
-              <Typography className={classes.errorMessage}>
-                Incorrect Email or Password😕
-              </Typography>
-            )}
-            <Grid
-              container
-              direction='row'
-              className={classes.passwordResetAndSubmitGrid}
-            >
-              <Link
-                className={classes.forgetPasswordText}
-                onClick={() => history.push("/forgetPassword")}
-              >
-                Forgot your secret word?
-              </Link>
-              <NextButton
-                onClick={() => handleClick()}
-                style={{ padding: 0 }}
-              />
-            </Grid>
+              Forgot your secret word?
+            </Link>
+            <NextButton onClick={() => handleClick()} style={{ padding: 0 }} />
           </Grid>
           <img
             alt=''
-            src={loginLogo}
-            style={{
-              position: "absolute",
-              left: 0,
-              bottom: 0,
-              height: "30vh",
-              zIndex: -1,
-            }}
+            src={isMobile ? loginLogoMobile : loginLogoDesktop}
+            className={classes.loginLogo}
           />
         </Grid>
-      )}
+      </Grid>
     </Grid>
   );
 }

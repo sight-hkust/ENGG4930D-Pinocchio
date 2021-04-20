@@ -10,6 +10,7 @@ import {
   ListItemText,
   ListItemIcon,
   IconButton,
+  Typography,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -22,21 +23,22 @@ import lookBackMenuIcon from "../../assets/lookBackMenuIcon.png";
 import bookmarkMenuIcon from "../../assets/bookmarkMenuIcon.png";
 import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
 import arrowLeftImage from "../../assets/arrowLeft.png";
+import whaleIcon from "../../assets/whaleIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    alignItems: "center",
     justifyContent: "center",
     flexFlow: "nowrap",
+    width: "auto",
   },
   button: {
-    fontStyle: "normal",
-    fontWeight: "normal",
     fontSize: 25,
-    letterSpacing: "0.07em",
     border: "none",
     background: "none",
-    padding: "0px 67px",
-    margin: "34px 0px",
+    padding: "20px 40px",
+    margin: "0px 67px",
+    textTransform: "capitalize",
   },
   text: {
     fontSize: 20,
@@ -52,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 30,
     minWidth: 40,
     minHeight: 30,
+  },
+  whaleTextColumn: {
+    alignItems: "center",
+    padding: "20px 20px",
+    maxWidth: "fit-content",
   },
 }));
 
@@ -211,15 +218,26 @@ function NavigationBar({ showMenu }) {
           className={classes.button}
           onClick={() => history.push("/home")}
         >
-          HOME
+          Home
         </Button>
-        <Button className={classes.button}>OUR FORUM</Button>
-        <Button className={classes.button}>PAST ENTRIES</Button>
         <Button
           className={classes.button}
-          onClick={() => history.push("/login")}
+          onClick={() => history.push("/forum")}
         >
-          LOGIN
+          The Storybook
+        </Button>
+        <Grid container direction='column' className={classes.whaleTextColumn}>
+          <img alt='' src={whaleIcon} />
+          <Typography>pinocchio</Typography>
+        </Grid>
+        <Button
+          className={classes.button}
+          onClick={() => history.push("/writing")}
+        >
+          Write Now
+        </Button>
+        <Button className={classes.button} onClick={() => logout()}>
+          Log Out
         </Button>
       </Grid>
     );

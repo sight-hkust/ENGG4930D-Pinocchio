@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 50,
     textAlign: "center",
     paddingBottom: 9,
-    paddingTop: 10,
+    paddingTop: 25,
     "@media (max-width:480px)": {
       fontSize: 35,
       paddingTop: 0,
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   landingPinocchio: {
     display: "flex",
-    height: "55vh",
+    height: "45vh",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -82,16 +82,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
       padding: "2vw 3vh",
     },
-  },
-  appInstallBanner: {
-    position: "absolute",
-    top: "80%",
-    backgroundColor: "#FFCF25",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    height: "20vh",
-    width: "100vw",
-    textAlign: "center",
   },
 }));
 
