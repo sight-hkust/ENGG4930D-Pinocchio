@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, Button } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import StoryInput from "../../components/StoryInput";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
@@ -63,14 +63,13 @@ function WritingPage() {
       </Typography>
 
       <NextButton
-        style={{ position: "relative", marginTop: 24, paddingRight: 40}}
+        style={{ position: "relative", marginTop: 24, paddingRight: 40 }}
         onClick={() => handleSubmit()}
       />
       <StoryInput
         onBodyTextChange={(e) => setStoryText(e.target.value)}
         onTitleChange={(e) => setTitle(e.target.value)}
       />
-
     </Grid>
   );
 }
