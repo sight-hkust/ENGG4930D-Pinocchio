@@ -12,12 +12,12 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    width: "fit-content",
     fontWeight: "bold",
     fontSize: 50,
     lineHeight: "normal",
     textAlign: "center",
     "@media (max-width:480px)": {
+      width: "fit-content",
       marginLeft: 35,
       paddingTop: 30,
       fontSize: 40,
@@ -71,11 +71,10 @@ function BookmarkPage() {
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography
-        className={classes.title}
-        style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}
-      >
-        Bookmarks
+      <Typography className={classes.title}>
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}>
+          Bookmarks
+        </span>
       </Typography>
       {stories.length > 0 ? (
         <InfiniteScroll
@@ -87,7 +86,6 @@ function BookmarkPage() {
             <StoryPreviewCard
               key={index}
               isBookmarked={true}
-              isPublic={story[1].isPublic}
               title={story[1].title}
               category={story[1].category}
               storyText={story[1].text}
@@ -106,7 +104,7 @@ function BookmarkPage() {
         <Grid
           container
           direction='column'
-          style={{ paddingLeft: 35, paddingTop: 20 }}
+          style={{ alignItems: "center", paddingTop: 20 }}
         >
           <Typography>You haven't bookmarked anything yet!</Typography>
           <Typography>Try now!😋</Typography>
