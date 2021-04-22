@@ -1,16 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button } from "@material-ui/core";
+import { Grid, Typography, Button, Card } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-import commentIcon from "../../assets/commentIcon.png";
 import bookmarkIcon from "../../assets/bookmarkedIcon.png";
 import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "40%",
-    margin: "5%",
+    height: 240,
+    margin: "2vw",
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
     padding: 22,
@@ -18,28 +18,40 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "#FFD7D7",
     },
     "@media (max-width:480px)": {
-    width: "90%",
-    margin: "10px 20px 10px",
-    }
+      width: "90%",
+      margin: "10px 20px 10px",
+    },
+  },
+  dateText: {
+    fontSize: 18,
+    "@media (max-width:480px)": {
+      fontSize: 14,
+    },
   },
   categoryText: {
-    fontSize: 12,
+    fontSize: 18,
     backgroundColor: "#F9A586",
     borderRadius: 20,
     padding: "3px 10px",
     textTransform: "capitalize",
+    "@media (max-width:480px)": {
+      fontSize: 12,
+    },
   },
   titleText: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 25,
     lineHeight: 1.3,
     paddingTop: 5,
     textTransform: "none",
     whiteSpace: "pre-line",
+    "@media (max-width:480px)": {
+      fontSize: 20,
+    },
   },
   storyText: {
     paddingTop: 13,
-    fontSize: 14,
+    fontSize: 28,
     marginBottom: 15,
     maxWidth: "100%",
     display: "-webkit-box",
@@ -49,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
     height: 45,
     textTransform: "none",
+    "@media (max-width:480px)": {
+      fontSize: 14,
+    },
   },
   icon: {
     padding: 0,
@@ -60,15 +75,7 @@ function StoryPreviewCard(props) {
   const classes = useStyles();
   const history = useHistory();
 
-  const {
-    isBookmarked,
-    title,
-    storyText,
-    date,
-    category,
-    isPublic,
-    storyID,
-  } = props;
+  const { isBookmarked, title, storyText, date, category, storyID } = props;
 
   return (
     <Button
@@ -77,7 +84,7 @@ function StoryPreviewCard(props) {
     >
       <Grid container direction='column' style={{ textAlign: "left" }}>
         <Grid container direction='row' justify='space-between'>
-          <Typography>{date}</Typography>
+          <Typography className={classes.dateText}>{date}</Typography>
           <Typography className={classes.categoryText}>{category}</Typography>
         </Grid>
         <Grid container direction='column'>
@@ -91,9 +98,6 @@ function StoryPreviewCard(props) {
               src={isBookmarked ? bookmarkIcon : noBookmarkIcon}
               className={classes.icon}
             />
-            {isPublic && (
-              <img alt='comment' src={commentIcon} className={classes.icon} />
-            )}
           </Grid>
         </Grid>
       </Grid>

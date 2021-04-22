@@ -79,12 +79,13 @@ function ForumPage() {
         dataLength={stories.length}
         next={fetchData}
         hasMore={hasMoreStories}
+        style={{ textAlign: "center" }}
+        scrollableTarget='scrollGrid'
       >
         {stories.map((story, index) => (
           <StoryPreviewCard
             key={index}
             isBookmarked={isBookmarked[index]}
-            isPublic
             title={story[1].title}
             category={story[1].category}
             storyText={story[1].text}

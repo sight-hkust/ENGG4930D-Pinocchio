@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -68,14 +68,12 @@ function BookmarkPage() {
     );
   };
 
-
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
-      <Typography
-        className={classes.title}>
-        <span style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA"}}>
-        Bookmarks
+      <Typography className={classes.title}>
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}>
+          Bookmarks
         </span>
       </Typography>
       {stories.length > 0 ? (
@@ -88,7 +86,6 @@ function BookmarkPage() {
             <StoryPreviewCard
               key={index}
               isBookmarked={true}
-              isPublic={story[1].isPublic}
               title={story[1].title}
               category={story[1].category}
               storyText={story[1].text}

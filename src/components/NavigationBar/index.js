@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexFlow: "nowrap",
-    width: "auto",
   },
   button: {
     fontSize: 25,
