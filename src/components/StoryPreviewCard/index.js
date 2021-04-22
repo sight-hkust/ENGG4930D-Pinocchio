@@ -9,14 +9,18 @@ import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    width: "90%",
-    margin: "10px 20px 10px",
+    width: "40%",
+    margin: "5%",
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
     padding: 22,
     "&:hover": {
       backgroundColor: "#FFD7D7",
     },
+    "@media (max-width:480px)": {
+    width: "90%",
+    margin: "10px 20px 10px",
+    }
   },
   categoryText: {
     fontSize: 12,

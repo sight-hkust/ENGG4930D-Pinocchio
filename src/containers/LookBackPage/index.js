@@ -110,7 +110,7 @@ function LookBackPage() {
         <Grid
           container
           direction='column'
-          style={{ paddingLeft: 35, paddingTop: 20 }}
+          style={{paddingTop: 20, alignItems: "center" }}
         >
           <Typography>You haven't posted anything yet!</Typography>
           <Typography>Try now!😋</Typography>
