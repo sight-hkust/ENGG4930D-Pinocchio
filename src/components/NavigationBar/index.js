@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 25,
     border: "none",
     background: "none",
-    padding: "20px 40px",
-    margin: "0px 67px",
+    padding: "20px 2vw",
+    margin: "0px 2vw",
     textTransform: "capitalize",
   },
   text: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Button, Card } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 import bookmarkIcon from "../../assets/bookmarkedIcon.png";
@@ -9,17 +9,18 @@ import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "40%",
-    height: 240,
     margin: "2vw",
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
     padding: 22,
+    minHeight: 300,
     "&:hover": {
       backgroundColor: "#FFD7D7",
     },
     "@media (max-width:480px)": {
       width: "90%",
       margin: "10px 20px 10px",
+      minHeight: "10vh",
     },
   },
   dateText: {
@@ -45,13 +46,18 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 5,
     textTransform: "none",
     whiteSpace: "pre-line",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 3,
+    textOverflow: "ellipsis",
+    overflow: "hidden",
     "@media (max-width:480px)": {
       fontSize: 20,
     },
   },
   storyText: {
     paddingTop: 13,
-    fontSize: 28,
+    fontSize: 20,
     marginBottom: 15,
     maxWidth: "100%",
     display: "-webkit-box",
@@ -59,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     WebkitLineClamp: 2,
     overflow: "hidden",
     textOverflow: "ellipsis",
-    height: 45,
     textTransform: "none",
     "@media (max-width:480px)": {
       fontSize: 14,
@@ -91,7 +96,6 @@ function StoryPreviewCard(props) {
           <Typography className={classes.titleText}>
             {title.split(",").join(",\n")}
           </Typography>
-          {/* <Typography className={classes.storyText}>{storyText}</Typography> */}
           <div
             className={classes.storyText}
             dangerouslySetInnerHTML={{ __html: storyText }}

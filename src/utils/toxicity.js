@@ -7,7 +7,11 @@ const perspective = new Perspective({
 });
 
 export async function getToxicity(text) {
-  const result = await perspective.analyze(text, { languages: ["en"] });
+  const result = await perspective.analyze({
+    comment: { text },
+    requestedAttributes: { TOXICITY: {} },
+    languages: ["en"],
+  });
   const score = result.attributeScores.TOXICITY.summaryScore.value;
   console.log(score);
   return score;

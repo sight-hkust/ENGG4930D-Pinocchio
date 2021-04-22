@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Grid,
-  IconButton,
-  Button,
-  Divider,
-} from "@material-ui/core";
+import { Typography, Grid, IconButton, Button } from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
@@ -34,12 +28,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFD7D7",
     borderRadius: 30,
     flexWrap: "nowrap",
+    overflow: "auto",
   },
   deleteButton: {
     background: "#F59598",
     borderRadius: 20,
     padding: "5px 20px",
     marginRight: 8,
+  },
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 3,
+    overflow: "auto",
+    height: "10vh",
   },
 }));
 
@@ -112,9 +116,7 @@ function StoryPage() {
           </Typography>
         </Grid>
         <Grid container className={classes.paper} direction='column'>
-          <Typography style={{ fontWeight: "bold", fontSize: 20 }}>
-            {story.title}
-          </Typography>
+          <Typography className={classes.titleText}>{story.title}</Typography>
           <div
             style={{
               overflow: "auto",
