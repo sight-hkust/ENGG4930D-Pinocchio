@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -89,16 +89,54 @@ function LandingPage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
-  const [showDialogBox, setShowDialogBox] = useState(false);
+  const [showPrivacyTextDialog, setShowPrivacyTextDialog] = useState(false);
+  const [showPWAInstallDialog, setShowPWAInstallDialog] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      setDeferredPrompt(e);
+      // Update UI notify the user they can install the PWA
+      setShowPWAInstallDialog(true);
+      // Optionally, send analytics event that PWA install promo was shown.
+      console.log(`'beforeinstallprompt' event was fired.`);
+    });
+  }, []);
+
+  const install = async () => {
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    const { outcome } = await deferredPrompt.userChoice;
+    // Optionally, send analytics event with outcome of user choice
+    console.log(`User response to the install prompt: ${outcome}`);
+    // We've used the prompt, and can't use it again, throw it away
+    setDeferredPrompt(null);
+    setShowPWAInstallDialog(false);
+  };
 
   return (
     <Grid container direction='column'>
       <DialogBox
-        open={showDialogBox}
+        open={showPrivacyTextDialog}
         HTMLString="<b>Your data will be kept safe with us</b><br><br>All posts are <u>anonymous</u> and private posts are only accessible to <u>you</u>.<br><br>If you ever feel like your privacy is breached, you can <u>delete all your posts</u>, and our database will remove them immediately.<br><br>So don't worry and write away!"
-        onClose={() => setShowDialogBox(false)}
+        onClose={() => setShowPrivacyTextDialog(false)}
         onClickYes={() => history.push("/signUp")}
         yesText="Let's Start"
+      ></DialogBox>
+      <DialogBox
+        open={showPWAInstallDialog}
+        text='The community needs you. Install Pinocchio Now.'
+        onClose={() => setShowPWAInstallDialog(false)}
+        onClickYes={() => install()}
+        onClickNo={() => {
+          setShowPWAInstallDialog(false);
+          history.push("/forum");
+        }}
+        yesText="Let's go!"
+        noText='Show me the forum first'
       ></DialogBox>
       {isMobile && <NavigationBar showMenu />}
 
@@ -136,7 +174,10 @@ function LandingPage() {
         </Typography>
         <Typography className={classes.linkText}>
           New to Pinocchio?
-          <Link className={classes.link} onClick={() => setShowDialogBox(true)}>
+          <Link
+            className={classes.link}
+            onClick={() => setShowPrivacyTextDialog(true)}
+          >
             {" Sign Up"}
           </Link>
         </Typography>

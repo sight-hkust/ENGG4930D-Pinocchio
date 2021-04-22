@@ -83,6 +83,7 @@ function DialogBox(props) {
     onClickNo,
     HTMLString,
     yesText,
+    noText,
   } = props;
   const isMobile = useMediaQuery("(max-width:480px)");
   return (
@@ -138,7 +139,9 @@ function DialogBox(props) {
           </Button>
           {onClickNo && (
             <Button className={classes.nobutton} onClick={onClickNo}>
-              <Typography className={classes.buttontext}>No</Typography>
+              <Typography className={classes.buttontext}>
+                {noText ? noText : "No"}
+              </Typography>
             </Button>
           )}
         </Grid>

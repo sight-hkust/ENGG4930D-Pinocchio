@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Typography,
-  Grid,
-  useMediaQuery,
-  Button,
-} from "@material-ui/core";
+import { Typography, Grid, useMediaQuery, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import NavigationBar from "../../components/NavigationBar";
 import readNowImage from "../../assets/readStoryIcon.png";
@@ -307,7 +302,9 @@ function HomePage() {
             style={{ alignItems: "center", paddingTop: 40 }}
           >
             <Button onClick={(e) => handleCall(e)} style={{ marginRight: 20 }}>
-              <Typography style={{ fontSize: 28 }}>Ask For Help</Typography>
+              <Typography style={{ fontSize: 28, paddingRight: 20 }}>
+                Ask For Help
+              </Typography>
               <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
             </Button>
           </Grid>
