@@ -80,7 +80,11 @@ function StoryPreviewCard(props) {
           <Typography className={classes.titleText}>
             {title.split(",").join(",\n")}
           </Typography>
-          <Typography className={classes.storyText}>{storyText}</Typography>
+          {/* <Typography className={classes.storyText}>{storyText}</Typography> */}
+          <div
+            className={classes.storyText}
+            dangerouslySetInnerHTML={{ __html: storyText }}
+          ></div>
           <Grid container direction='row'>
             <img
               alt='bookmark'

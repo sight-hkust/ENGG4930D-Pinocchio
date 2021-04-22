@@ -128,13 +128,21 @@ function WritingCategoryPage() {
   const handleUpload = ({ isPublic }) => {
     let title = sessionStorage.getItem("title");
     let storyText = sessionStorage.getItem("storyText");
-    if (title && storyText && selected !== undefined) {
+    let storyTextHTML = sessionStorage.getItem("storyTextHTML");
+    if (title && storyText && storyTextHTML && selected !== undefined) {
+      console.log({ title, storyText, storyTextHTML });
       if (isPublic) {
-        processStory(userUID, title, storyText, interests[selected][0]);
+        processStory(
+          userUID,
+          title,
+          storyText,
+          storyTextHTML,
+          interests[selected][0]
+        );
       } else {
         uploadStory(
           userUID,
-          storyText,
+          storyTextHTML,
           title,
           interests[selected][0],
           false // Private post
@@ -154,7 +162,12 @@ function WritingCategoryPage() {
         <Typography className={classes.description}>
           Choose a category for your story:
         </Typography>
-        <Grid container item xs={isMobile ? 'auto' : 6} className={classes.buttonGroup}>
+        <Grid
+          container
+          item
+          xs={isMobile ? "auto" : 6}
+          className={classes.buttonGroup}
+        >
           {interests.map((interest, index) => (
             <Button
               className={classes.interestButton}
@@ -163,7 +176,7 @@ function WritingCategoryPage() {
                 setSelected(index);
               }}
               disableRipple
-              style={{alignitems: "center"}}
+              style={{ alignitems: "center" }}
             >
               <Grid container item direction='column'>
                 <span

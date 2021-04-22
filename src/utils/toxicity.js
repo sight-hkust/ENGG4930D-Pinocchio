@@ -7,16 +7,23 @@ const perspective = new Perspective({
 });
 
 export async function getToxicity(text) {
-  const result = await perspective.analyze(text);
+  const result = await perspective.analyze(text, { languages: ["en"] });
   const score = result.attributeScores.TOXICITY.summaryScore.value;
   console.log(score);
   return score;
 }
 
-export function processStory(userUID, title, storyText, category) {
+export function processStory(
+  userUID,
+  title,
+  storyText,
+  storyTextHTML,
+  category
+) {
   //processStory only process public posts
   getToxicity(title)
     .then((titleScore) => {
+      console.log({ storyText, storyTextHTML });
       getToxicity(storyText)
         .then((textScore) => {
           if (titleScore > 0.5 || textScore > 0.5) {
@@ -30,7 +37,7 @@ export function processStory(userUID, title, storyText, category) {
               textScore
             );
           } else {
-            uploadStory(userUID, storyText, title, category, true);
+            uploadStory(userUID, storyTextHTML, title, category, true);
           }
         })
         .catch((err) => console.log(err));

@@ -5,7 +5,6 @@ import {
   Grid,
   useMediaQuery,
   Button,
-  IconButton,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import NavigationBar from "../../components/NavigationBar";

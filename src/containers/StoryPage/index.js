@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid, IconButton, Button } from "@material-ui/core";
+import {
+  Typography,
+  Grid,
+  IconButton,
+  Button,
+  Divider,
+} from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
@@ -106,14 +112,17 @@ function StoryPage() {
           </Typography>
         </Grid>
         <Grid container className={classes.paper} direction='column'>
-          <Typography
-            style={{ fontWeight: "bold", fontSize: 20, whiteSpace: "pre-line" }}
-          >
+          <Typography style={{ fontWeight: "bold", fontSize: 20 }}>
             {story.title}
           </Typography>
-          <Typography style={{ overflow: "auto", paddingTop: 30 }}>
-            {story.text}
-          </Typography>
+          <div
+            style={{
+              overflow: "auto",
+              paddingTop: 30,
+              whiteSpace: "break-spaces",
+            }}
+            dangerouslySetInnerHTML={{ __html: story.text }}
+          />
         </Grid>
         <Grid
           container

@@ -56,9 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   boxText: {
     fontSize: 15,
-    paddingLeft: 20,
-    paddingRight: 12,
-    paddingTop: 30,
+    padding: "0 12px 10px 20px",
     "@media (max-width:480px)": {
       fontSize: 14,
       padding: 20,
@@ -85,7 +83,6 @@ function DialogBox(props) {
     onClickNo,
     HTMLString,
     yesText,
-    ...rest
   } = props;
   const isMobile = useMediaQuery("(max-width:480px)");
   return (
@@ -134,16 +131,14 @@ function DialogBox(props) {
               dangerouslySetInnerHTML={{ __html: HTMLString }}
             />
           )}
-          <Button className={classes.yesbutton}>
-            <Typography className={classes.buttontext} onClick={onClickYes}>
+          <Button className={classes.yesbutton} onClick={onClickYes}>
+            <Typography className={classes.buttontext}>
               {yesText ? yesText : "Yes"}
             </Typography>
           </Button>
           {onClickNo && (
-            <Button className={classes.nobutton}>
-              <Typography className={classes.buttontext} onClick={onClickNo}>
-                No
-              </Typography>
+            <Button className={classes.nobutton} onClick={onClickNo}>
+              <Typography className={classes.buttontext}>No</Typography>
             </Button>
           )}
         </Grid>

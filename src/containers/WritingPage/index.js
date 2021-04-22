@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
 import StoryInput from "../../components/StoryInput";
 import NavigationBar from "../../components/NavigationBar";
-import NextButton from "../../components/NextButton";
 import { useHistory } from "react-router";
+import { EditorState, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+import sanitizeHtml from "sanitize-html";
+import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -12,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 60,
     lineHeight: "normal",
     textAlign: "center",
-    paddingTop: 30,
+    paddingBottom: 30,
     whiteSpace: "break-spaces",
     "@media (max-width:480px)": {
       paddingLeft: 35,
@@ -46,14 +49,48 @@ const useStyles = makeStyles((theme) => ({
 function WritingPage() {
   const history = useHistory();
   const classes = useStyles();
-  const [storyText, setStoryText] = useState();
   const [title, setTitle] = useState();
+  const [open, setOpen] = useState(false);
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+  const editorRef = useRef(null);
+  const isString = /.*[a-zA-Z].*/;
 
   const handleSubmit = () => {
     var myStorage = window.sessionStorage;
-    myStorage.setItem("title", title);
-    myStorage.setItem("storyText", storyText);
-    history.push("/writingCategory");
+    const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+    const originalText = blocks
+      .map((block) => (!block.text.trim() && "\n") || block.text)
+      .join("\n");
+    const sanitizeTitle = sanitizeHtml(title, {
+      allowedTags: ["b", "em", "strong", "u"],
+    });
+    const sanitizeText = sanitizeHtml(originalText, {
+      allowedTags: ["b", "em", "strong", "u"],
+    });
+    const sanitizedTextHTML = sanitizeHtml(
+      stateToHTML(editorState.getCurrentContent()),
+      { allowedTags: ["b", "em", "strong", "u"] }
+    );
+    if (
+      isString.test(originalText) &&
+      sanitizeTitle &&
+      sanitizeText &&
+      sanitizedTextHTML
+    ) {
+      myStorage.setItem("title", sanitizeTitle);
+      myStorage.setItem("storyText", sanitizeText);
+      myStorage.setItem("storyTextHTML", sanitizedTextHTML);
+      history.push("/writingCategory");
+    } else {
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    console.log("clicked");
   };
 
   return (
@@ -63,15 +100,20 @@ function WritingPage() {
         Write your{" "}
         <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>thoughts</span>
       </Typography>
-
-      <NextButton
-        style={{ position: "relative", marginTop: 24, paddingRight: 40 }}
-        onClick={() => handleSubmit()}
-      />
       <StoryInput
-        onBodyTextChange={(e) => setStoryText(e.target.value)}
+        editorState={editorState}
+        onChange={setEditorState}
         onTitleChange={(e) => setTitle(e.target.value)}
+        onSubmit={handleSubmit}
+        editorRef={editorRef}
       />
+      <DialogBox
+        open={open}
+        text='You have entered no/invalid information. Please try again.'
+        onClose={handleClose}
+        onClickYes={handleClose}
+        yesText='OK'
+      ></DialogBox>
     </Grid>
   );
 }
