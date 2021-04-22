@@ -45,6 +45,31 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     height: "10vh",
   },
+  categoryText: {
+    fontSize: 24,
+    backgroundColor: "#F9A586",
+    borderRadius: 20,
+    padding: "6px 40px",
+    "@media (max-width:480px)": {
+      padding: "3px 10px",
+      fontSize: 12,
+    },
+  },
+  storyText: {
+    overflow: "auto",
+    paddingTop: 30,
+    whiteSpace: "break-spaces",
+  },
+  timeText: {
+    fontSize: 24,
+    "@media (max-width:480px)": {
+      fontSize: 12,
+    },
+  },
+  timeCategoryContainer: {
+    padding: 8,
+    alignItems: "center",
+  },
 }));
 
 function StoryPage() {
@@ -101,28 +126,17 @@ function StoryPage() {
           container
           direction='row'
           justify='space-between'
-          style={{ padding: "8px 8px 15px" }}
+          className={classes.timeCategoryContainer}
         >
-          <Typography>{story.time}</Typography>
-          <Typography
-            style={{
-              fontSize: 12,
-              backgroundColor: "#F9A586",
-              borderRadius: 20,
-              padding: "3px 10px",
-            }}
-          >
+          <Typography className={classes.timeText}>{story.time}</Typography>
+          <Typography className={classes.categoryText}>
             {story.category}
           </Typography>
         </Grid>
         <Grid container className={classes.paper} direction='column'>
           <Typography className={classes.titleText}>{story.title}</Typography>
           <div
-            style={{
-              overflow: "auto",
-              paddingTop: 30,
-              whiteSpace: "break-spaces",
-            }}
+            className={classes.storyText}
             dangerouslySetInnerHTML={{ __html: story.text }}
           />
         </Grid>
