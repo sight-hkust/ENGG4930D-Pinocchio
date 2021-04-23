@@ -87,6 +87,7 @@ function LookBackPage() {
           dataLength={stories.length}
           next={fetchData}
           hasMore={hasMoreStories}
+          style={{ textAlign: "center" }}
         >
           {stories.map((story, index) => (
             <StoryPreviewCard
@@ -110,7 +111,7 @@ function LookBackPage() {
         <Grid
           container
           direction='column'
-          style={{paddingTop: 20, alignItems: "center" }}
+          style={{ paddingTop: 20, alignItems: "center" }}
         >
           <Typography>You haven't posted anything yet!</Typography>
           <Typography>Try now!😋</Typography>

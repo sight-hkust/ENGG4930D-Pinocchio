@@ -81,6 +81,7 @@ function BookmarkPage() {
           dataLength={stories.length}
           next={fetchData}
           hasMore={hasMoreStories}
+          style={{ textAlign: "center" }}
         >
           {stories.map((story, index) => (
             <StoryPreviewCard

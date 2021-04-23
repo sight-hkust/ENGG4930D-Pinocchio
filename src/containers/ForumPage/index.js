@@ -80,7 +80,6 @@ function ForumPage() {
         next={fetchData}
         hasMore={hasMoreStories}
         style={{ textAlign: "center" }}
-        scrollableTarget='scrollGrid'
       >
         {stories.map((story, index) => (
           <StoryPreviewCard
