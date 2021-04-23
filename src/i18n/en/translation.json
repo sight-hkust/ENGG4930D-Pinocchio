@@ -1,0 +1,10 @@
+{
+  "landingPage.privacyText": "<b>Your data will be kept safe with us</b><br><br>All posts are <u>anonymous</u> and private posts are only accessible to <u>you</u>.<br><br>If you ever feel like your privacy is breached, you can <u>delete all your posts</u>, and our database will remove them immediately.<br><br>So don't worry and write away!",
+  "landingPage.privacyDialogBoxConfirm": "OK! Let's Go!",
+  "landingPage.pwaInstallText": "The community needs you. Install Pinocchio Now.",
+  "landingPage.pwaInstallDialogBoxConfirm": "OK! Let's Go!",
+  "landingPage.pwaInstallDialogBoxDecline": "Show me the forum first",
+  "landingPage.welcomeText": "Welcome to ",
+  "landingPage.description": "Start your journey with us",
+  "landingPage.tryNow": "Try Now"
+}

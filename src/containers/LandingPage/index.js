@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
 import DialogBox from "../../components/DialogBox";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -92,6 +93,7 @@ function LandingPage() {
   const [showPrivacyTextDialog, setShowPrivacyTextDialog] = useState(false);
   const [showPWAInstallDialog, setShowPWAInstallDialog] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", (e) => {
@@ -121,22 +123,22 @@ function LandingPage() {
     <Grid container direction='column'>
       <DialogBox
         open={showPrivacyTextDialog}
-        HTMLString="<b>Your data will be kept safe with us</b><br><br>All posts are <u>anonymous</u> and private posts are only accessible to <u>you</u>.<br><br>If you ever feel like your privacy is breached, you can <u>delete all your posts</u>, and our database will remove them immediately.<br><br>So don't worry and write away!"
+        HTMLString={t("landingPage.privacyText")}
         onClose={() => setShowPrivacyTextDialog(false)}
         onClickYes={() => history.push("/signUp")}
-        yesText="Let's Start"
+        yesText={t("landingPage.privacyDialogBoxConfirm")}
       ></DialogBox>
       <DialogBox
         open={showPWAInstallDialog}
-        text='The community needs you. Install Pinocchio Now.'
+        text={t("landingPage.pwaInstallText")}
         onClose={() => setShowPWAInstallDialog(false)}
         onClickYes={() => install()}
         onClickNo={() => {
           setShowPWAInstallDialog(false);
           history.push("/forum");
         }}
-        yesText="Let's go!"
-        noText='Show me the forum first'
+        yesText={t("landingPage.pwaInstallText")}
+        noText={t("landingPage.pwaInstallDialogBoxDecline")}
       ></DialogBox>
       {isMobile && <NavigationBar showMenu />}
 
@@ -147,13 +149,13 @@ function LandingPage() {
         alignItems='center'
       >
         <b className={classes.title}>
-          {"Welcome to "}
+          {t("landingPage.welcomeText")}
           <span style={{ boxShadow: "inset 0 -10px 0 0 #FEBD7D" }}>
             Pinocchio
           </span>
         </b>
         <Typography className={classes.description}>
-          Start your journey with us
+          {t("landingPage.description")}
         </Typography>
         <img
           src={landingPinocchio}
@@ -164,7 +166,9 @@ function LandingPage() {
           className={classes.button}
           onClick={() => history.push("/forum")}
         >
-          <Typography className={classes.buttonText}>Try Now</Typography>
+          <Typography className={classes.buttonText}>
+            {t("landingPage.tryNow")}
+          </Typography>
         </Button>
         <Typography className={classes.linkText}>
           Already have an account?
