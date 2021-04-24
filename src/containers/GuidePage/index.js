@@ -14,6 +14,7 @@ import guidePage3Web from "../../assets/guidePage3Web.png";
 import guidePage4Web from "../../assets/guidePage4Web.png";
 import guidePage5Web from "../../assets/guidePage5Web.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -40,6 +41,7 @@ function GuidePage() {
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useTranslation();
   return (
     <Grid container>
       <Carousel
@@ -87,7 +89,7 @@ function GuidePage() {
                   : setCurrentSlide(currentSlide === 4 ? 4 : currentSlide + 1)
               }
             >
-              <Typography className={classes.text}>Go to Forum now!</Typography>
+              <Typography className={classes.text}>{t("guidePage.goToForum")}</Typography>
             </Button>
           )
         ) : (
@@ -98,7 +100,7 @@ function GuidePage() {
                 setCurrentSlide(currentSlide === 0 ? 0 : currentSlide - 1)
               }
             >
-              <Typography className={classes.text}>Previous</Typography>
+              <Typography className={classes.text}>{t("guidePage.previous")}</Typography>
             </Button>
             <Button
               className={classes.button}
@@ -109,7 +111,7 @@ function GuidePage() {
               }
             >
               <Typography className={classes.text}>
-                {currentSlide === 4 ? "Go to Forum now!" : "Next"}
+                {currentSlide === 4 ? (t("guidePage.goToForum")) : (t("guidePage.next"))}
               </Typography>
             </Button>
           </>

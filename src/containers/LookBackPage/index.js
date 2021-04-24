@@ -11,6 +11,7 @@ import {
   fetchUserStory,
 } from "../../utils/fetchStory";
 import { checkStoryBookmarked } from "../../utils/bookmarkStory";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -41,6 +42,7 @@ function LookBackPage() {
   const [hasMoreStories, setHasMoreStories] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState([]);
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchUserStory({ userUID: userUID, numberOfStory: 5 }).then(
@@ -79,8 +81,8 @@ function LookBackPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Typography className={classes.title}>
-        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>Look</span>{" "}
-        back
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>{t("lookBackPage.lookText")}</span>{" "}
+        {t("lookBackPage.backText")}
       </Typography>
       {stories.length > 0 ? (
         <InfiniteScroll
@@ -112,8 +114,8 @@ function LookBackPage() {
           direction='column'
           style={{paddingTop: 20, alignItems: "center" }}
         >
-          <Typography>You haven't posted anything yet!</Typography>
-          <Typography>Try now!😋</Typography>
+          <Typography>{t("lookBackPage.noPostText")}</Typography>
+          <Typography>{t("lookBackPage.tryNowText")}</Typography>
         </Grid>
       )}
     </Grid>

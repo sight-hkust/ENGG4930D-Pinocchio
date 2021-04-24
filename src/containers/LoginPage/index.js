@@ -18,6 +18,7 @@ import NextButton from "../../components/NextButton";
 import loginLogoMobile from "../../assets/loginLogoMobile.png";
 import loginLogoDesktop from "../../assets/loginLogoDesktop.png";
 import NavigationBar from "../../components/NavigationBar";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -124,6 +125,7 @@ function LoginPage() {
   const [loginError, setLoginError] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   var isLoggedIn = useSelector((state) => state.auth.userUID);
 
@@ -143,6 +145,7 @@ function LoginPage() {
     }
   };
 
+
   return (
     <Grid container direction='column'>
       <NavigationBar showMenu />
@@ -159,15 +162,15 @@ function LoginPage() {
                 boxShadow: "inset 0 -13px 0 0 #FFD7D7",
               }}
             >
-              Welcome
+              {t("loginPage.welcomeText")}
             </span>{" "}
-            back!
+            {t("loginPage.backText")}
           </b>
           <Typography className={classes.description}>
-            we’re happy you came back to us 💜
+            {t("loginPage.happyBackText")}
           </Typography>
           <Typography className={classes.inputLabel}>
-            Full ITSC Email address
+            {t("loginPage.itscEmail")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -177,7 +180,7 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           ></InputBase>
           <Typography className={classes.inputLabel}>
-            Your secret word
+          {t("loginPage.secretWord")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -197,7 +200,7 @@ function LoginPage() {
           ></InputBase>
           {loginError && (
             <Typography className={classes.errorMessage}>
-              Incorrect Email or Password😕
+              {t("loginPage.incorrectText")}
             </Typography>
           )}
 
@@ -210,7 +213,7 @@ function LoginPage() {
               className={classes.forgetPasswordText}
               onClick={() => history.push("/forgetPassword")}
             >
-              Forgot your secret word?
+              {t("loginPage.forgotSecret")}
             </Link>
             <NextButton onClick={() => handleClick()} style={{ padding: 0 }} />
           </Grid>

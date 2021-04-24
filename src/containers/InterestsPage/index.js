@@ -14,6 +14,7 @@ import ptsdIcon from "../../assets/ptsdIcon.png";
 import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -101,16 +102,17 @@ function InterestsPage() {
   const [selected, setSelected] = useState([]);
   const isMobile = useMediaQuery("(max-width:480px)");
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   const interests = [
-    ["Depression", depressionIcon],
-    ["Motivation", motivationIcon],
-    ["Exam Anxiety", examAnxietyIcon],
-    ["Social Anxiety", socialAnxietyIcon],
-    ["PTSD", ptsdIcon],
-    ["Panic Disorder", panicDisorderIcon],
-    ["Eating Disorder", eatingDisorderIcon],
-    ["All", allIcon],
+    [(t("interestsPage.depression")), depressionIcon],
+    [(t("interestsPage.motivation")), motivationIcon],
+    [(t("interestsPage.examAnxiety")), examAnxietyIcon],
+    [(t("interestsPage.socialAnxiety")), socialAnxietyIcon],
+    [(t("interestsPage.ptsd")), ptsdIcon],
+    [(t("interestsPage.panicDisorder")), panicDisorderIcon],
+    [(t("interestsPage.eatingDisorder")), eatingDisorderIcon],
+    [(t("interestsPage.all")), allIcon],
   ];
 
   const handleSubmit = () => {
@@ -132,13 +134,13 @@ function InterestsPage() {
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
         <b className={classes.title}>
-          {"Choose your "}
+        {t("interestsPage.chooseYourText")}
           <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
-            interests
+            {t("interestsPage.interestsText")}
           </span>
         </b>
         <Typography className={classes.description}>
-          As your heart desires
+        {t("interestsPage.heartDesireText")}
         </Typography>
         <Grid
           container

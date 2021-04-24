@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import headsUpIcon from "../../assets/headsUpIcon.png";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   yesbutton: {
@@ -86,6 +87,7 @@ function DialogBox(props) {
     noText,
   } = props;
   const isMobile = useMediaQuery("(max-width:480px)");
+  const { t } = useTranslation();
   return (
     <Modal
       open={open}
@@ -117,7 +119,7 @@ function DialogBox(props) {
             src={headsUpIcon}
             style={{ height: 30, width: 11, paddingLeft: 15 }}
           />
-          <Typography className={classes.headsUp}>Heads up!</Typography>
+          <Typography className={classes.headsUp}>{t("dialogBox.headsUp")}</Typography>
         </Grid>
         <Grid
           container

@@ -9,6 +9,7 @@ import {
   fetchBookmarkedStories,
   fetchNextFiveBookmarkedStories,
 } from "../../utils/fetchStory";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -40,6 +41,7 @@ function BookmarkPage() {
   const [hasMoreStories, setHasMoreStories] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState([]);
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchBookmarkedStories({ userUID: userUID, numberOfStory: 5 }).then(
@@ -73,7 +75,7 @@ function BookmarkPage() {
       <NavigationBar showMenu />
       <Typography className={classes.title}>
         <span style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}>
-          Bookmarks
+          {t("bookmarkPage.bookmarks")}
         </span>
       </Typography>
       {stories.length > 0 ? (
@@ -106,8 +108,8 @@ function BookmarkPage() {
           direction='column'
           style={{ alignItems: "center", paddingTop: 20 }}
         >
-          <Typography>You haven't bookmarked anything yet!</Typography>
-          <Typography>Try now!😋</Typography>
+          <Typography>{t("bookmarkPage.noBookmarks")}</Typography>
+          <Typography>{t("bookmarkPage.tryNow")}</Typography>
         </Grid>
       )}
     </Grid>

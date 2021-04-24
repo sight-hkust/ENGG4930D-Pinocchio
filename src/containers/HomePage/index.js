@@ -9,6 +9,7 @@ import lookBackImage from "../../assets/lookBackIcon.png";
 import bookmarkImage from "../../assets/bookmarkIcon.png";
 import callWellnessCenterIcon from "../../assets/exclamationMarkIcon.png";
 import DialogBox from "../../components/DialogBox";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -87,6 +88,7 @@ function HomePage() {
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleClose = (event, reason) => {
     setIsOpen(false);
@@ -124,7 +126,7 @@ function HomePage() {
             >
               <img alt='lookback' src={lookBackImage}></img>
               <Typography className={classes.buttonHeadingText}>
-                Look back
+                {t("homePage.lookBackText")}
               </Typography>
             </Button>
             <Button
@@ -133,7 +135,7 @@ function HomePage() {
             >
               <img alt='bookmark' src={bookmarkImage}></img>
               <Typography className={classes.buttonHeadingText}>
-                Bookmarks
+                {t("homePage.bookMark")}
               </Typography>
             </Button>
           </Grid>
@@ -149,10 +151,10 @@ function HomePage() {
               className={classes.buttonTextGroup}
             >
               <Typography className={classes.buttonHeadingText}>
-                Read stories
+                {t("homePage.readStories")}
               </Typography>
               <Typography className={classes.buttonText}>
-                Delve into our stories of the good, the bad and the magical
+              {t("homePage.delveStories")}
               </Typography>
             </Grid>
           </Button>
@@ -168,11 +170,10 @@ function HomePage() {
               className={classes.buttonTextGroup}
             >
               <Typography className={classes.buttonHeadingText}>
-                Write now
+                {t("homePage.writeNow")}
               </Typography>
               <Typography className={classes.buttonText}>
-                Write down your daily thoughts, for they are part of your
-                alluring tale
+               {t("homePage.dailyThoughts")}
               </Typography>
             </Grid>
           </Button>
@@ -188,15 +189,14 @@ function HomePage() {
               style={{ marginRight: 20, textTransform: "capitalize" }}
             >
               <Typography style={{ fontSize: 28, paddingRight: 10 }}>
-                Ask For Help
+                {t("homePage.askForHelp")}
               </Typography>
               <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
             </Button>
           </Grid>
           <DialogBox
             open={isOpen}
-            HTMLString='<b>Thank you for taking good care of yourself.<br>We are proud of you!</b><br><br>Do you wish to contact our counsellors through the 24-hour helpline?'
-            onClose={handleClose}
+            HTMLString= {t("homePage.hotLineText")}
             onClickYes={() => (window.location.href = "tel:+85282082688")}
             onClickNo={handleClose}
           ></DialogBox>
@@ -233,14 +233,13 @@ function HomePage() {
                   className={classes.buttonHeadingText}
                   style={{ paddingLeft: 20 }}
                 >
-                  Write now
+                  {t("homePage.writeNow")}
                 </Typography>
                 <Typography
                   className={classes.buttonText}
                   style={{ paddingLeft: 20, paddingRight: 20 }}
                 >
-                  Write down your life's tales because good or bad, they are
-                  part of your alluring tale
+                  {t("homePage.lifeTale")}
                 </Typography>
               </Grid>
             </Button>
@@ -250,7 +249,7 @@ function HomePage() {
             >
               <img alt='lookback' src={lookBackImage}></img>
               <Typography className={classes.buttonHeadingText}>
-                Look back
+                {t("homePage.lookBackText")}
               </Typography>
             </Button>
           </Grid>
@@ -274,13 +273,13 @@ function HomePage() {
                   className={classes.buttonHeadingText}
                   style={{ paddingLeft: 20 }}
                 >
-                  Read stories
+                  {t("homePage.readStories")}
                 </Typography>
                 <Typography
                   className={classes.buttonText}
                   style={{ paddingLeft: 20, paddingRight: 20 }}
                 >
-                  Delve into our inspirational and beautiful stories
+                  {t("homePage.delveInspire")}
                 </Typography>
               </Grid>
             </Button>
@@ -290,7 +289,7 @@ function HomePage() {
             >
               <img alt='bookmark' src={bookmarkImage}></img>
               <Typography className={classes.buttonHeadingText}>
-                Bookmarks
+                {t("homePage.bookMark")}
               </Typography>
             </Button>
           </Grid>
@@ -303,7 +302,7 @@ function HomePage() {
           >
             <Button onClick={(e) => handleCall(e)} style={{ marginRight: 20 }}>
               <Typography style={{ fontSize: 28, paddingRight: 20 }}>
-                Ask For Help
+                {t("homePage.askForHelp")}
               </Typography>
               <img alt='callWellnessCenter' src={callWellnessCenterIcon}></img>
             </Button>
@@ -311,7 +310,7 @@ function HomePage() {
 
           <DialogBox
             open={isOpen}
-            HTMLString='<b>Thank you for taking good care of yourself.<br>We are proud of you!</b><br><br>Do you wish to contact our counsellors through the 24-hour helpline?'
+            HTMLString={t("homePage.hotLineText")}
             onClose={handleClose}
             onClickYes={() => (window.location.href = "tel:+85282082688")}
             onClickNo={handleClose}

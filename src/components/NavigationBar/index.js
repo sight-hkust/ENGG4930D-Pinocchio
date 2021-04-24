@@ -24,6 +24,7 @@ import bookmarkMenuIcon from "../../assets/bookmarkMenuIcon.png";
 import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import whaleIcon from "../../assets/whaleIcon.png";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -70,6 +71,7 @@ function NavigationBar({ showMenu }) {
   });
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const logOut = () => {
     dispatch(logout());
@@ -90,12 +92,12 @@ function NavigationBar({ showMenu }) {
   const list = (anchor) => (
     <List>
       {[
-        "Home",
-        "The Storybook",
-        "Write Now",
-        "Look Back",
-        "Bookmark",
-        "Log Out",
+        (t("navigationBar.home")),
+        (t("navigationBar.theStorybook")),
+        (t("navigationBar.writeNow")),
+        (t("navigationBar.lookBack")),
+        (t("navigationBar.bookmark")),
+        (t("navigationBar.logOut")),
       ].map((text, index) =>
         index === 0 ? (
           <ListItem
@@ -217,13 +219,13 @@ function NavigationBar({ showMenu }) {
           className={classes.button}
           onClick={() => history.push("/home")}
         >
-          Home
+          {t("navigationBar.home")}
         </Button>
         <Button
           className={classes.button}
           onClick={() => history.push("/forum")}
         >
-          The Storybook
+          {t("navigationBar.theStorybook")}
         </Button>
         <Grid container direction='column' className={classes.whaleTextColumn}>
           <img alt='' src={whaleIcon} />
@@ -233,10 +235,10 @@ function NavigationBar({ showMenu }) {
           className={classes.button}
           onClick={() => history.push("/writing")}
         >
-          Write Now
+          {t("navigationBar.writeNow")}
         </Button>
         <Button className={classes.button} onClick={() => logout()}>
-          Log Out
+          {t("navigationBar.logOut")}
         </Button>
       </Grid>
     );

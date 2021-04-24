@@ -93,7 +93,7 @@ function LandingPage() {
   const [showPrivacyTextDialog, setShowPrivacyTextDialog] = useState(false);
   const [showPWAInstallDialog, setShowPWAInstallDialog] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", (e) => {
@@ -171,18 +171,18 @@ function LandingPage() {
           </Typography>
         </Button>
         <Typography className={classes.linkText}>
-          Already have an account?
+         {t("landingPage.haveAccount")}
           <Link className={classes.link} onClick={() => history.push("/login")}>
-            {" Sign In"}
+          {t("landingPage.signIn")}
           </Link>
         </Typography>
         <Typography className={classes.linkText}>
-          New to Pinocchio?
+        {t("landingPage.newToPinocchio")}
           <Link
             className={classes.link}
             onClick={() => setShowPrivacyTextDialog(true)}
           >
-            {" Sign Up"}
+            {t("landingPage.signUp")}
           </Link>
         </Typography>
       </Grid>

@@ -7,6 +7,7 @@ import StoryPreviewCard from "../../components/StoryPreviewCard";
 import NavigationBar from "../../components/NavigationBar";
 import { fetchNextFiveStories, fetchStory } from "../../utils/fetchStory";
 import { checkStoryBookmarked } from "../../utils/bookmarkStory";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -37,6 +38,7 @@ function ForumPage() {
   const [hasMoreStories, setHasMoreStories] = useState(true);
   const [isBookmarked, setIsBookmarked] = useState([]);
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setStories([]);
@@ -70,9 +72,9 @@ function ForumPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Typography className={classes.title}>
-        The{" "}
+        {t("forumPage.theText")}{" "}
         <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
-          Storybook
+         {t("forumPage.storybook")}
         </span>
       </Typography>
       <InfiniteScroll

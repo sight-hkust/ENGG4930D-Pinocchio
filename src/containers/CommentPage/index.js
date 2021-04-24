@@ -8,6 +8,7 @@ import NextButton from "../../components/NextButton";
 import commentIcon from "../../assets/commentIcon.png";
 import { fetchStoryByID } from "../../utils/fetchStory";
 import { uploadComment } from "../../utils/uploadComment";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -48,6 +49,7 @@ function CommentPage() {
   const { id } = useParams();
   const handlePreviousPage = () => history.push("/forum");
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchComment();
@@ -79,7 +81,7 @@ function CommentPage() {
                 marginLeft: 10,
               }}
             >
-              Comments
+              {t("commentPage.comments")}
             </Typography>
           </Grid>
           <div style={{ overflow: "auto", marginBottom: 15 }}>
@@ -105,9 +107,7 @@ function CommentPage() {
                 <Typography
                   style={{ padding: "14px 0", whiteSpace: "pre-line" }}
                 >
-                  {`There is no comments right now.
-                  Write Now to encourage others
-                  in this community!`}
+                  {t("commentPage.noComments")}
                 </Typography>
                 <Divider
                   classes={{ root: classes.divider }}
@@ -120,7 +120,7 @@ function CommentPage() {
             <Grid container className={classes.commentInput}>
               <Input
                 style={{ width: "80vw" }}
-                placeholder='Write your comment...'
+                placeholder= {t("commentPage.writeComment")}
                 disableUnderline
                 multiline
                 onChange={(e) => setNewComment(e.target.value)}

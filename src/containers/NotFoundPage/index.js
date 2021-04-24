@@ -1,8 +1,10 @@
 import React from "react";
 import { Typography, Grid } from "@material-ui/core";
 import backgroundImage from "../../assets/notFound.png";
+import { useTranslation } from "react-i18next";
 
 function NotFoundPage() {
+  const { t } = useTranslation();
   return (
     <Grid
       container
@@ -23,9 +25,9 @@ function NotFoundPage() {
           textAlign: "center",
         }}
       >
-        <Typography style={{ fontSize: 60 }}>🧐Hmmmmm...</Typography>
+        <Typography style={{ fontSize: 60 }}>{t("notFoundPage.hmmText")}</Typography>
         <Typography style={{ fontSize: 30 }}>
-          I think you are in the wrong place
+          {t("notFoundPage.wrongPlaceText")}
         </Typography>
       </Grid>
     </Grid>
