@@ -6,11 +6,13 @@ import {
   useMediaQuery,
   Button,
   Link,
+  Snackbar,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
 import DialogBox from "../../components/DialogBox";
+import IOSShareIcon from "../../assets/IOSShareIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -91,19 +93,41 @@ function LandingPage() {
   const isMobile = useMediaQuery("(max-width:480px)");
   const [showPrivacyTextDialog, setShowPrivacyTextDialog] = useState(false);
   const [showPWAInstallDialog, setShowPWAInstallDialog] = useState(false);
+  const [showIOSInstallBanner, setShowIOSInstallBanner] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
+  // Expected behaviour:
+  // Desktop: Do not show installation dialog
+  // Mobile(iOS Safari): Show Installation Banner(Snackbar component at bottom)
+  // Mobile(Android Chrome): Show PWA Installation Dialog
+  // Standalone = run like an app in iOS/Android: Do not show installation dialog
   useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e) => {
-      // Prevent the mini-infobar from appearing on mobile
-      e.preventDefault();
-      // Stash the event so it can be triggered later.
-      setDeferredPrompt(e);
-      // Update UI notify the user they can install the PWA
-      setShowPWAInstallDialog(true);
-      // Optionally, send analytics event that PWA install promo was shown.
-      console.log(`'beforeinstallprompt' event was fired.`);
-    });
+    // Detects if device is in standalone mode
+    const isInStandaloneMode = () =>
+      "standalone" in window.navigator && window.navigator.standalone;
+
+    // Detects if device is on iOS
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+
+    //Open PWA Install Dialog on Android
+    if (isMobile && !isInStandaloneMode()) {
+      window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        setDeferredPrompt(e);
+        // Update UI notify the user they can install the PWA
+        setShowPWAInstallDialog(true);
+      });
+    }
+
+    // Open iOS install banner:
+    if (isIos() && !isInStandaloneMode()) {
+      setShowIOSInstallBanner(true);
+    }
   }, []);
 
   const install = async () => {
@@ -139,7 +163,6 @@ function LandingPage() {
         noText='Show me the forum first'
       ></DialogBox>
       {isMobile && <NavigationBar showMenu />}
-
       <Grid
         container
         className={classes.container}
@@ -181,6 +204,29 @@ function LandingPage() {
             {" Sign Up"}
           </Link>
         </Typography>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={showIOSInstallBanner}
+          onClose={() => setShowIOSInstallBanner(false)}
+          autoHideDuration={4000}
+          style={{
+            backgroundColor: "#FFD7D7",
+            borderRadius: 20,
+            padding: "5px 20px",
+          }}
+        >
+          <Typography
+            style={{
+              textAlign: "center",
+              fontSize: 18,
+              whiteSpace: "break-spaces",
+            }}
+          >
+            {`Pinocchio is a big family. Join us now!\nAdd our website to the Home Screen by tapping `}
+            <img alt='' src={IOSShareIcon}></img>
+            {`\n👇`}
+          </Typography>
+        </Snackbar>
       </Grid>
     </Grid>
   );
