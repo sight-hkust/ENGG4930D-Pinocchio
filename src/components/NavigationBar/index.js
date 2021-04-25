@@ -24,6 +24,7 @@ import bookmarkMenuIcon from "../../assets/bookmarkMenuIcon.png";
 import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import whaleIcon from "../../assets/whaleIcon.png";
+import personalMenuIcon from "../../assets/personalPage.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -90,77 +91,21 @@ function NavigationBar({ showMenu }) {
   const list = (anchor) => (
     <List>
       {[
-        "Home",
-        "The Storybook",
-        "Write Now",
-        "Look Back",
-        "Bookmark",
-        "Log Out",
-      ].map((text, index) =>
-        index === 0 ? (
-          <ListItem
-            button
-            key={text + index}
-            onClick={() => history.push("/home")}
-          >
-            <ListItemIcon>
-              <img alt='home' src={homeMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) : index === 1 ? (
-          <ListItem
-            button
-            key={text + index}
-            onClick={() => history.push("/forum")}
-          >
-            <ListItemIcon>
-              <img alt='storybook' src={storyBookMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) : index === 2 ? (
-          <ListItem
-            button
-            key={text + index}
-            onClick={() => history.push("/writing")}
-          >
-            <ListItemIcon>
-              <img alt='writeNow' src={writeNowMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) : index === 3 ? (
-          <ListItem
-            button
-            key={text + index}
-            onClick={() => history.push("/lookBack")}
-          >
-            <ListItemIcon>
-              <img alt='lookback' src={lookBackMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) : index === 4 ? (
-          <ListItem
-            button
-            key={text + index}
-            onClick={() => history.push("/bookmark")}
-          >
-            <ListItemIcon>
-              <img alt='bookmark' src={bookmarkMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) : (
-          <ListItem button key={text + index} onClick={() => logOut()}>
-            <ListItemIcon>
-              <img alt='logout' src={logOutMenuIcon}></img>
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        )
-      )}
+        ["Home", homeMenuIcon, () => history.push("/home")],
+        ["The Storybook", storyBookMenuIcon, () => history.push("/forum")],
+        ["Write Now", writeNowMenuIcon, () => history.push("/writing")],
+        ["Look Back", lookBackMenuIcon, () => history.push("/lookback")],
+        ["Bookmark", bookmarkMenuIcon, () => history.push("/bookmark")],
+        ["Personal", personalMenuIcon, () => history.push("/personal")],
+        ["Log Out", logOutMenuIcon, () => logOut()],
+      ].map((data, index) => (
+        <ListItem button key={data[0] + index} onClick={data[2]}>
+          <ListItemIcon style={{ minWidth: 36 }} key={`icon${data[0]}`}>
+            <img alt='' src={data[1]}></img>
+          </ListItemIcon>
+          <ListItemText primary={data[0]} />
+        </ListItem>
+      ))}
     </List>
   );
 
@@ -231,11 +176,11 @@ function NavigationBar({ showMenu }) {
         </Grid>
         <Button
           className={classes.button}
-          onClick={() => history.push("/writing")}
+          onClick={() => history.push("/personal")}
         >
-          Write Now
+          Personal
         </Button>
-        <Button className={classes.button} onClick={() => logout()}>
+        <Button className={classes.button} onClick={() => logOut()}>
           Log Out
         </Button>
       </Grid>

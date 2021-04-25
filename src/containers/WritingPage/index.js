@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 30,
     whiteSpace: "break-spaces",
     "@media (max-width:480px)": {
+      paddingBottom: 0,
       paddingLeft: 35,
       paddingTop: 30,
       fontSize: 40,
@@ -109,7 +110,7 @@ function WritingPage() {
       />
       <DialogBox
         open={open}
-        text='You have entered no/invalid information. Please try again.'
+        text='You have entered no/invalid text. Please try again.'
         onClose={handleClose}
         onClickYes={handleClose}
         yesText='OK'

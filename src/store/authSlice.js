@@ -17,7 +17,11 @@ export const login = createAsyncThunk("auth/login", async (data) => {
           return { userUID: userUID, isAdmin: result.data().isAdmin };
         });
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      if (error.code === "auth/wrong-password") {
+        return { userUID: "", isAdmin: false, loginWrongPassword: true };
+      }
+    });
 });
 
 export const logout = createAsyncThunk("auth/logout", async () => {
@@ -58,6 +62,7 @@ export const authSlice = createSlice({
   initialState: {
     userUID: "",
     isAdmin: false,
+    loginWrongPassword: false,
   },
   reducers: {},
   extraReducers: {
@@ -65,6 +70,7 @@ export const authSlice = createSlice({
       return {
         userUID: action.payload.userUID,
         isAdmin: action.payload.isAdmin,
+        loginWrongPassword: action.payload.loginWrongPassword,
       };
     },
     [logout.fulfilled]: (state, action) => {

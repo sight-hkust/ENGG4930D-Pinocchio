@@ -113,16 +113,16 @@ function LandingPage() {
     };
 
     //Open PWA Install Dialog on Android
-    if (isMobile && !isInStandaloneMode()) {
-      window.addEventListener("beforeinstallprompt", (e) => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      if (isMobile && !isInStandaloneMode()) {
         // Prevent the mini-infobar from appearing on mobile
         e.preventDefault();
         // Stash the event so it can be triggered later.
         setDeferredPrompt(e);
         // Update UI notify the user they can install the PWA
         setShowPWAInstallDialog(true);
-      });
-    }
+      }
+    });
 
     // Open iOS install banner:
     if (isIos() && !isInStandaloneMode()) {
@@ -152,7 +152,7 @@ function LandingPage() {
       ></DialogBox>
       <DialogBox
         open={showPWAInstallDialog}
-        text='The community needs you. Install Pinocchio Now.'
+        text={`Want easier access to Pinocchio?\nAdd us to your Homescreen Now!`}
         onClose={() => setShowPWAInstallDialog(false)}
         onClickYes={() => install()}
         onClickNo={() => {

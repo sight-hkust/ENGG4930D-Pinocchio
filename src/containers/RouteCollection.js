@@ -22,6 +22,7 @@ import BookmarkPage from "./BookmarkPage";
 import LookBackPage from "./LookBackPage";
 import ForgetPasswordPage from "./ForgetPasswordPage";
 import GuidePage from "./GuidePage";
+import PersonalPage from "./PersonalPage";
 
 function RouteCollection() {
   var isLoggedIn = useSelector((state) => state.auth.userUID);
@@ -50,6 +51,9 @@ function RouteCollection() {
         <Route exact path='/guidelines'>
           <GuidelinesPage />
         </Route>
+        <Route exact path='/personal'>
+          {isLoggedIn ? <PersonalPage /> : <Redirect to={{ pathname: "/" }} />}
+        </Route>
         <Route exact path='/home'>
           {isLoggedIn ? <HomePage /> : <Redirect to={{ pathname: "/" }} />}
         </Route>
@@ -67,10 +71,10 @@ function RouteCollection() {
           <ForumPage />
         </Route>
         <Route exact path='/story/:id'>
-          {isLoggedIn ? <StoryPage /> : <Redirect to={{ pathname: "/" }} />}
+          <StoryPage />
         </Route>
         <Route exact path='/comment/:id'>
-          {isLoggedIn ? <CommentPage /> : <Redirect to={{ pathname: "/" }} />}
+          <CommentPage />
         </Route>
         <Route exact path='/bookmark'>
           {isLoggedIn ? <BookmarkPage /> : <Redirect to={{ pathname: "/" }} />}

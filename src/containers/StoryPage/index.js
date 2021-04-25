@@ -168,10 +168,12 @@ function StoryPage() {
               }}
               onClick={() => handleBookmark()}
             >
-              <img
-                alt='bookmark'
-                src={isBookmarked ? bookmarkIcon : noBookmarkIcon}
-              />
+              {userUID && (
+                <img
+                  alt='bookmark'
+                  src={isBookmarked ? bookmarkIcon : noBookmarkIcon}
+                />
+              )}
             </IconButton>
             {isPublic && (
               <IconButton

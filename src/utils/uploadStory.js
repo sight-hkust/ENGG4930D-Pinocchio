@@ -18,7 +18,9 @@ export function uploadStory(userUID, storyText, title, category, isPublic) {
         .collection("users")
         .doc(userUID)
         .update({
-          postsRef: firebase.firestore.FieldValue.arrayUnion(documentRef.id),
+          postsRef: firebase.firestore.FieldValue.arrayUnion(
+            documentRef.id + (isPublic ? "PUBLIC" : "PRIVATE")
+          ),
         })
     )
     .catch((error) => console.log(error));

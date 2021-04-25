@@ -120,37 +120,43 @@ function CommentPage() {
             <Grid container className={classes.commentInput}>
               <Input
                 style={{ width: "80vw" }}
-                placeholder='Write your comment...'
+                placeholder={
+                  userUID
+                    ? "Write your comment..."
+                    : "Log in to write comments that encourage the other!"
+                }
                 disableUnderline
                 multiline
                 onChange={(e) => setNewComment(e.target.value)}
                 value={newComment}
               />
             </Grid>
-            <Grid
-              container
-              direction='row'
-              style={{ justifyContent: "flex-end" }}
-            >
-              <Button
-                style={{
-                  backgroundColor: "#F9A586",
-                  borderRadius: 20,
-                  textTransform: "none",
-                  maxHeight: 24,
-                  marginTop: 8,
-                }}
-                onClick={() => {
-                  uploadComment(userUID, id, newComment);
-                  setTimeout(() => {
-                    fetchComment();
-                    setNewComment("");
-                  }, 500);
-                }}
+            {userUID && (
+              <Grid
+                container
+                direction='row'
+                style={{ justifyContent: "flex-end" }}
               >
-                Send
-              </Button>
-            </Grid>
+                <Button
+                  style={{
+                    backgroundColor: "#F9A586",
+                    borderRadius: 20,
+                    textTransform: "none",
+                    maxHeight: 24,
+                    marginTop: 8,
+                  }}
+                  onClick={() => {
+                    uploadComment(userUID, id, newComment);
+                    setTimeout(() => {
+                      fetchComment();
+                      setNewComment("");
+                    }, 500);
+                  }}
+                >
+                  Send
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Grid>
         <Grid container direction='row' justify='space-between'>

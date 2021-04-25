@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     padding: "15vh 15vw 0vh",
     "@media (max-width:480px)": {
-      padding: "2vh 15vw 0vh",
+      padding: "2vh 12vw 0vh",
     },
   },
   errorMessage: {
@@ -126,13 +126,18 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   var isLoggedIn = useSelector((state) => state.auth.userUID);
+  var isWrongPassword = useSelector((state) => state.auth.loginWrongPassword);
 
   useEffect(() => {
     if (isLoggedIn) {
       setLoginError(false);
       history.push("/home");
     }
-  }, [isLoggedIn, dispatch]);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isWrongPassword) setLoginError(true);
+  }, [isWrongPassword]);
 
   const handleClick = async () => {
     if (isLoggedIn) {

@@ -20,3 +20,12 @@ export async function checkIfUserExists(email) {
       return true;
     });
 }
+
+export function updatePassword(newPassword) {
+  return firebase
+    .auth()
+    .currentUser.updatePassword(newPassword)
+    .catch((err) => {
+      console.log(err);
+    });
+}
