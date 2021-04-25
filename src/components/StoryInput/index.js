@@ -4,6 +4,7 @@ import { Grid, Input, Button } from "@material-ui/core";
 import NextButton from "../../components/NextButton";
 import { Editor, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -99,6 +100,7 @@ function StoryInput(props) {
     ...restProps
   } = props;
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const focus = () => {
     if (editorRef.current) editorRef.current.focus();
@@ -163,7 +165,7 @@ function StoryInput(props) {
         <Input
           disableUnderline
           multiline
-          placeholder='Enter title here'
+          placeholder= {t("storyInput.enterTitle")}
           className={classes.inputTitle}
           value={storyText}
           onChange={onTitleChange}
@@ -176,7 +178,7 @@ function StoryInput(props) {
           ref={editorRef}
           editorState={editorState}
           onChange={onChange}
-          placeholder='Start writing here...'
+          placeholder= {t("storyInput.startWriting")}
           spellCheck={true}
         />
       </Grid>

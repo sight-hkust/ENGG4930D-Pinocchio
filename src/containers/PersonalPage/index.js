@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import i18next from "i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -13,6 +14,7 @@ import {
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import NavigationBar from "../../components/NavigationBar";
 import DialogBox from "../../components/DialogBox";
 import personalPageIcon from "../../assets/personalPageIcon.png";
@@ -112,12 +114,14 @@ function PersonalPage() {
   const [error, setError] = useState(false);
   const [privateStory, setPrivateStory] = useState(0);
   const [publicStory, setPublicStory] = useState(0);
-
+  const [currentLocale, setCurrentLocale] = useState("en");
   const passwordRegex = /^.{8,}$/gm;
+  const { t } = useTranslation();
 
   var userUID = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
+    setCurrentLocale(i18next.language);
     countStory({ userUID: userUID }).then((data) => {
       if (data) {
         setPrivateStory(data.privateStory);
@@ -136,6 +140,14 @@ function PersonalPage() {
     }
   };
 
+  const handleChangeLanguage = (event) => {
+    const locale = event.target.value;
+    setCurrentLocale(locale);
+    i18next.changeLanguage(locale, (err, t) => {
+      if (err) return console.log("something went wrong loading", err);
+    });
+  };
+
   return (
     <Grid container direction='column'>
       <NavigationBar showMenu />
@@ -152,7 +164,7 @@ function PersonalPage() {
           className={classes.inputForm}
         >
           <Typography className={classes.inputLabel}>
-            New Secret Word
+            {t("personalPage.newSecretWord")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -171,7 +183,7 @@ function PersonalPage() {
             }
           ></InputBase>
           <Typography className={classes.inputLabel}>
-            Reconfirm Password
+            {t("personalPage.reconfirmSecretWord")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -191,12 +203,12 @@ function PersonalPage() {
           ></InputBase>
           {error && (
             <Typography className={classes.errorMessage}>
-              New password is too short or doesn't match with reconfirm password
+              {t("personalPage.passwordError")}
             </Typography>
           )}
           {passwordChanged && (
             <Typography className={classes.errorMessage}>
-              Password changed
+              {t("personalPage.passwordChanged")}
             </Typography>
           )}
           <Grid
@@ -211,15 +223,19 @@ function PersonalPage() {
                 borderRadius: 20,
                 padding: "5px 20px",
               }}
+              onChange={(e) => handleChangeLanguage(e)}
+              value={currentLocale}
             >
-              <option value='English'>English</option>
-              <option value='Chinese'>繁體中文</option>
+              <option value='en'>English</option>
+              <option value='zh'>繁體中文</option>
             </select>
             <Button
               className={classes.confirmButton}
               onClick={() => checkNewPassword()}
             >
-              <Typography style={{ fontSize: 12 }}>Confirm Change</Typography>
+              <Typography style={{ fontSize: 12 }}>
+                {t("personalPage.confirmPassword")}
+              </Typography>
             </Button>
           </Grid>
           <Grid container direction='row' justify='space-evenly'>
@@ -239,7 +255,9 @@ function PersonalPage() {
                 </Typography>
                 <Divider flexItem className={classes.divider} />
                 <Typography className={classes.storyText}>
-                  {data[1]} Stories
+                  {index === 0
+                    ? t("personalPage.privateStory")
+                    : t("personalPage.publicStory")}
                 </Typography>
               </Grid>
             ))}
@@ -248,7 +266,7 @@ function PersonalPage() {
             className={classes.deleteButton}
             onClick={() => setShowDeleteConfirmDialog(true)}
           >
-            Delete all
+            {t("personalPage.deleteAll")}
           </Button>
           <DialogBox
             open={showDeleteConfirmDialog}

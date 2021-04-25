@@ -15,6 +15,7 @@ import allIcon from "../../assets/allIcon.png";
 import { uploadStory, uploadToxicStory } from "../../utils/uploadStory";
 import DialogBox from "../../components/DialogBox";
 import { processStory } from "../../utils/toxicity";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -105,6 +106,7 @@ function WritingCategoryPage() {
   const [openDialogPublishForMe, setOpenDialogPublishForMe] = useState(false);
   const isMobile = useMediaQuery("(max-width:480px)");
   const userUID = useSelector((state) => state.auth.userUID);
+  const { t } = useTranslation();
 
   const interests = [
     ["Depression", depressionIcon],
@@ -158,9 +160,9 @@ function WritingCategoryPage() {
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
-        <Typography className={classes.title}>Write your thoughts</Typography>
+        <Typography className={classes.title}>{t("writingCategoryPage.writeThoughts")}</Typography>
         <Typography className={classes.description}>
-          Choose a category for your story:
+        {t("writingCategoryPage.chooseCategory")}
         </Typography>
         <Grid
           container
@@ -203,7 +205,7 @@ function WritingCategoryPage() {
               onClick={() => comfirmUpload({ isPublic: false })}
             >
               <Typography className={classes.buttonBoldText}>
-                Publish For Me
+                {t("writingCategoryPage.publishMe")}
               </Typography>
             </Button>
             <Button
@@ -215,7 +217,7 @@ function WritingCategoryPage() {
               onClick={() => comfirmUpload({ isPublic: true })}
             >
               <Typography className={classes.buttonBoldText}>
-                Publish For All
+              {t("writingCategoryPage.publishAll")}
               </Typography>
             </Button>
           </Grid>
@@ -223,14 +225,14 @@ function WritingCategoryPage() {
       </Grid>
       <DialogBox
         open={openDialogPublishForAll}
-        text='Do you wish to proceed with publishing your story for everyone?'
+        text= {t("writingCategoryPage.publishAllQuestion")}
         onClickYes={() => handleUpload({ isPublic: true })}
         onClickNo={() => setOpenDialogPublishForAll(false)}
         onClose={() => setOpenDialogPublishForAll(false)}
       ></DialogBox>
       <DialogBox
         open={openDialogPublishForMe}
-        text='Do you wish to proceed with publishing your story for yourself?'
+        text= {t("writingCategoryPage.publishMeQuestion")}
         onClickYes={() => handleUpload({ isPublic: false })}
         onClickNo={() => setOpenDialogPublishForMe(false)}
         onClose={() => setOpenDialogPublishForMe(false)}

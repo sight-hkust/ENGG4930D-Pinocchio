@@ -11,6 +11,7 @@ import noBookmarkIcon from "../../assets/noBookmarkIcon.png";
 import { bookmarkStory } from "../../utils/bookmarkStory";
 import { fetchStoryByID } from "../../utils/fetchStory";
 import { deleteStory } from "../../utils/deleteStory";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -86,6 +87,8 @@ function StoryPage() {
   const { id } = useParams();
   const userUID = useSelector((state) => state.auth.userUID);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const { t } = useTranslation();
+
 
   const handlePreviousPage = () => history.goBack();
 
@@ -121,7 +124,7 @@ function StoryPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Grid container direction='column' style={{ padding: 30 }}>
-        <Typography className={classes.title}>The Storybook</Typography>
+        <Typography className={classes.title}>{t("storyPage.theStoryBook")}</Typography>
         <Grid
           container
           direction='row'
@@ -156,7 +159,7 @@ function StoryPage() {
                 className={classes.deleteButton}
                 onClick={() => handleDelete()}
               >
-                Delete
+                {t("storyPage.deleteText")}
               </Button>
             )}
             <IconButton

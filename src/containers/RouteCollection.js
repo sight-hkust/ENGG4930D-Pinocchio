@@ -11,7 +11,6 @@ import LoginPage from "./LoginPage";
 import InterestsPage from "./InterestsPage";
 import SignUpPage from "./SignUpPage";
 import HomePage from "./HomePage";
-import NotFoundPage from "./NotFoundPage";
 import GuidelinesPage from "./GuidelinesPage";
 import WritingPage from "./WritingPage";
 import ForumPage from "./ForumPage";
@@ -52,19 +51,27 @@ function RouteCollection() {
           <GuidelinesPage />
         </Route>
         <Route exact path='/personal'>
-          {isLoggedIn ? <PersonalPage /> : <Redirect to={{ pathname: "/" }} />}
+          {isLoggedIn ? (
+            <PersonalPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
         <Route exact path='/home'>
-          {isLoggedIn ? <HomePage /> : <Redirect to={{ pathname: "/" }} />}
+          {isLoggedIn ? <HomePage /> : <Redirect to={{ pathname: "/login" }} />}
         </Route>
         <Route exact path='/writing'>
-          {isLoggedIn ? <WritingPage /> : <Redirect to={{ pathname: "/" }} />}
+          {isLoggedIn ? (
+            <WritingPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
         <Route exact path='/writingCategory'>
           {isLoggedIn ? (
             <WritingCategoryPage />
           ) : (
-            <Redirect to={{ pathname: "/" }} />
+            <Redirect to={{ pathname: "/login" }} />
           )}
         </Route>
         <Route exact path='/forum'>
@@ -77,13 +84,18 @@ function RouteCollection() {
           <CommentPage />
         </Route>
         <Route exact path='/bookmark'>
-          {isLoggedIn ? <BookmarkPage /> : <Redirect to={{ pathname: "/" }} />}
+          {isLoggedIn ? (
+            <BookmarkPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
         <Route exact path='/lookBack'>
-          {isLoggedIn ? <LookBackPage /> : <Redirect to={{ pathname: "/" }} />}
-        </Route>
-        <Route exact path='*'>
-          <NotFoundPage />
+          {isLoggedIn ? (
+            <LookBackPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
       </Switch>
     </Router>

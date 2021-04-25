@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import ruleMemoImage from "../../assets/ruleBackground.png";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
 function GuidelinesPage() {
   const classes = useStyles();
   const history = useHistory();
+  const { t } = useTranslation();
 
   return (
     <Grid container className={classes.container}>
@@ -67,38 +69,32 @@ function GuidelinesPage() {
       <Paper className={classes.paper}>
         <Typography className={classes.allText}>
           <Typography className={classes.rulesTitle}>
-            1. remain respectful at all times:
+            {t("guidelinesPage.respect")}
             <ul className={classes.rulesDescription}>
               <li>
-                All posts and comments should be kept courteous to avoid hurting
-                other community members.
+              {t("guidelinesPage.avoidHurt")}
               </li>
             </ul>
           </Typography>
           <Typography className={classes.rulesTitle}>
-            2. do not post offensive posts and links:
+           {t("guidelinesPage.offensivePost")}
             <ul className={classes.rulesDescription}>
               <li>
-                Any posts disrespectful to those of other genders, races,
-                classes, or sexual orientations are not allowed.
+                {t("guidelinesPage.disrespectful")}
               </li>
               <li>
-                Any material that constitutes defamation, abuse, threats, or
-                harassment is strictly forbidden.
+                {t("guidelinesPage.materialForbidden")}
               </li>
             </ul>
           </Typography>
           <Typography className={classes.rulesTitle}>
-            3. don't be afraid to share and lend a helping hand!:
+           {t("guidelinesPage.noAfraid")}
             <ul className={classes.rulesDescription}>
               <li>
-                Try to share your thoughts and experiences regarding mental
-                health. We're sure many others can relate, even if you don't
-                think so!
+                {t("guidelinesPage.shareThoughts")}
               </li>
               <li>
-                If you can, help out a fellow friend and offer some encouraging
-                words to those facing tough times.
+              {t("guidelinesPage.helpFriend")}
               </li>
             </ul>
           </Typography>

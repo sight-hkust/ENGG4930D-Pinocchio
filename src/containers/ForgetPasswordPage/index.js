@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, InputBase } from "@material-ui/core";
 import NextButton from "../../components/NextButton";
@@ -7,6 +6,7 @@ import { sendPasswordResetEmail } from "../../utils/auth";
 import loginLogoMobile from "../../assets/loginLogoMobile.png";
 import loginLogoDesktop from "../../assets/loginLogoDesktop.png";
 import NavigationBar from "../../components/NavigationBar";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -81,14 +81,15 @@ function ForgetPasswordPage() {
   const [email, setEmail] = useState("");
   const [displayMessage, setDisplayMessage] = useState("");
   const emailRegex = /.+@.*ust.hk$/gm;
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (emailRegex.test(email.trim())) {
-      setDisplayMessage("Password Reset Email Sent!");
+      setDisplayMessage(t("forgetPasswordPage.psReset"));
       sendPasswordResetEmail(email.trim());
       setEmail("");
     } else {
-      setDisplayMessage("Invalid ITSC Email");
+      setDisplayMessage(t("forgetPasswordPage.invalidItsc"));
       setEmail("");
     }
   };
@@ -105,15 +106,14 @@ function ForgetPasswordPage() {
         <Grid container item className={classes.inputForm} direction='column'>
           <b className={classes.title}>
             <span style={{ boxShadow: "inset 0 -13px 0 0 #FFD7D7" }}>
-              Forgot
+              {t("forgetPasswordPage.forgotText")}
             </span>
-            {" Password?"}
           </b>
           <Typography className={classes.description}>
-            No worries, we got your back!
+            {t("forgetPasswordPage.noWorriesText")}
           </Typography>
           <Typography className={classes.inputLabel}>
-            Full ITSC Email Address
+            {t("forgetPasswordPage.fullItsc")}
           </Typography>
           <InputBase
             className={classes.input}

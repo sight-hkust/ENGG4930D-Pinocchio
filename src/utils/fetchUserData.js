@@ -26,7 +26,7 @@ export const countStory = async ({ userUID }) => {
         if (docRef.data().postsRef.length > 0) {
           var privateStory = 0;
           var publicStory = 0;
-          docRef.data().postsRef.map((postRef) => {
+          docRef.data().postsRef.forEach((postRef) => {
             if (postRef.includes("PRIVATE")) {
               privateStory += 1;
             } else {

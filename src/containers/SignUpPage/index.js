@@ -18,6 +18,7 @@ import signUpLogo from "../../assets/signUpLogo.png";
 import signUpLogoDesktop from "../../assets/signUpLogoDesktop.png";
 import { checkIfUserExists } from "../../utils/auth";
 import NavigationBar from "../../components/NavigationBar";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -118,11 +119,12 @@ function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const emailRegex = /.+@.*ust.hk$/gm;
   const passwordRegex = /^.{8,}$/gm;
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (!emailRegex.test(email)) {
       setEmail("");
-      setEmailError("Please use ITSC account eg. xxxxxxxx@connect.ust.hk");
+      setEmailError(t("signUpPage.useItsc"));
     } else {
       setEmailError("");
     }
@@ -135,7 +137,7 @@ function SignUpPage() {
     if (email && password && !(emailError.length > 0) && !passwordError) {
       checkIfUserExists(email).then((res) => {
         if (res) {
-          setEmailError("Account already created");
+          setEmailError(t("signUpPage.existingAccount"));
         } else {
           dispatch(signup({ email: email.trim(), password: password.trim() }));
         }
@@ -166,15 +168,15 @@ function SignUpPage() {
                 boxShadow: "inset 0 -13px 0 0 #FFD7D7",
               }}
             >
-              Let’s get
+              {t("signUpPage.letsGetText")}
             </span>{" "}
-            started!
+            {t("signUpPage.startedText")}
           </b>
           <Typography className={classes.description}>
-            No request is too extreme
+            {t("signUpPage.noRequestExtreme")}
           </Typography>
           <Typography className={classes.inputLabel}>
-            Full ITSC Email address
+            {t("signUpPage.fullItsc")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -184,7 +186,7 @@ function SignUpPage() {
             onChange={(e) => setEmail(e.target.value)}
           ></InputBase>
           <Typography className={classes.inputLabel}>
-            Your secret word
+            {t("signUpPage.secretWord")}
           </Typography>
           <InputBase
             className={classes.input}
@@ -204,7 +206,7 @@ function SignUpPage() {
           ></InputBase>
           {passwordError && (
             <Typography className={classes.errorMessage}>
-              Secret word is too short😳 Use {">"}= 8 characters
+              {t("signUpPage.secretWordShort")}
             </Typography>
           )}
           {emailError && (

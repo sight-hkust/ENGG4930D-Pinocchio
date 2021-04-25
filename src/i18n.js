@@ -1,6 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
+import enTranslation from "./i18n/en/translation.json";
+import zhTranslation from "./i18n/zh/translation.json";
 
 i18n
   .use(Backend)
@@ -13,9 +15,10 @@ i18n
     },
     resources: {
       en: {
-        translation: {
-          // here we will place our translations...
-        },
+        translation: enTranslation,
+      },
+      zh: {
+        translation: zhTranslation,
       },
     },
   });

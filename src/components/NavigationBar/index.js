@@ -25,6 +25,7 @@ import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import whaleIcon from "../../assets/whaleIcon.png";
 import personalMenuIcon from "../../assets/personalPage.png";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -71,6 +72,7 @@ function NavigationBar({ showMenu }) {
   });
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const logOut = () => {
     dispatch(logout());
@@ -91,13 +93,33 @@ function NavigationBar({ showMenu }) {
   const list = (anchor) => (
     <List>
       {[
-        ["Home", homeMenuIcon, () => history.push("/home")],
-        ["The Storybook", storyBookMenuIcon, () => history.push("/forum")],
-        ["Write Now", writeNowMenuIcon, () => history.push("/writing")],
-        ["Look Back", lookBackMenuIcon, () => history.push("/lookback")],
-        ["Bookmark", bookmarkMenuIcon, () => history.push("/bookmark")],
-        ["Personal", personalMenuIcon, () => history.push("/personal")],
-        ["Log Out", logOutMenuIcon, () => logOut()],
+        [t("navigationBar.home"), homeMenuIcon, () => history.push("/home")],
+        [
+          t("navigationBar.theStorybook"),
+          storyBookMenuIcon,
+          () => history.push("/forum"),
+        ],
+        [
+          t("navigationBar.writeNow"),
+          writeNowMenuIcon,
+          () => history.push("/writing"),
+        ],
+        [
+          t("navigationBar.lookBack"),
+          lookBackMenuIcon,
+          () => history.push("/lookback"),
+        ],
+        [
+          t("navigationBar.bookmark"),
+          bookmarkMenuIcon,
+          () => history.push("/bookmark"),
+        ],
+        [
+          t("navigationBar.personal"),
+          personalMenuIcon,
+          () => history.push("/personal"),
+        ],
+        [t("navigationBar.logOut"), logOutMenuIcon, () => logOut()],
       ].map((data, index) => (
         <ListItem button key={data[0] + index} onClick={data[2]}>
           <ListItemIcon style={{ minWidth: 36 }} key={`icon${data[0]}`}>
@@ -162,13 +184,13 @@ function NavigationBar({ showMenu }) {
           className={classes.button}
           onClick={() => history.push("/home")}
         >
-          Home
+          {t("navigationBar.home")}
         </Button>
         <Button
           className={classes.button}
           onClick={() => history.push("/forum")}
         >
-          The Storybook
+          {t("navigationBar.theStorybook")}
         </Button>
         <Grid container direction='column' className={classes.whaleTextColumn}>
           <img alt='' src={whaleIcon} />
@@ -178,10 +200,10 @@ function NavigationBar({ showMenu }) {
           className={classes.button}
           onClick={() => history.push("/personal")}
         >
-          Personal
+          {t("navigationBar.personal")}
         </Button>
         <Button className={classes.button} onClick={() => logOut()}>
-          Log Out
+          {t("navigationBar.logOut")}
         </Button>
       </Grid>
     );

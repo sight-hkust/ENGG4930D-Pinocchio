@@ -8,6 +8,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import sanitizeHtml from "sanitize-html";
 import DialogBox from "../../components/DialogBox";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -57,6 +58,7 @@ function WritingPage() {
   );
   const editorRef = useRef(null);
   const isString = /.*[a-zA-Z].*/;
+  const { t } = useTranslation();
 
   const handleSubmit = () => {
     var myStorage = window.sessionStorage;
@@ -98,8 +100,10 @@ function WritingPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Typography className={classes.title}>
-        Write your{" "}
-        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>thoughts</span>
+        {t("writingPage.writeYourText")}{" "}
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
+          {t("writingPage.thoughtsText")}
+        </span>
       </Typography>
       <StoryInput
         editorState={editorState}
@@ -110,10 +114,10 @@ function WritingPage() {
       />
       <DialogBox
         open={open}
-        text='You have entered no/invalid text. Please try again.'
+        text={t("writingPage.invalidInfo")}
         onClose={handleClose}
         onClickYes={handleClose}
-        yesText='OK'
+        yesText={t("writingPage.okText")}
       ></DialogBox>
     </Grid>
   );
