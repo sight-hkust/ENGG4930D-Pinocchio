@@ -11,7 +11,6 @@ import LoginPage from "./LoginPage";
 import InterestsPage from "./InterestsPage";
 import SignUpPage from "./SignUpPage";
 import HomePage from "./HomePage";
-import GuidelinesPage from "./GuidelinesPage";
 import WritingPage from "./WritingPage";
 import ForumPage from "./ForumPage";
 import WritingCategoryPage from "./WritingCategoryPage";
@@ -46,9 +45,6 @@ function RouteCollection() {
         </Route>
         <Route exact path='/interests'>
           <InterestsPage />
-        </Route>
-        <Route exact path='/guidelines'>
-          <GuidelinesPage />
         </Route>
         <Route exact path='/personal'>
           {isLoggedIn ? (
