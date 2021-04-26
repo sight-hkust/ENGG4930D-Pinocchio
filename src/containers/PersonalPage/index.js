@@ -270,7 +270,7 @@ function PersonalPage() {
           </Button>
           <DialogBox
             open={showDeleteConfirmDialog}
-            text='Do you really want to delete all your posts?'
+            text= {t("personalPage.confirmDelete")}
             onClickYes={() => {
               deleteAllStory(userUID);
               setPrivateStory(0);
