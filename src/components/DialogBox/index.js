@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
   },
   boxText: {
-    fontSize: 15,
+    fontSize: 13,
     padding: "0 12px 10px 20px",
     "@media (max-width:480px)": {
       fontSize: 14,
