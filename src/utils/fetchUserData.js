@@ -23,7 +23,7 @@ export const countStory = async ({ userUID }) => {
     .get()
     .then((docRef) => {
       if (docRef.exists) {
-        if (docRef.data().postsRef.length > 0) {
+        if (docRef.data().postsRef?.length > 0) {
           var privateStory = 0;
           var publicStory = 0;
           docRef.data().postsRef.forEach((postRef) => {
