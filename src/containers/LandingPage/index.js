@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
       paddingTop: 30,
       alignItems: "center",
-      margin: 10
+      margin: 10,
     },
   },
   button: {
@@ -208,53 +208,70 @@ function LandingPage() {
           </Typography>
         </Button>
         {isMobile ? (
-            <Grid
+          <Grid
             container
             className={classes.container}
             direction='row'
-            style={{justifyContent : "center"}}
+            style={{ justifyContent: "center" }}
           >
             <Link
-            className={classes.link}
-            onClick={() => setShowPrivacyTextDialog(true)}
-          >
-            {t("landingPage.signUp")}
-          </Link>
-          <Typography 
-          style={{
-            textAlign: "center",
-            fontSize: 40,
-            whiteSpace: "break-spaces",
-            color: "#838181",
-            paddingTop: 30,
-          }}> I </Typography>
-          <Link className={classes.link} onClick={() => history.push("/login")}>
-            {t("landingPage.signIn")}
-          </Link>
-        </Grid>
+              className={classes.link}
+              onClick={() => setShowPrivacyTextDialog(true)}
+            >
+              {t("landingPage.signUp")}
+            </Link>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: 40,
+                whiteSpace: "break-spaces",
+                color: "#838181",
+                paddingTop: 30,
+              }}
+            >
+              {" "}
+              I{" "}
+            </Typography>
+            <Link
+              className={classes.link}
+              onClick={() => history.push("/login")}
+            >
+              {t("landingPage.signIn")}
+            </Link>
+          </Grid>
         ) : (
           <Grid
-        container
-        className={classes.container}
-        direction='column'
-        alignItems='center'
-        >
-          <Typography className={classes.linkText}>
-          {t("landingPage.haveAccount")}
-          <Link className={classes.link} onClick={() => history.push("/login")}>
-            {t("landingPage.signIn")}
-          </Link>
-        </Typography>
-        <Typography className={classes.linkText}>
-          {t("landingPage.newToPinocchio")}
-          <Link
-            className={classes.link}
-            onClick={() => setShowPrivacyTextDialog(true)}
+            container
+            className={classes.container}
+            direction='row'
+            style={{ justifyContent: "center" }}
           >
-            {t("landingPage.signUp")}
-          </Link>
-        </Typography>
-        </Grid>
+            <Link
+              className={classes.link}
+              onClick={() => setShowPrivacyTextDialog(true)}
+            >
+              {t("landingPage.signUp")}
+            </Link>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: 40,
+                whiteSpace: "break-spaces",
+                color: "#838181",
+                paddingLeft: 50,
+                paddingRight: 50,
+              }}
+            >
+              {" "}
+              I{" "}
+            </Typography>
+            <Link
+              className={classes.link}
+              onClick={() => history.push("/login")}
+            >
+              {t("landingPage.signIn")}
+            </Link>
+          </Grid>
         )}
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
