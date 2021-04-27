@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     "@media (max-width:480px)": {
       height: 30,
       minWidth: 80,
-      padding: 0,
+      padding: "0 12px",
       fontWeight: "bold",
       marginLeft: 15,
       marginRight: 15,

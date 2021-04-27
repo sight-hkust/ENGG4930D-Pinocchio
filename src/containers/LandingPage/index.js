@@ -116,7 +116,7 @@ function LandingPage() {
 
     //Open PWA Install Dialog on Android
     window.addEventListener("beforeinstallprompt", (e) => {
-      if (isMobile && !isInStandaloneMode()) {
+      if (window.innerWidth <= 480 && !isInStandaloneMode()) {
         // Prevent the mini-infobar from appearing on mobile
         e.preventDefault();
         // Stash the event so it can be triggered later.
