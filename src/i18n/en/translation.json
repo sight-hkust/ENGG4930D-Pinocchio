@@ -107,5 +107,6 @@
   "personalPage.publicStory": "Public Stories",
   "personalPage.deleteAll": "Delete All",
   "personalPage.passwordChanged": "Password changed",
-  "personalPage.passwordError": "New password is too short or doesn't match with retype password"
+  "personalPage.passwordError": "New password is too short or doesn't match with retype password",
+  "personalPage.confirmDelete": "Do you really want to delete all your posts?"
 }
