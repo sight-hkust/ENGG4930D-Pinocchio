@@ -1,18 +1,20 @@
 import firebase from "firebase/app";
-
-var lastVisible;
+import { encodeUserUID } from "../utils/auth";
 
 export async function fetchStory({ isPublic, numberOfStory }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
+    .collection("stories")
     .where("isPublic", "==", isPublic)
-    .orderBy("time", "desc")
+    .orderBy("createdTime", "desc")
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        localStorage.setItem(
+          "lastVisible",
+          querySnapshot.docs[querySnapshot.docs.length - 1]
+        );
         return querySnapshot;
       }
     })
@@ -22,7 +24,7 @@ export async function fetchStory({ isPublic, numberOfStory }) {
 export async function fetchStoryByID({ storyID }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
+    .collection("stories")
     .doc(storyID)
     .get()
     .then((docRef) => {
@@ -38,18 +40,21 @@ export async function fetchStoryByID({ storyID }) {
 export async function fetchNextFiveStories({ isPublic }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
+    .collection("stories")
     .where("isPublic", "==", isPublic)
-    .orderBy("time", "desc")
-    .startAfter(lastVisible)
+    .orderBy("createdTime", "desc")
+    .startAfter(localStorage.getItem("lastVisible"))
     .limit(5)
     .get()
     .then((querySnapshot) => {
-      lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      localStorage.setItem(
+        "lastVisible",
+        querySnapshot.docs[querySnapshot.docs.length - 1]
+      );
       return querySnapshot;
     })
     .catch((error) => {
-      console.log("lastVisible: ", lastVisible);
+      console.log("lastVisible: ", localStorage.getItem("lastVisible"));
       console.log(error);
     });
 }
@@ -57,14 +62,17 @@ export async function fetchNextFiveStories({ isPublic }) {
 export async function fetchBookmarkedStories({ userUID, numberOfStory }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
-    .where("bookmarkUserRef", "array-contains", userUID)
-    .orderBy("time", "desc")
+    .collection("stories")
+    .where("bookmarkUsersID", "array-contains", encodeUserUID(userUID))
+    .orderBy("createdTime", "desc")
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        localStorage.setItem(
+          "lastVisible",
+          querySnapshot.docs[querySnapshot.docs.length - 1]
+        );
         return querySnapshot;
       } else {
         console.log("ERROR_NO_STORY");
@@ -79,22 +87,25 @@ export async function fetchNextFiveBookmarkedStories({
 }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
-    .where("bookmarkUserRef", "array-contains", userUID)
-    .orderBy("time", "desc")
-    .startAfter(lastVisible)
+    .collection("stories")
+    .where("bookmarkUsersID", "array-contains", encodeUserUID(userUID))
+    .orderBy("createdTime", "desc")
+    .startAfter(localStorage.getItem("lastVisible"))
     .limit(numberOfStory)
     .get()
     .then(async (querySnapshot) => {
       if (!querySnapshot.empty) {
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        localStorage.setItem(
+          "lastVisible",
+          querySnapshot.docs[querySnapshot.docs.length - 1]
+        );
         return await querySnapshot;
       } else {
         console.log("ERROR_NO_STORY");
       }
     })
     .catch((error) => {
-      console.log("lastVisible: ", lastVisible);
+      console.log("lastVisible: ", localStorage.getItem("lastVisible"));
       console.log(error);
     });
 }
@@ -102,14 +113,17 @@ export async function fetchNextFiveBookmarkedStories({
 export async function fetchUserStory({ userUID, numberOfStory }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
-    .where("userRef", "==", userUID)
-    .orderBy("time", "desc")
+    .collection("stories")
+    .where("userID", "==", encodeUserUID(userUID))
+    .orderBy("createdTime", "desc")
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        localStorage.setItem(
+          "lastVisible",
+          querySnapshot.docs[querySnapshot.docs.length - 1]
+        );
         return querySnapshot;
       }
     })
@@ -119,15 +133,18 @@ export async function fetchUserStory({ userUID, numberOfStory }) {
 export async function fetchNextFiveUserStories({ userUID, numberOfStory }) {
   const db = firebase.firestore();
   return await db
-    .collection("posts")
-    .where("userRef", "==", userUID)
-    .orderBy("time", "desc")
-    .startAfter(lastVisible)
+    .collection("stories")
+    .where("userID", "==", encodeUserUID(userUID))
+    .orderBy("createdTime", "desc")
+    .startAfter(localStorage.getItem("lastVisible"))
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        localStorage.setItem(
+          "lastVisible",
+          querySnapshot.docs[querySnapshot.docs.length - 1]
+        );
         return querySnapshot;
       }
     })

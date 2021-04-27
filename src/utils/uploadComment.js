@@ -5,16 +5,16 @@ export function uploadComment(userUID, storyID, comment) {
   var db = firebase.firestore();
   getToxicity(comment).then((score) => {
     if (score > 0.5) {
-      db.collection("toxic")
+      db.collection("toxicComments")
         .add({
-          userRef: userUID,
-          comment: comment,
+          userID: userUID,
+          text: comment,
           toxicity: score,
-          time: firebase.firestore.Timestamp.now(),
+          createdTime: firebase.firestore.Timestamp.now(),
         })
         .catch((error) => console.log(error));
     } else {
-      var story = db.collection("posts").doc(storyID);
+      var story = db.collection("stories").doc(storyID);
       story
         .update({
           comments: firebase.firestore.FieldValue.arrayUnion(comment),

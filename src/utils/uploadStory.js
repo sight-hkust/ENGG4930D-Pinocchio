@@ -1,24 +1,25 @@
 import firebase from "firebase/app";
+import { encodeUserUID } from "../utils/auth";
 
 export function uploadStory(userUID, storyText, title, category, isPublic) {
   var db = firebase.firestore();
-  db.collection("posts")
+  db.collection("stories")
     .add({
-      userRef: userUID,
+      bookmarkUsersID: [],
       category: category,
-      title: title,
-      text: storyText,
-      time: firebase.firestore.Timestamp.now(),
-      isPublic: isPublic,
-      bookmarkUserRef: [],
       comments: [],
+      isPublic: isPublic,
+      text: storyText,
+      createdTime: firebase.firestore.Timestamp.now(),
+      title: title,
+      userID: encodeUserUID(userUID),
     })
     .then((documentRef) =>
       db
         .collection("users")
-        .doc(userUID)
+        .doc(encodeUserUID(userUID))
         .update({
-          postsRef: firebase.firestore.FieldValue.arrayUnion(
+          storiesID: firebase.firestore.FieldValue.arrayUnion(
             documentRef.id + (isPublic ? "PUBLIC" : "PRIVATE")
           ),
         })
@@ -31,23 +32,21 @@ export function uploadToxicStory(
   storyText,
   title,
   category,
-  isPublic,
   titleToxicity,
   textToxicity
 ) {
   var db = firebase.firestore();
-  db.collection("toxic")
+  db.collection("toxicStories")
     .add({
-      userRef: userUID,
+      bookmarkUsersID: [],
       category: category,
-      title: title,
-      text: storyText,
-      time: firebase.firestore.Timestamp.now(),
-      isPublic: isPublic,
-      bookmarkUserRef: [],
       comments: [],
-      titleToxicity: titleToxicity,
+      text: storyText,
+      createdTime: firebase.firestore.Timestamp.now(),
+      title: title,
+      userID: encodeUserUID(userUID),
       textToxicity: textToxicity,
+      titleToxicity: titleToxicity,
     })
     .catch((error) => console.log(error));
 }

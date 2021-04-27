@@ -106,7 +106,7 @@ function HomePage() {
         className={classes.title}
         style={{ boxShadow: "inset 0 -18px 0 0 #B3B4DA" }}
       >
-        {t('homePage.forYou')}
+        {t("homePage.forYou")}
       </Typography>
       {isMobile ? (
         <Grid
@@ -154,7 +154,7 @@ function HomePage() {
                 {t("homePage.readStories")}
               </Typography>
               <Typography className={classes.buttonText}>
-              {t("homePage.delveStories")}
+                {t("homePage.delveStories")}
               </Typography>
             </Grid>
           </Button>
@@ -173,7 +173,7 @@ function HomePage() {
                 {t("homePage.writeNow")}
               </Typography>
               <Typography className={classes.buttonText}>
-               {t("homePage.dailyThoughts")}
+                {t("homePage.dailyThoughts")}
               </Typography>
             </Grid>
           </Button>
@@ -196,7 +196,7 @@ function HomePage() {
           </Grid>
           <DialogBox
             open={isOpen}
-            HTMLString= {t("homePage.hotLineText")}
+            HTMLString={t("homePage.hotLineText")}
             onClickYes={() => (window.location.href = "tel:+85282082688")}
             onClickNo={handleClose}
           ></DialogBox>

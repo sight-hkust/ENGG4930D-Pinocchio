@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import { Button, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, Grid, useMediaQuery } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import firebase from "firebase/app";
+import { useHistory } from "react-router-dom";
+import allIcon from "../../assets/allIcon.png";
+import depressionIcon from "../../assets/depressionIcon.png";
+import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
+import examAnxietyIcon from "../../assets/examAnxietyIcon.png";
+import motivationIcon from "../../assets/motivationIcon.png";
+import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
+import ptsdIcon from "../../assets/ptsdIcon.png";
+import socialAnxietyIcon from "../../assets/socialAnxietyIcon.png";
 import NavigationBar from "../../components/NavigationBar";
 import NextButton from "../../components/NextButton";
-import depressionIcon from "../../assets/depressionIcon.png";
-import motivationIcon from "../../assets/motivationIcon.png";
-import examAnxietyIcon from "../../assets/examAnxietyIcon.png";
-import socialAnxietyIcon from "../../assets/socialAnxietyIcon.png";
-import ptsdIcon from "../../assets/ptsdIcon.png";
-import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
-import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
-import allIcon from "../../assets/allIcon.png";
-import { useTranslation } from "react-i18next";
+import { addInterests } from "../../utils/addInterests";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -105,27 +105,18 @@ function InterestsPage() {
   const { t } = useTranslation();
 
   const interests = [
-    [(t("interestsPage.depression")), depressionIcon],
-    [(t("interestsPage.motivation")), motivationIcon],
-    [(t("interestsPage.examAnxiety")), examAnxietyIcon],
-    [(t("interestsPage.socialAnxiety")), socialAnxietyIcon],
-    [(t("interestsPage.ptsd")), ptsdIcon],
-    [(t("interestsPage.panicDisorder")), panicDisorderIcon],
-    [(t("interestsPage.eatingDisorder")), eatingDisorderIcon],
-    [(t("interestsPage.all")), allIcon],
+    [t("interestsPage.depression"), depressionIcon],
+    [t("interestsPage.motivation"), motivationIcon],
+    [t("interestsPage.examAnxiety"), examAnxietyIcon],
+    [t("interestsPage.socialAnxiety"), socialAnxietyIcon],
+    [t("interestsPage.ptsd"), ptsdIcon],
+    [t("interestsPage.panicDisorder"), panicDisorderIcon],
+    [t("interestsPage.eatingDisorder"), eatingDisorderIcon],
+    [t("interestsPage.all"), allIcon],
   ];
 
   const handleSubmit = () => {
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(userUID)
-      .set(
-        {
-          interests: [...selected.map((index) => interests[index][0])],
-        },
-        { merge: true }
-      );
+    addInterests(userUID, ...selected.map((index) => interests[index][0]));
     history.push("/home");
   };
 
@@ -134,13 +125,13 @@ function InterestsPage() {
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
         <b className={classes.title}>
-        {t("interestsPage.chooseYourText")}
+          {t("interestsPage.chooseYourText")}
           <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
             {t("interestsPage.interestsText")}
           </span>
         </b>
         <Typography className={classes.description}>
-        {t("interestsPage.heartDesireText")}
+          {t("interestsPage.heartDesireText")}
         </Typography>
         <Grid
           container

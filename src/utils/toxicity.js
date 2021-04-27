@@ -13,7 +13,6 @@ export async function getToxicity(text) {
     languages: ["en"],
   });
   const score = result.attributeScores.TOXICITY.summaryScore.value;
-  console.log(score);
   return score;
 }
 
@@ -27,7 +26,6 @@ export function processStory(
   //processStory only process public posts
   getToxicity(title)
     .then((titleScore) => {
-      console.log({ storyText, storyTextHTML });
       getToxicity(storyText)
         .then((textScore) => {
           if (titleScore > 0.5 || textScore > 0.5) {
@@ -36,7 +34,6 @@ export function processStory(
               storyText,
               title,
               category,
-              true,
               titleScore,
               textScore
             );

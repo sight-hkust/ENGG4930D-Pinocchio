@@ -12,6 +12,7 @@ import { bookmarkStory } from "../../utils/bookmarkStory";
 import { fetchStoryByID } from "../../utils/fetchStory";
 import { deleteStory } from "../../utils/deleteStory";
 import { useTranslation } from "react-i18next";
+import { encodeUserUID } from "../../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -89,13 +90,12 @@ function StoryPage() {
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const { t } = useTranslation();
 
-
   const handlePreviousPage = () => history.goBack();
 
   useEffect(() => {
     fetchStoryByID({ storyID: id }).then((doc) => {
       setStory({
-        time: doc.data().time.toDate().toLocaleString([], {
+        time: doc.data().createdTiime.toDate().toLocaleString([], {
           year: "numeric",
           month: "numeric",
           day: "numeric",
@@ -106,7 +106,9 @@ function StoryPage() {
         text: doc.data().text,
         category: doc.data().category,
       });
-      setIsBookmarked(doc.data().bookmarkUserRef.includes(userUID));
+      setIsBookmarked(
+        doc.data().bookmarkUsersID.includes(encodeUserUID(userUID))
+      );
     });
   }, []);
 
@@ -124,7 +126,9 @@ function StoryPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Grid container direction='column' style={{ padding: 30 }}>
-        <Typography className={classes.title}>{t("storyPage.theStoryBook")}</Typography>
+        <Typography className={classes.title}>
+          {t("storyPage.theStoryBook")}
+        </Typography>
         <Grid
           container
           direction='row'

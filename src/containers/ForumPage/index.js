@@ -74,7 +74,7 @@ function ForumPage() {
       <Typography className={classes.title}>
         {t("forumPage.theText")}{" "}
         <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
-         {t("forumPage.storybook")}
+          {t("forumPage.storybook")}
         </span>
       </Typography>
       <InfiniteScroll

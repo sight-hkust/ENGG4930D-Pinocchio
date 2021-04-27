@@ -1,14 +1,15 @@
 import firebase from "firebase/app";
+import { encodeUserUID } from "../utils/auth";
 
 export function deleteStory(storyID) {
   const db = firebase.firestore();
   return db
-    .collection("posts")
+    .collection("stories")
     .doc(storyID)
     .get()
     .then((doc) => {
-      var storyAuthor = doc.data().userRef;
-      db.collection("posts")
+      var storyAuthor = encodeUserUID(doc.data().userID);
+      db.collection("stories")
         .doc(storyID)
         .delete()
         .then(
@@ -16,7 +17,7 @@ export function deleteStory(storyID) {
             .collection("users")
             .doc(storyAuthor)
             .update({
-              postsRef: firebase.firestore.FieldValue.arrayRemove(storyID),
+              storiesID: firebase.firestore.FieldValue.arrayRemove(storyID),
             })
             .catch((err) => console.log(err))
         );
@@ -26,19 +27,20 @@ export function deleteStory(storyID) {
 
 export function deleteAllStory(userUID) {
   const db = firebase.firestore();
+  const encodedUserUID = encodeUserUID(userUID);
   db.collection("users")
-    .doc(userUID)
+    .doc(encodedUserUID)
     .get()
     .then((doc) => {
-      var posts = doc.data().postsRef;
-      posts.forEach((postID) => {
-        db.collection("posts")
-          .doc(postID)
+      var stories = doc.data().storiesID;
+      stories.forEach((storyID) => {
+        db.collection("stories")
+          .doc(storyID)
           .delete()
           .catch((err) => console.log(err));
       });
-      db.collection("users").doc(userUID).update({
-        postsRef: [],
+      db.collection("users").doc(encodedUserUID).update({
+        storiesID: [],
       });
     })
     .catch((error) => console.log(error));

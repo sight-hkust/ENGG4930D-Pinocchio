@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { encodeUserUID } from "../utils/auth";
 
 export const login = createAsyncThunk("auth/login", async (data) => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
@@ -7,7 +8,7 @@ export const login = createAsyncThunk("auth/login", async (data) => {
     return await firebase
       .firestore()
       .collection("users")
-      .doc(data.userUID)
+      .doc(encodeUserUID(data.userUID))
       .get()
       .then((result) => {
         return { userUID: data.userUID, isAdmin: result.data().isAdmin };
@@ -21,7 +22,7 @@ export const login = createAsyncThunk("auth/login", async (data) => {
         return await firebase
           .firestore()
           .collection("users")
-          .doc(userUID)
+          .doc(encodeUserUID(userUID))
           .get()
           .then((result) => {
             return { userUID: userUID, isAdmin: result.data().isAdmin };
@@ -50,9 +51,9 @@ export const signup = createAsyncThunk("auth/signup", async (data) => {
     .createUserWithEmailAndPassword(data.email, data.password)
     .then((userCredential) => {
       var user = userCredential.user;
-      firebase.firestore().collection("users").doc(user.uid).set(
+      firebase.firestore().collection("users").doc(encodeUserUID(user.uid)).set(
+        //userUID are encrypted in firestore db
         {
-          email: user.email,
           emailVerified: user.emailVerified,
           isAdmin: false,
         },
