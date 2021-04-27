@@ -71,7 +71,10 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 28,
     fontWeight: "bold",
     "@media (max-width:480px)": {
-      fontSize: 14,
+      fontSize: 20,
+      paddingTop: 30,
+      alignItems: "center",
+      margin: 10
     },
   },
   button: {
@@ -204,7 +207,39 @@ function LandingPage() {
             {t("landingPage.tryNow")}
           </Typography>
         </Button>
-        <Typography className={classes.linkText}>
+        {isMobile ? (
+            <Grid
+            container
+            className={classes.container}
+            direction='row'
+            style={{justifyContent : "center"}}
+          >
+            <Link
+            className={classes.link}
+            onClick={() => setShowPrivacyTextDialog(true)}
+          >
+            {t("landingPage.signUp")}
+          </Link>
+          <Typography 
+          style={{
+            textAlign: "center",
+            fontSize: 40,
+            whiteSpace: "break-spaces",
+            color: "#838181",
+            paddingTop: 30,
+          }}> I </Typography>
+          <Link className={classes.link} onClick={() => history.push("/login")}>
+            {t("landingPage.signIn")}
+          </Link>
+        </Grid>
+        ) : (
+          <Grid
+        container
+        className={classes.container}
+        direction='column'
+        alignItems='center'
+        >
+          <Typography className={classes.linkText}>
           {t("landingPage.haveAccount")}
           <Link className={classes.link} onClick={() => history.push("/login")}>
             {t("landingPage.signIn")}
@@ -219,6 +254,8 @@ function LandingPage() {
             {t("landingPage.signUp")}
           </Link>
         </Typography>
+        </Grid>
+        )}
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={showIOSInstallBanner}
