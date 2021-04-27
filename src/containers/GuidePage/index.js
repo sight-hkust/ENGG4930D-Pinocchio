@@ -15,6 +15,7 @@ import guidePage4Web from "../../assets/guidePage4Web.png";
 import guidePage5Web from "../../assets/guidePage5Web.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useTranslation } from "react-i18next";
+import DialogBox from "../../components/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -41,6 +42,7 @@ function GuidePage() {
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showStorybookRulesDialog, setStorybookRulesDialog] = useState(false);
   const { t } = useTranslation();
   return (
     <Grid container>
@@ -52,30 +54,45 @@ function GuidePage() {
         onChange={(index) => setCurrentSlide(index)}
       >
         {isMobile
-          ? [guidePage1, guidePage2, guidePage3, guidePage4, guidePage5].map(
-              (src) => (
-                <div>
+          ? [guidePage1, guidePage2, guidePage3, guidePage4, guidePage5, "guidePage6",].map(
+              (src, index) => {
+                return index===5 ? (
+                  <DialogBox
+                    open={showStorybookRulesDialog}
+                    HTMLString={t("guidePage.guidelines")}
+                    onClose={() => setStorybookRulesDialog(false)}
+                    onClickYes={() => history.push("/home")}
+                    yesText={t("guidePage.agree")}
+                  ></DialogBox>
+                ) : (
+                  <div>
                   <img alt='' src={src} />
                 </div>
-              )
-            )
+                );
+              })
           : [
               guidePage1Web,
               guidePage2Web,
               guidePage3Web,
               guidePage4Web,
               guidePage5Web,
-            ].map((src) => (
-              <div>
-                <img
-                  alt=''
-                  src={src}
-                  style={{
-                    width: "80%",
-                  }}
-                />
+              "guidePage6Web",
+            ].map((src, index) => {
+              return index===5 ? (
+                (setStorybookRulesDialog(true)) //needs to be fixed
+              ) : (
+                <div>
+                <img alt='' src={src} style={{width: "80%"}}/>
               </div>
-            ))}
+              );
+            })}
+            <DialogBox
+                  open={showStorybookRulesDialog}
+                  HTMLString={t("guidePage.guidelines")}
+                  onClose={() => setStorybookRulesDialog(false)}
+                  onClickYes={() => history.push("/home")}
+                  yesText={t("guidePage.agree")}
+                ></DialogBox>
       </Carousel>
       <Grid container direction='row' justify='space-around'>
         {isMobile ? (
@@ -91,6 +108,7 @@ function GuidePage() {
             >
               <Typography className={classes.text}>{t("guidePage.goToForum")}</Typography>
             </Button>
+            
           )
         ) : (
           <>

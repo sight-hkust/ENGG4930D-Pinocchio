@@ -67,6 +67,8 @@
   "guidePage.goToForum": "Go to Forum now!",
   "guidePage.previous": "Previous",
   "guidePage.next": "Next",
+  "guidePage.guidelines" : "<b>1. Remain respectful at all times:</b><br><br>All posts and comments should be kept courteous to avoid hurting other community members.<br><br><b>2. Do not post offensive posts and links:</b> <br><br>Any posts disrespectful to those of other genders, races, classes, or sexual orientations are not allowed. Any material that constitutes defamation, abuse, threats, or harassment is strictly forbidden. <br><br><b>3. Don't be afraid to lend a helping hand!:</b><br><br>Try to share your thoughts and experiences regarding mental health. We're sure many others can relate, even if you don't think so! ",
+  "guidePage.agree" : "Agree",
   "guidelinesPage.respect": "1. remain respectful at all times:",
   "guidelinesPage.avoidHurt": "All posts and comments should be kept courteous to avoid hurting other community members.",
   "guidelinesPage.offensivePost": "2. do not post offensive posts and links:",
