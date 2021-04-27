@@ -30,6 +30,7 @@
   "signUpPage.fullItsc": "完整的ITSC電郵地址",
   "signUpPage.secretWord": "你的密碼",
   "signUpPage.secretWordShort": "你的密碼太短了😳 請使用8個或以上的字母及數字",
+  "signUpPage.verifyEmail": "我們寄出了一封確認電郵給你，請確認該電郵地址為你所有。",
   "storyPage.theStoryBook": "我們的故事",
   "storyPage.deleteText": "刪除",
   "writingCategoryPage.writeThoughts": "寫你所想",

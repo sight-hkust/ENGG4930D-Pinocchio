@@ -48,16 +48,14 @@ const useStyles = makeStyles((theme) => ({
   },
   interestButton: {
     height: "auto",
-    width: "auto",
+    width: 200,
     "&:hover": {
       backgroundColor: "#FFFFFF",
     },
     "@media (max-width:480px)": {
       height: "auto",
-      padding: "13px 13px",
       width: "auto",
       marginLeft: 0,
-      marginBottom: 20,
     },
   },
   buttonText: {
@@ -82,7 +80,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
   },
   buttonGroup: {
-    paddingTop: "4vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
@@ -156,7 +153,7 @@ function InterestsPage() {
                 container
                 item
                 direction='column'
-                style={{ alignItems: "center", padding: 10 }}
+                style={{ alignItems: "center" }}
               >
                 <span
                   style={{
@@ -182,7 +179,7 @@ function InterestsPage() {
         </Grid>
         {selected.length !== 0 && (
           <NextButton
-            style={{ marginLeft: 285, marginBottom: 20 }}
+            style={{ marginRight: "10vw" }}
             onClick={() => handleSubmit()}
           />
         )}

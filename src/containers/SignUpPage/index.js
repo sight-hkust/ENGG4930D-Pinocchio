@@ -229,8 +229,7 @@ function SignUpPage() {
         <DialogBox
           open={openDialog}
           onClose={() => setOpenDialog(false)}
-          yesText='OK'
-          text='We sent you a verification email to confirm you are a UST student! Verify the account to write on Pinocchio!'
+          text={t("signUpPage.verifyEmail")}
           onClickYes={() => history.push("/interests")}
         ></DialogBox>
       </Grid>
