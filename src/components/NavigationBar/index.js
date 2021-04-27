@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { logout } from "../../store/authSlice";
 import menuLogo from "../../assets/menuIcon.png";
 import homeMenuIcon from "../../assets/homeMenuIcon.png";
@@ -25,7 +26,7 @@ import logOutMenuIcon from "../../assets/logOutMenuIcon.png";
 import arrowLeftImage from "../../assets/arrowLeft.png";
 import whaleIcon from "../../assets/whaleIcon.png";
 import personalMenuIcon from "../../assets/personalPage.png";
-import { useTranslation } from "react-i18next";
+import instagramIcon from "../../assets/instagramIcon.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -91,7 +92,7 @@ function NavigationBar({ showMenu }) {
     setState({ ...state, [anchor]: open });
   };
   const list = (anchor) => (
-    <List>
+    <List style={{ flexGrow: 1 }}>
       {[
         [t("navigationBar.home"), homeMenuIcon, () => history.push("/home")],
         [
@@ -165,6 +166,17 @@ function NavigationBar({ showMenu }) {
             ></img>
           </IconButton>
           {list("left")}
+          <Button style={{ textTransform: "unset" }}>
+            <img alt='' src={instagramIcon}></img>
+            <Typography
+              style={{ paddingLeft: 10 }}
+              onClick={() =>
+                window.open("https://instagram.com/pinocchio.hkust", "_blank")
+              }
+            >
+              Instagram
+            </Typography>
+          </Button>
         </SwipeableDrawer>
         <Grid
           item
