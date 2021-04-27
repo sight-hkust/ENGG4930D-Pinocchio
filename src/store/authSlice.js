@@ -54,7 +54,6 @@ export const signup = createAsyncThunk("auth/signup", async (data) => {
       firebase.firestore().collection("users").doc(encodeUserUID(user.uid)).set(
         //userUID are encrypted in firestore db
         {
-          emailVerified: user.emailVerified,
           isAdmin: false,
         },
         { merge: true }

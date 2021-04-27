@@ -138,12 +138,15 @@ function LandingPage() {
       setShowIOSInstallBanner(true);
     }
 
-    firebase.auth().onAuthStateChanged((user) => {
+    var listener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(login({ userUID: user.uid }));
+        console.log("auth listener calling from landingPage");
         history.push("/home");
       }
     });
+    listener && listener();
+    listener = undefined;
   }, []);
 
   const install = async () => {

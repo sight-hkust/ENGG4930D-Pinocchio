@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
-  Typography,
   Grid,
-  useMediaQuery,
   IconButton,
-  InputBase,
   InputAdornment,
+  InputBase,
+  Typography,
+  useMediaQuery,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { signup } from "../../store/authSlice";
+import { makeStyles } from "@material-ui/core/styles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import NextButton from "../../components/NextButton";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import signUpLogo from "../../assets/signUpLogo.png";
 import signUpLogoDesktop from "../../assets/signUpLogoDesktop.png";
-import { checkIfUserExists } from "../../utils/auth";
+import DialogBox from "../../components/DialogBox";
 import NavigationBar from "../../components/NavigationBar";
-import { useTranslation } from "react-i18next";
+import NextButton from "../../components/NextButton";
+import { signup } from "../../store/authSlice";
+import { checkIfUserExists } from "../../utils/auth";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -113,7 +114,7 @@ function SignUpPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [accountCreated, setAccountCreated] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -150,10 +151,9 @@ function SignUpPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      setAccountCreated(true);
-      history.push("/interests");
+      setOpenDialog(true);
     }
-  }, [isLoggedIn, dispatch]);
+  }, [isLoggedIn]);
 
   return (
     <Grid container direction='column'>
@@ -226,6 +226,13 @@ function SignUpPage() {
           src={isMobile ? signUpLogo : signUpLogoDesktop}
           className={classes.loginLogo}
         />
+        <DialogBox
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+          yesText='OK'
+          text='We sent you a verification email to confirm you are a UST student! Verify the account to write on Pinocchio!'
+          onClickYes={() => history.push("/interests")}
+        ></DialogBox>
       </Grid>
     </Grid>
   );

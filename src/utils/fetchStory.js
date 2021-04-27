@@ -11,7 +11,7 @@ export async function fetchStory({ isPublic, numberOfStory }) {
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        localStorage.setItem(
+        window.sessionStorage.setItem(
           "lastVisible",
           querySnapshot.docs[querySnapshot.docs.length - 1]
         );
@@ -43,18 +43,21 @@ export async function fetchNextFiveStories({ isPublic }) {
     .collection("stories")
     .where("isPublic", "==", isPublic)
     .orderBy("createdTime", "desc")
-    .startAfter(localStorage.getItem("lastVisible"))
+    .startAfter(window.sessionStorage.getItem("lastVisible"))
     .limit(5)
     .get()
     .then((querySnapshot) => {
-      localStorage.setItem(
+      window.sessionStorage.setItem(
         "lastVisible",
         querySnapshot.docs[querySnapshot.docs.length - 1]
       );
       return querySnapshot;
     })
     .catch((error) => {
-      console.log("lastVisible: ", localStorage.getItem("lastVisible"));
+      console.log(
+        "lastVisible: ",
+        window.sessionStorage.getItem("lastVisible")
+      );
       console.log(error);
     });
 }
@@ -69,7 +72,7 @@ export async function fetchBookmarkedStories({ userUID, numberOfStory }) {
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        localStorage.setItem(
+        window.sessionStorage.setItem(
           "lastVisible",
           querySnapshot.docs[querySnapshot.docs.length - 1]
         );
@@ -90,12 +93,12 @@ export async function fetchNextFiveBookmarkedStories({
     .collection("stories")
     .where("bookmarkUsersID", "array-contains", encodeUserUID(userUID))
     .orderBy("createdTime", "desc")
-    .startAfter(localStorage.getItem("lastVisible"))
+    .startAfter(window.sessionStorage.getItem("lastVisible"))
     .limit(numberOfStory)
     .get()
     .then(async (querySnapshot) => {
       if (!querySnapshot.empty) {
-        localStorage.setItem(
+        window.sessionStorage.setItem(
           "lastVisible",
           querySnapshot.docs[querySnapshot.docs.length - 1]
         );
@@ -105,7 +108,10 @@ export async function fetchNextFiveBookmarkedStories({
       }
     })
     .catch((error) => {
-      console.log("lastVisible: ", localStorage.getItem("lastVisible"));
+      console.log(
+        "lastVisible: ",
+        window.sessionStorage.getItem("lastVisible")
+      );
       console.log(error);
     });
 }
@@ -120,7 +126,7 @@ export async function fetchUserStory({ userUID, numberOfStory }) {
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        localStorage.setItem(
+        window.sessionStorage.setItem(
           "lastVisible",
           querySnapshot.docs[querySnapshot.docs.length - 1]
         );
@@ -136,12 +142,12 @@ export async function fetchNextFiveUserStories({ userUID, numberOfStory }) {
     .collection("stories")
     .where("userID", "==", encodeUserUID(userUID))
     .orderBy("createdTime", "desc")
-    .startAfter(localStorage.getItem("lastVisible"))
+    .startAfter(window.sessionStorage.getItem("lastVisible"))
     .limit(numberOfStory)
     .get()
     .then((querySnapshot) => {
       if (!querySnapshot.empty) {
-        localStorage.setItem(
+        window.sessionStorage.setItem(
           "lastVisible",
           querySnapshot.docs[querySnapshot.docs.length - 1]
         );

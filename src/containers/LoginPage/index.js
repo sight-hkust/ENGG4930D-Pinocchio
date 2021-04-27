@@ -149,7 +149,7 @@ function LoginPage() {
     if (isWrongPassword) setLoginError(true);
   }, [isWrongPassword]);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (isLoggedIn) {
       setLoginError(false);
       history.push("/home");

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase/app";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Divider, Button, Input } from "@material-ui/core";
 import { useHistory, useParams } from "react-router";
@@ -46,6 +47,7 @@ function CommentPage() {
   const classes = useStyles();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState();
+  const [userEmailVerified, setUserEmailVerified] = useState();
   const { id } = useParams();
   const handlePreviousPage = () => history.push("/forum");
   const userUID = useSelector((state) => state.auth.userUID);
@@ -53,6 +55,8 @@ function CommentPage() {
 
   useEffect(() => {
     fetchComment();
+    const user = firebase.auth().currentUser;
+    user?.reload().then(() => setUserEmailVerified(user?.emailVerified));
   }, []);
 
   const fetchComment = () => {
@@ -122,8 +126,10 @@ function CommentPage() {
                 style={{ width: "80vw" }}
                 placeholder={
                   userUID
-                    ? t("commentPage.writeComment")
-                    : "Log in to write comments that encourage the other!"
+                    ? userEmailVerified
+                      ? t("commentPage.writeComment")
+                      : t("commentPage.notEmailVerified")
+                    : t("commentPage.notLoggedIn")
                 }
                 disableUnderline
                 multiline
@@ -131,7 +137,7 @@ function CommentPage() {
                 value={newComment}
               />
             </Grid>
-            {userUID && (
+            {userUID && userEmailVerified && (
               <Grid
                 container
                 direction='row'
@@ -153,7 +159,7 @@ function CommentPage() {
                     }, 500);
                   }}
                 >
-                  Send
+                  {t("commentPage.send")}
                 </Button>
               </Grid>
             )}

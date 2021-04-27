@@ -95,7 +95,7 @@ function StoryPage() {
   useEffect(() => {
     fetchStoryByID({ storyID: id }).then((doc) => {
       setStory({
-        time: doc.data().createdTiime.toDate().toLocaleString([], {
+        time: doc.data().createdTime.toDate().toLocaleString([], {
           year: "numeric",
           month: "numeric",
           day: "numeric",

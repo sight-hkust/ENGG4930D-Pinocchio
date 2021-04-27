@@ -44,7 +44,11 @@ function RouteCollection() {
           <ForgetPasswordPage />
         </Route>
         <Route exact path='/interests'>
-          <InterestsPage />
+          {isLoggedIn ? (
+            <InterestsPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
         <Route exact path='/personal'>
           {isLoggedIn ? (

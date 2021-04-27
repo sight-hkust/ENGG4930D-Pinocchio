@@ -90,7 +90,7 @@ function ForumPage() {
             title={story[1].title}
             category={story[1].category}
             storyText={story[1].text}
-            date={story[1].time.toDate().toLocaleString([], {
+            date={story[1].createdTime.toDate().toLocaleString([], {
               year: "numeric",
               month: "numeric",
               day: "numeric",

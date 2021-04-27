@@ -93,7 +93,6 @@ function WritingPage() {
 
   const handleClose = () => {
     setOpen(false);
-    console.log("clicked");
   };
 
   return (

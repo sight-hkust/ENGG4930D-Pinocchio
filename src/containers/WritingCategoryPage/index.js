@@ -128,9 +128,10 @@ function WritingCategoryPage() {
   };
 
   const handleUpload = ({ isPublic }) => {
-    let title = sessionStorage.getItem("title");
-    let storyText = sessionStorage.getItem("storyText");
-    let storyTextHTML = sessionStorage.getItem("storyTextHTML");
+    var myStorage = window.sessionStorage;
+    let title = myStorage.getItem("title");
+    let storyText = myStorage.getItem("storyText");
+    let storyTextHTML = myStorage.getItem("storyTextHTML");
     if (title && storyText && storyTextHTML && selected !== undefined) {
       console.log({ title, storyText, storyTextHTML });
       if (isPublic) {
@@ -160,9 +161,11 @@ function WritingCategoryPage() {
     <Grid container className={classes.container} direction='column'>
       <Grid container item direction='column' className={classes.inputForm}>
         <NavigationBar showMenu />
-        <Typography className={classes.title}>{t("writingCategoryPage.writeThoughts")}</Typography>
+        <Typography className={classes.title}>
+          {t("writingCategoryPage.writeThoughts")}
+        </Typography>
         <Typography className={classes.description}>
-        {t("writingCategoryPage.chooseCategory")}
+          {t("writingCategoryPage.chooseCategory")}
         </Typography>
         <Grid
           container
@@ -217,7 +220,7 @@ function WritingCategoryPage() {
               onClick={() => comfirmUpload({ isPublic: true })}
             >
               <Typography className={classes.buttonBoldText}>
-              {t("writingCategoryPage.publishAll")}
+                {t("writingCategoryPage.publishAll")}
               </Typography>
             </Button>
           </Grid>
@@ -225,14 +228,14 @@ function WritingCategoryPage() {
       </Grid>
       <DialogBox
         open={openDialogPublishForAll}
-        text= {t("writingCategoryPage.publishAllQuestion")}
+        text={t("writingCategoryPage.publishAllQuestion")}
         onClickYes={() => handleUpload({ isPublic: true })}
         onClickNo={() => setOpenDialogPublishForAll(false)}
         onClose={() => setOpenDialogPublishForAll(false)}
       ></DialogBox>
       <DialogBox
         open={openDialogPublishForMe}
-        text= {t("writingCategoryPage.publishMeQuestion")}
+        text={t("writingCategoryPage.publishMeQuestion")}
         onClickYes={() => handleUpload({ isPublic: false })}
         onClickNo={() => setOpenDialogPublishForMe(false)}
         onClose={() => setOpenDialogPublishForMe(false)}
