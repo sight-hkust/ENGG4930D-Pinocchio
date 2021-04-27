@@ -225,24 +225,27 @@ function LandingPage() {
           <Grid
         container
         className={classes.container}
-        direction='column'
-        alignItems='center'
+        direction='row'
+        style={{justifyContent : "center"}}
         >
-          <Typography className={classes.linkText}>
-          {t("landingPage.haveAccount")}
-          <Link className={classes.link} onClick={() => history.push("/login")}>
-            {t("landingPage.signIn")}
-          </Link>
-        </Typography>
-        <Typography className={classes.linkText}>
-          {t("landingPage.newToPinocchio")}
-          <Link
+            <Link
             className={classes.link}
             onClick={() => setShowPrivacyTextDialog(true)}
           >
             {t("landingPage.signUp")}
           </Link>
-        </Typography>
+          <Typography 
+          style={{
+            textAlign: "center",
+            fontSize: 40,
+            whiteSpace: "break-spaces",
+            color: "#838181",
+            paddingLeft: 50,
+            paddingRight: 50,
+          }}> I </Typography>
+          <Link className={classes.link} onClick={() => history.push("/login")}>
+            {t("landingPage.signIn")}
+          </Link>
         </Grid>
         )}
         <Snackbar
