@@ -113,8 +113,11 @@ function InterestsPage() {
   ];
 
   const handleSubmit = () => {
-    addInterests(userUID, ...selected.map((index) => interests[index][0]));
-    history.push("/home");
+    addInterests(
+      userUID,
+      selected.map((index) => interests[index][0])
+    );
+    history.push("/survey");
   };
 
   return (

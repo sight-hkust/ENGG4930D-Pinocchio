@@ -280,7 +280,7 @@ function LandingPage() {
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={showIOSInstallBanner}
           onClose={() => setShowIOSInstallBanner(false)}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           style={{
             backgroundColor: "#FFD7D7",
             borderRadius: 20,

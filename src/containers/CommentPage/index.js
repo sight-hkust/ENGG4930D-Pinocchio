@@ -73,7 +73,9 @@ function CommentPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Grid container direction='column' style={{ padding: 30 }}>
-        <Typography className={classes.title}>The Storybook</Typography>
+        <Typography className={classes.title}>
+          {t("commentPage.storybook")}
+        </Typography>
         <Grid container className={classes.paper} direction='column'>
           <Grid container direction='row'>
             <img alt='comment' src={commentIcon} />

@@ -21,6 +21,7 @@ import LookBackPage from "./LookBackPage";
 import ForgetPasswordPage from "./ForgetPasswordPage";
 import GuidePage from "./GuidePage";
 import PersonalPage from "./PersonalPage";
+import SurveyPage from "./SurveyPage";
 
 function RouteCollection() {
   var isLoggedIn = useSelector((state) => state.auth.userUID);
@@ -40,16 +41,18 @@ function RouteCollection() {
         <Route exact path='/guide'>
           <GuidePage />
         </Route>
+        <Route exact path='/survey'>
+          <SurveyPage />
+        </Route>
         <Route exact path='/forgetPassword'>
           <ForgetPasswordPage />
         </Route>
         <Route exact path='/interests'>
-          {/* { */}
-          {/* isLoggedIn ? ( */}
-          <InterestsPage />
-          {/* ) : ( */}
-          {/* <Redirect to={{ pathname: "/login" }} /> */}
-          {/* )} */}
+          {isLoggedIn ? (
+            <InterestsPage />
+          ) : (
+            <Redirect to={{ pathname: "/login" }} />
+          )}
         </Route>
         <Route exact path='/personal'>
           {isLoggedIn ? (
