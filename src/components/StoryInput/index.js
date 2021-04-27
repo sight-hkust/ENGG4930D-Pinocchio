@@ -20,11 +20,9 @@ const useStyles = makeStyles((theme) => ({
     width: "80vw",
     height: "60vh",
     overflow: "auto",
-    // margin: "0 50px 20px",
     borderRadius: 30,
     backgroundColor: "#FFD7D7",
-    paddingTop: 50,
-    paddingLeft: 50,
+    padding: 50,
     "@media (max-width:480px)": {
       margin: "0 20px",
       marginBottom: 20,
@@ -77,10 +75,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "unset",
     padding: 0,
     marginRight: 20,
-    minWidth: 60,
+    width: 24,
     "@media (max-width:480px)": {
-      height: 20,
-      minWidth: 35,
+      width: 24,
     },
   },
 }));
@@ -165,7 +162,7 @@ function StoryInput(props) {
         <Input
           disableUnderline
           multiline
-          placeholder= {t("storyInput.enterTitle")}
+          placeholder={t("storyInput.enterTitle")}
           className={classes.inputTitle}
           value={storyText}
           onChange={onTitleChange}
@@ -178,7 +175,7 @@ function StoryInput(props) {
           ref={editorRef}
           editorState={editorState}
           onChange={onChange}
-          placeholder= {t("storyInput.startWriting")}
+          placeholder={t("storyInput.startWriting")}
           spellCheck={true}
         />
       </Grid>

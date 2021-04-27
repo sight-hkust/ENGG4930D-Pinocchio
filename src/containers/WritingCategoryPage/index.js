@@ -12,7 +12,7 @@ import ptsdIcon from "../../assets/ptsdIcon.png";
 import panicDisorderIcon from "../../assets/panicDisorderIcon.png";
 import eatingDisorderIcon from "../../assets/eatingDisorderIcon.png";
 import allIcon from "../../assets/allIcon.png";
-import { uploadStory, uploadToxicStory } from "../../utils/uploadStory";
+import { uploadStory } from "../../utils/uploadStory";
 import DialogBox from "../../components/DialogBox";
 import { processStory } from "../../utils/toxicity";
 import { useTranslation } from "react-i18next";
@@ -63,10 +63,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   interestButton: {
+    height: "auto",
+    width: 200,
+    "&:hover": {
+      backgroundColor: "#FFFFFF",
+    },
     "@media (max-width:480px)": {
       height: "auto",
-      padding: "13px 13px",
       width: "auto",
+      marginLeft: 0,
     },
   },
   buttonText: {
@@ -87,7 +92,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   buttonGroup: {
-    paddingTop: "4vh",
     justifyContent: "space-evenly",
     flexDirection: "row",
   },
@@ -170,7 +174,7 @@ function WritingCategoryPage() {
         <Grid
           container
           item
-          xs={isMobile ? "auto" : 6}
+          xs={isMobile ? "auto" : 7}
           className={classes.buttonGroup}
         >
           {interests.map((interest, index) => (
@@ -181,13 +185,17 @@ function WritingCategoryPage() {
                 setSelected(index);
               }}
               disableRipple
-              style={{ alignitems: "center" }}
             >
-              <Grid container item direction='column'>
+              <Grid
+                container
+                item
+                direction='column'
+                style={{ alignItems: "center" }}
+              >
                 <span
                   style={{
-                    width: 98,
-                    height: 98,
+                    width: isMobile ? 98 : 130,
+                    height: isMobile ? 98 : 130,
                     backgroundColor: selected === index ? "#FEBD7D" : "#FFD7D7",
                     borderRadius: "50%",
                   }}
@@ -213,10 +221,7 @@ function WritingCategoryPage() {
             </Button>
             <Button
               className={classes.button}
-              style={{
-                backgroundColor: "#FEBD7D",
-                marginRight: 10,
-              }}
+              style={{ backgroundColor: "#FEBD7D" }}
               onClick={() => comfirmUpload({ isPublic: true })}
             >
               <Typography className={classes.buttonBoldText}>

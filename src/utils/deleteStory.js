@@ -8,7 +8,7 @@ export function deleteStory(storyID) {
     .doc(storyID)
     .get()
     .then((doc) => {
-      var storyAuthor = encodeUserUID(doc.data().userID);
+      var storyAuthor = doc.data().userID;
       db.collection("stories")
         .doc(storyID)
         .delete()

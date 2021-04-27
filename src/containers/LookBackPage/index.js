@@ -81,7 +81,9 @@ function LookBackPage() {
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
       <Typography className={classes.title}>
-        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>{t("lookBackPage.lookText")}</span>{" "}
+        <span style={{ boxShadow: "inset 0 -18px 0 0 #FEBD7D" }}>
+          {t("lookBackPage.lookText")}
+        </span>{" "}
         {t("lookBackPage.backText")}
       </Typography>
       {stories.length > 0 ? (
@@ -98,7 +100,7 @@ function LookBackPage() {
               title={story[1].title}
               category={story[1].category}
               storyText={story[1].text}
-              date={story[1].time.toDate().toLocaleString([], {
+              date={story[1].createdTime.toDate().toLocaleString([], {
                 year: "numeric",
                 month: "numeric",
                 day: "numeric",
