@@ -178,7 +178,7 @@ function LandingPage() {
         yesText={t("landingPage.pwaInstallDialogBoxConfirm")}
         noText={t("landingPage.pwaInstallDialogBoxDecline")}
       ></DialogBox>
-      {isMobile && <NavigationBar showMenu />}
+      {!isMobile && <NavigationBar showMenu />}
       <Grid
         container
         className={classes.container}

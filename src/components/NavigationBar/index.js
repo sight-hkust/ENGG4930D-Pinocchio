@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { logout } from "../../store/authSlice";
+import NextButton from "../../components/NextButton";
 import menuLogo from "../../assets/menuIcon.png";
 import homeMenuIcon from "../../assets/homeMenuIcon.png";
 import storyBookMenuIcon from "../../assets/storyBookMenuIcon.png";
@@ -71,7 +72,6 @@ function NavigationBar({ showMenu }) {
   const [state, setState] = React.useState({
     left: false,
   });
-  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -138,16 +138,21 @@ function NavigationBar({ showMenu }) {
         container
         direction='row'
         style={{
-          justifyContent: showMenu ? "space-between" : "flex-end",
+          justifyContent: showMenu ? "space-between" : "flex-start",
         }}
       >
-        {showMenu && (
+        {showMenu ? (
           <Button
             className={classes.menuButton}
             onClick={toggleDrawer("left", true)}
           >
             <img src={menuLogo} alt='menuLogo'></img>
           </Button>
+        ) : (
+          <NextButton
+            style={{ transform: "scaleX(-1)" }}
+            onClick={() => history.goBack()}
+          />
         )}
         <SwipeableDrawer
           anchor='left'

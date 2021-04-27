@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, InputBase } from "@material-ui/core";
-import NextButton from "../../components/NextButton";
+import { useHistory } from "react-router-dom";
 import { sendPasswordResetEmail } from "../../utils/auth";
 import loginLogoMobile from "../../assets/loginLogoMobile.png";
 import loginLogoDesktop from "../../assets/loginLogoDesktop.png";
 import NavigationBar from "../../components/NavigationBar";
+import NextButton from "../../components/NextButton";
 import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
 function ForgetPasswordPage() {
   const classes = useStyles();
   const isMobile = useMediaQuery("(max-width:480px)");
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [displayMessage, setDisplayMessage] = useState("");
   const emailRegex = /.+@.*ust.hk$/gm;
@@ -96,7 +98,7 @@ function ForgetPasswordPage() {
 
   return (
     <Grid container direction='column'>
-      <NavigationBar showMenu />
+      <NavigationBar showMenu={!isMobile} />
       <Grid
         container
         className={classes.container}

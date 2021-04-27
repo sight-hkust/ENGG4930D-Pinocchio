@@ -19,13 +19,10 @@ function NextButton(props) {
     <IconButton
       aria-label='submit'
       className={classes.button}
-      onClick={() => onClick()}
+      onClick={onClick}
       {...rest}
     >
-      <img
-        alt='arrowRight'
-        src={arrowRightImage}
-      />
+      <img alt='arrowRight' src={arrowRightImage} />
     </IconButton>
   );
 }

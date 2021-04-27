@@ -120,7 +120,6 @@ function LoginPage() {
   const classes = useStyles();
   const history = useHistory();
   const isMobile = useMediaQuery("(max-width:480px)");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState();
@@ -161,7 +160,7 @@ function LoginPage() {
 
   return (
     <Grid container direction='column'>
-      <NavigationBar showMenu />
+      <NavigationBar showMenu={!isMobile} />
       <Grid
         container
         className={classes.container}

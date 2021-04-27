@@ -114,7 +114,7 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountCreated, setAccountCreated] = useState(false);
-  const [emailError, setEmailError] = useState("");
+  const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const emailRegex = /.+@.*ust.hk$/gm;
@@ -134,6 +134,9 @@ function SignUpPage() {
     } else {
       setPasswordError(false);
     }
+  };
+
+  useEffect(() => {
     if (email && password && !(emailError.length > 0) && !passwordError) {
       checkIfUserExists(email).then((res) => {
         if (res) {
@@ -143,7 +146,7 @@ function SignUpPage() {
         }
       });
     }
-  };
+  }, [emailError]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -154,7 +157,7 @@ function SignUpPage() {
 
   return (
     <Grid container direction='column'>
-      <NavigationBar showMenu />
+      <NavigationBar showMenu={!isMobile} />
       <Grid
         container
         className={classes.container}
@@ -184,6 +187,7 @@ function SignUpPage() {
             autoFocus
             inputProps={{ autoCapitalize: "none" }}
             onChange={(e) => setEmail(e.target.value)}
+            value={email}
           ></InputBase>
           <Typography className={classes.inputLabel}>
             {t("signUpPage.secretWord")}
@@ -193,6 +197,7 @@ function SignUpPage() {
             type={showPassword ? "text" : "password"}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete='new-password'
+            value={password}
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
