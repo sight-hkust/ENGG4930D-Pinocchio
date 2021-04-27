@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase/app";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -131,6 +132,14 @@ function LoginPage() {
   var isWrongPassword = useSelector((state) => state.auth.loginWrongPassword);
 
   useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(login({ userUID: user.uid }));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     if (isLoggedIn) {
       setLoginError(false);
       history.push("/home");
@@ -149,7 +158,6 @@ function LoginPage() {
       dispatch(login({ email: email.trim(), password: password.trim() }));
     }
   };
-
 
   return (
     <Grid container direction='column'>
@@ -185,7 +193,7 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           ></InputBase>
           <Typography className={classes.inputLabel}>
-          {t("loginPage.secretWord")}
+            {t("loginPage.secretWord")}
           </Typography>
           <InputBase
             className={classes.input}

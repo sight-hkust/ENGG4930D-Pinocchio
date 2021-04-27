@@ -3,25 +3,36 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const login = createAsyncThunk("auth/login", async (data) => {
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-  return await firebase
-    .auth()
-    .signInWithEmailAndPassword(data.email, data.password)
-    .then(async (userCredential) => {
-      var userUID = userCredential.user.uid;
-      return await firebase
-        .firestore()
-        .collection("users")
-        .doc(userUID)
-        .get()
-        .then((result) => {
-          return { userUID: userUID, isAdmin: result.data().isAdmin };
-        });
-    })
-    .catch((error) => {
-      if (error.code === "auth/wrong-password") {
-        return { userUID: "", isAdmin: false, loginWrongPassword: true };
-      }
-    });
+  if (data.userUID) {
+    return await firebase
+      .firestore()
+      .collection("users")
+      .doc(data.userUID)
+      .get()
+      .then((result) => {
+        return { userUID: data.userUID, isAdmin: result.data().isAdmin };
+      });
+  } else {
+    return await firebase
+      .auth()
+      .signInWithEmailAndPassword(data.email, data.password)
+      .then(async (userCredential) => {
+        var userUID = userCredential.user.uid;
+        return await firebase
+          .firestore()
+          .collection("users")
+          .doc(userUID)
+          .get()
+          .then((result) => {
+            return { userUID: userUID, isAdmin: result.data().isAdmin };
+          });
+      })
+      .catch((error) => {
+        if (error.code === "auth/wrong-password") {
+          return { userUID: "", isAdmin: false, loginWrongPassword: true };
+        }
+      });
+  }
 });
 
 export const logout = createAsyncThunk("auth/logout", async () => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase/app";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography,
@@ -8,6 +9,8 @@ import {
   Link,
   Snackbar,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/authSlice";
 import { useHistory } from "react-router-dom";
 import landingPinocchio from "../../assets/landingPinocchio.png";
 import NavigationBar from "../../components/NavigationBar";
@@ -97,6 +100,7 @@ function LandingPage() {
   const [showIOSInstallBanner, setShowIOSInstallBanner] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   // Expected behaviour:
   // Desktop: Do not show installation dialog
@@ -130,6 +134,13 @@ function LandingPage() {
     if (isIos() && !isInStandaloneMode()) {
       setShowIOSInstallBanner(true);
     }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(login({ userUID: user.uid }));
+        history.push("/home");
+      }
+    });
   }, []);
 
   const install = async () => {
