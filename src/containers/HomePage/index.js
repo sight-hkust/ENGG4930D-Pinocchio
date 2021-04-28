@@ -3,6 +3,7 @@ import firebase from "firebase/app";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import NavigationBar from "../../components/NavigationBar";
 import readNowImage from "../../assets/readStoryIcon.png";
 import writeNowImage from "../../assets/writeNowIcon.png";
@@ -91,9 +92,10 @@ function HomePage() {
   const isMobile = useMediaQuery("(max-width:480px)");
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
+  const userUID = useSelector((state) => state.auth.userUID);
 
   useEffect(() => {
-    isCompletedSignUp().then((isCompleted) => {
+    isCompletedSignUp(userUID).then((isCompleted) => {
       if (!isCompleted) {
         history.push("/interests");
       }
