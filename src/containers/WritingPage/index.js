@@ -98,8 +98,11 @@ function WritingPage() {
   };
 
   useEffect(() => {
-    const user = firebase.auth().currentUser;
-    user?.reload().then(() => setUserEmailVerified(user?.emailVerified));
+    const check = async () => {
+    const user = await firebase.auth().currentUser.emailVerified;
+      setUserEmailVerified(user);
+    };
+    check();
   }, []);
 
   return (
@@ -126,7 +129,7 @@ function WritingPage() {
         yesText={t("writingPage.okText")}
       ></DialogBox>
       <DialogBox
-        open={userEmailVerified}
+        open={!userEmailVerified}
         text={t("writingPage.notVerified")}
         onClose={() => setUserEmailVerified(false)}
         onClickYes={() => setUserEmailVerified(false)}

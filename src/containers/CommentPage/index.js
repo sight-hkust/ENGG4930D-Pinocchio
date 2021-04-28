@@ -54,9 +54,12 @@ function CommentPage() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    const check = async () => {
+      const user = await firebase.auth().currentUser.emailVerified;
+      setUserEmailVerified(user);
+    };
+    check();
     fetchComment();
-    const user = firebase.auth().currentUser;
-    user?.reload().then(() => setUserEmailVerified(user?.emailVerified));
   }, []);
 
   const fetchComment = () => {

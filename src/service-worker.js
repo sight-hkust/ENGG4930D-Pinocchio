@@ -12,7 +12,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 
-const version = 1.0;
+const version = 1.1;
 
 clientsClaim();
 
