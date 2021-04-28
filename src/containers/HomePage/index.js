@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase/app";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -104,6 +105,7 @@ function HomePage() {
   };
 
   const handleCall = (e) => {
+    firebase.analytics.logEvent("callWellnessCenter");
     e.preventDefault();
     setIsOpen(true);
   };
