@@ -168,7 +168,6 @@ function LandingPage() {
     var listener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(login({ userUID: user.uid }));
-        console.log("auth listener calling from landingPage");
         history.push("/home");
       }
     });

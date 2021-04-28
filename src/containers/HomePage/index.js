@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, useMediaQuery, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
@@ -10,6 +10,7 @@ import bookmarkImage from "../../assets/bookmarkIcon.png";
 import callWellnessCenterIcon from "../../assets/exclamationMarkIcon.png";
 import DialogBox from "../../components/DialogBox";
 import { useTranslation } from "react-i18next";
+import { isCompletedSignUp } from "../../utils/fetchUserData";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -89,6 +90,14 @@ function HomePage() {
   const isMobile = useMediaQuery("(max-width:480px)");
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    isCompletedSignUp().then((isCompleted) => {
+      if (!isCompleted) {
+        history.push("/interests");
+      }
+    });
+  }, []);
 
   const handleClose = (event, reason) => {
     setIsOpen(false);

@@ -16,6 +16,21 @@ export async function getUserIsAdmin(userUID) {
     });
 }
 
+export async function isCompletedSignUp(userUID) {
+  const db = firebase.firestore();
+  return await db
+    .collection("users")
+    .doc(encodeUserUID(userUID))
+    .get()
+    .then((docRef) => {
+      if (docRef.exists) {
+        return docRef.data().q1 && docRef.data().interests;
+      } else {
+        console.log("ERROR_NO_USER");
+      }
+    });
+}
+
 export const countStory = async ({ userUID }) => {
   var db = firebase.firestore();
   return await db

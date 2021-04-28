@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import firebase from "firebase/app";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
 import StoryInput from "../../components/StoryInput";
@@ -53,6 +54,7 @@ function WritingPage() {
   const classes = useStyles();
   const [title, setTitle] = useState();
   const [open, setOpen] = useState(false);
+  const [userEmailVerified, setUserEmailVerified] = useState();
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -95,6 +97,11 @@ function WritingPage() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    const user = firebase.auth().currentUser;
+    user?.reload().then(() => setUserEmailVerified(user?.emailVerified));
+  }, []);
+
   return (
     <Grid container direction='column' style={{ alignContent: "center" }}>
       <NavigationBar showMenu />
@@ -116,6 +123,13 @@ function WritingPage() {
         text={t("writingPage.invalidInfo")}
         onClose={handleClose}
         onClickYes={handleClose}
+        yesText={t("writingPage.okText")}
+      ></DialogBox>
+      <DialogBox
+        open={userEmailVerified}
+        text={t("writingPage.notVerified")}
+        onClose={() => setUserEmailVerified(false)}
+        onClickYes={() => setUserEmailVerified(false)}
         yesText={t("writingPage.okText")}
       ></DialogBox>
     </Grid>
