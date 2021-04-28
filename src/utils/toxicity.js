@@ -28,7 +28,7 @@ export function processStory(
     .then((titleScore) => {
       getToxicity(storyText)
         .then((textScore) => {
-          if (titleScore > 0.5 || textScore > 0.5) {
+          if (titleScore > 0.7 || textScore > 0.7) {
             uploadToxicStory(
               userUID,
               storyText,

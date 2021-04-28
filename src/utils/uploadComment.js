@@ -4,7 +4,7 @@ import { getToxicity } from "./toxicity";
 export function uploadComment(userUID, storyID, comment) {
   var db = firebase.firestore();
   getToxicity(comment).then((score) => {
-    if (score > 0.5) {
+    if (score > 0.7) {
       db.collection("toxicComments")
         .add({
           userID: userUID,
