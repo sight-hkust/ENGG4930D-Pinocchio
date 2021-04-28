@@ -105,12 +105,39 @@ function LandingPage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  async function handleUpdate() {
+    if ("serviceWorker" in navigator) {
+      let refreshing;
+
+      // check to see if there is a current active service worker
+      const oldSw = (await navigator.serviceWorker.getRegistration())?.active
+        ?.state;
+
+      navigator.serviceWorker.addEventListener("controllerchange", async () => {
+        if (refreshing) return;
+
+        // when the controllerchange event has fired, we get the new service worker
+        const newSw = (await navigator.serviceWorker.getRegistration())?.active
+          ?.state;
+
+        // if there was already an old activated service worker, and a new activating service worker, do the reload
+        if (oldSw === "activated" && newSw === "activating") {
+          refreshing = true;
+          window.location.reload();
+        }
+      });
+    }
+  }
+
   // Expected behaviour:
   // Desktop: Do not show installation dialog
   // Mobile(iOS Safari): Show Installation Banner(Snackbar component at bottom)
   // Mobile(Android Chrome): Show PWA Installation Dialog
   // Standalone = run like an app in iOS/Android: Do not show installation dialog
   useEffect(() => {
+    //Update PWA
+    handleUpdate();
+
     // Detects if device is in standalone mode
     const isInStandaloneMode = () =>
       "standalone" in window.navigator && window.navigator.standalone;
