@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
       height: 30,
       minWidth: 90,
       fontWeight: "bold",
-      marginRight: 0,
       marginLeft: 30,
     },
   },
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
       padding: "0 12px",
       fontWeight: "bold",
       marginLeft: 15,
-      marginRight: 15,
     },
   },
   buttontext: {
