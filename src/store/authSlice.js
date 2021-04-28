@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { encodeUserUID } from "../utils/auth";
 
 export const login = createAsyncThunk("auth/login", async (data) => {
-  firebase.analytics.logEvent("login");
+  firebase.analytics().logEvent("login");
   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
   if (data.userUID) {
     return await firebase
@@ -47,7 +47,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 });
 
 export const signup = createAsyncThunk("auth/signup", async (data) => {
-  firebase.analytics.logEvent("sign_up");
+  firebase.analytics().logEvent("sign_up");
   return await firebase
     .auth()
     .createUserWithEmailAndPassword(data.email, data.password)

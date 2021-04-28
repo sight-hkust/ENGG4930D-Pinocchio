@@ -105,7 +105,7 @@ function HomePage() {
   };
 
   const handleCall = (e) => {
-    firebase.analytics.logEvent("callWellnessCenter");
+    firebase.analytics().logEvent("callWellnessCenter");
     e.preventDefault();
     setIsOpen(true);
   };
