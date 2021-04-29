@@ -79,7 +79,6 @@ function ForumPage() {
       </Typography>
       <InfiniteScroll
         pullDownToRefresh
-        pullDownToRefreshThreshold={50}
         pullDownToRefreshContent={
           <h3 style={{ textAlign: "center" }}>&#8595; Pull down to refresh</h3>
         }

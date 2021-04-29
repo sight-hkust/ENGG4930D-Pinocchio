@@ -13,7 +13,10 @@ export function uploadStory(userUID, storyText, title, category, isPublic) {
       createdTime: firebase.firestore.Timestamp.now(),
       title: title,
       userID: encodeUserUID(userUID),
-      weighting: category === "Motivation" ? 50 : 1,
+      weighting:
+        category === "Motivation"
+          ? Math.floor(Math.random() * 50) + 1
+          : Math.floor(Math.random() * 40) + 20,
     })
     .then((documentRef) =>
       db
