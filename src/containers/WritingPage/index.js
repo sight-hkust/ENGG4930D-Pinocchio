@@ -79,7 +79,7 @@ function WritingPage() {
       { allowedTags: ["b", "em", "strong", "u"] }
     );
     if (
-      isString.test(originalText) &&
+      // isString.test(originalText) &&
       sanitizeTitle &&
       sanitizeText &&
       sanitizedTextHTML
@@ -99,7 +99,7 @@ function WritingPage() {
 
   useEffect(() => {
     const check = async () => {
-    const user = await firebase.auth().currentUser.emailVerified;
+      const user = await firebase.auth().currentUser.emailVerified;
       setUserEmailVerified(user);
     };
     check();
