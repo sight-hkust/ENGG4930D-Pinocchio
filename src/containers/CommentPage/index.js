@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
       textAlign: "left",
     },
   },
-  paper: {
+  commentPaper: {
     height: "70vh",
     padding: 29,
     backgroundColor: "#FFD7D7",
@@ -79,7 +79,7 @@ function CommentPage() {
         <Typography className={classes.title}>
           {t("commentPage.storybook")}
         </Typography>
-        <Grid container className={classes.paper} direction='column'>
+        <Grid container className={classes.commentPaper} direction='column'>
           <Grid container direction='row'>
             <img alt='comment' src={commentIcon} />
             <Typography

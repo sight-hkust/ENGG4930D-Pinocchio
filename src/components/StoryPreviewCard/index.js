@@ -89,7 +89,7 @@ function StoryPreviewCard(props) {
     >
       <Grid container direction='column' style={{ textAlign: "left" }}>
         <Grid container direction='row' justify='space-between'>
-          <Typography className={classes.dateText}>{date}</Typography>
+          {/* <Typography className={classes.dateText}>{date}</Typography> */}
           <Typography className={classes.categoryText}>{category}</Typography>
         </Grid>
         <Grid container direction='column'>

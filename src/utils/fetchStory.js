@@ -8,7 +8,7 @@ export async function fetchStory({ isPublic, numberOfStory }) {
   return await db
     .collection("stories")
     .where("isPublic", "==", isPublic)
-    .orderBy("weighting", "desc")
+    .orderBy("createdTime", "desc")
     .limit(15)
     .get()
     .then((querySnapshot) => {
@@ -40,14 +40,14 @@ export async function fetchNextFiveStories({ isPublic }) {
   const db = firebase.firestore();
   var firstDoc = await db
     .collection("stories")
-    .orderBy("weighting", "desc")
+    .orderBy("createdTime", "desc")
     .limit(1)
     .get();
   var afterDoc = lastVisible ?? firstDoc;
   return await db
     .collection("stories")
     .where("isPublic", "==", isPublic)
-    .orderBy("weighting", "desc")
+    .orderBy("createdTime", "desc")
     .startAfter(afterDoc)
     .limit(5)
     .get()
