@@ -230,7 +230,7 @@ function SignUpPage() {
           open={openDialog}
           onClose={() => setOpenDialog(false)}
           text={t("signUpPage.verifyEmail")}
-          onClickYes={() => history.push("/interests")}
+          onClickYes={() => history.push("/survey")}
         ></DialogBox>
       </Grid>
     </Grid>

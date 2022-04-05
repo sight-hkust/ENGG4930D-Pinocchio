@@ -97,7 +97,7 @@ function HomePage() {
   useEffect(() => {
     isCompletedSignUp(userUID).then((isCompleted) => {
       if (!isCompleted) {
-        history.push("/interests");
+        history.push("/forum");
       }
     });
   }, []);

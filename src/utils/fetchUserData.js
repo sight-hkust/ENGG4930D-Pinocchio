@@ -24,7 +24,7 @@ export async function isCompletedSignUp(userUID) {
     .get()
     .then((docRef) => {
       if (docRef.exists) {
-        return docRef.data().q1 && docRef.data().interests;
+        return docRef.data().q1;
       } else {
         console.log("ERROR_NO_USER");
       }

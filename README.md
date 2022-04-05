@@ -46,8 +46,6 @@ Or directly contact us via Instagram: @pinocchio.hkust
 │   │   └── index.js
 │   ├── HomePage
 │   │   └── index.js
-│   ├── InterestsPage
-│   │   └── index.js
 │   ├── LandingPage
 │   │   └── index.js
 │   ├── LoginPage
@@ -75,7 +73,6 @@ Or directly contact us via Instagram: @pinocchio.hkust
 ├── store                           # Redux store
 │   └── authSlice.js
 ├── utils                           # Reusable functions
-│   ├── addInterests.js
 │   ├── auth.js
 │   ├── bookmarkStory.js
 │   ├── deleteStory.js
