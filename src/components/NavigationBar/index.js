@@ -219,7 +219,10 @@ function NavigationBar({ showMenu }) {
         >
           {t("navigationBar.personal")}
         </Button>
-        <Button className={classes.button} onClick={() => logOut()}>
+        <Button 
+          className={classes.button} 
+          onClick={() => logOut()}
+        >
           {t("navigationBar.logOut")}
         </Button>
       </Grid>

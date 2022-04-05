@@ -8,7 +8,6 @@ import {
 import { useSelector } from "react-redux";
 import LandingPage from "./LandingPage";
 import LoginPage from "./LoginPage";
-import InterestsPage from "./InterestsPage";
 import SignUpPage from "./SignUpPage";
 import HomePage from "./HomePage";
 import WritingPage from "./WritingPage";
@@ -46,13 +45,6 @@ function RouteCollection() {
         </Route>
         <Route exact path='/forgetPassword'>
           <ForgetPasswordPage />
-        </Route>
-        <Route exact path='/interests'>
-          {isLoggedIn ? (
-            <InterestsPage />
-          ) : (
-            <Redirect to={{ pathname: "/login" }} />
-          )}
         </Route>
         <Route exact path='/personal'>
           {isLoggedIn ? (
