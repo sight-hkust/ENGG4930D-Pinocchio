@@ -94,7 +94,7 @@ function NavigationBar({ showMenu }) {
   const list = (anchor) => (
     <List style={{ flexGrow: 1 }}>
       {[
-        [t("navigationBar.home"), homeMenuIcon, () => history.push("/home")],
+        [t("navigationBar.home"), homeMenuIcon, () => history.push("/")],
         [
           t("navigationBar.theStorybook"),
           storyBookMenuIcon,
@@ -199,7 +199,7 @@ function NavigationBar({ showMenu }) {
       <Grid container direction='row' className={classes.container}>
         <Button
           className={classes.button}
-          onClick={() => history.push("/home")}
+          onClick={() => history.push("/")}
         >
           {t("navigationBar.home")}
         </Button>
