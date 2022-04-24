@@ -102,7 +102,7 @@ function DialogBox(props) {
         direction='column'
         style={{
           outline: "none",
-          backgroundColor: "white",
+          // backgroundColor: "white",
           borderRadius: 20,
           alignItems: "center",
         }}
@@ -134,6 +134,7 @@ function DialogBox(props) {
               dangerouslySetInnerHTML={{ __html: HTMLString }}
             />
           )}
+          <Grid container direction='row' display='flex' alignItems = 'center'>
           <Button className={classes.yesbutton} onClick={onClickYes}>
             <Typography className={classes.buttontext}>
               {yesText ? yesText : t("dialogBox.yes")}
@@ -146,6 +147,7 @@ function DialogBox(props) {
               </Typography>
             </Button>
           )}
+          </Grid>
         </Grid>
       </Grid>
     </Modal>
