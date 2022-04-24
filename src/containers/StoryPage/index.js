@@ -336,7 +336,7 @@ function StoryPage() {
                 />
               )}
             </IconButton>
-            {isPublic && (
+            {(isPublic && isMobile) && (
               <IconButton
                 style={{
                   padding: 0,
